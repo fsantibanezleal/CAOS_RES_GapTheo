@@ -1,0 +1,24 @@
+{
+  "version": "0.01.000",
+  "count": 3,
+  "artifacts": [
+    {
+      "id": "golden-baseline",
+      "path": "artifacts/golden-baseline.json",
+      "hash": "6238d6fc09de1da05eb969481f7df8274da12f024efd1db6adc94b3d1879a4ae",
+      "status": "certified"
+    },
+    {
+      "id": "rational-boundary",
+      "path": "artifacts/rational-boundary.json",
+      "hash": "e30bd3466f7a2f8f3ad275990669193016d10cb5edc7dc0bbce8a622e5eb0776",
+      "status": "boundary"
+    },
+    {
+      "id": "farthest-contrast",
+      "path": "artifacts/farthest-contrast.json",
+      "hash": "bbeaf27b80ec8446e6add705325403d9d63afdd30667981187d881769c3bd566",
+      "status": "contrast"
+    }
+  ]
+}

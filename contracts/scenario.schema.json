@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaptheo.fasl-work.com/contracts/scenario.schema.json",
+  "title": "GapTheo scenario",
+  "type": "object",
+  "required": ["id", "alpha", "alphaMode", "pointCount", "allocator", "seed", "beta"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "alpha": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+    "alphaMode": { "enum": ["irrational", "rational", "numeric"] },
+    "rationalP": { "type": "integer" },
+    "rationalQ": { "type": "integer", "minimum": 1 },
+    "pointCount": { "type": "integer", "minimum": 3, "maximum": 900 },
+    "phase": { "type": "number", "minimum": 0, "exclusiveMaximum": 1 },
+    "beta": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+    "allocator": { "enum": ["rotation", "random", "farthest", "anchors"] },
+    "seed": { "type": "integer" },
+    "strictBeta": { "type": "boolean" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,409 @@
+{
+  "distinctCount": 2,
+  "gaps": [
+    {
+      "end": 0.015625,
+      "id": "gap-0",
+      "length": 0.015625,
+      "start": 0.0,
+      "type": "a"
+    },
+    {
+      "end": 0.03125,
+      "id": "gap-1",
+      "length": 0.015625,
+      "start": 0.015625,
+      "type": "a"
+    },
+    {
+      "end": 0.046875,
+      "id": "gap-2",
+      "length": 0.015625,
+      "start": 0.03125,
+      "type": "a"
+    },
+    {
+      "end": 0.0625,
+      "id": "gap-3",
+      "length": 0.015625,
+      "start": 0.046875,
+      "type": "a"
+    },
+    {
+      "end": 0.09375,
+      "id": "gap-4",
+      "length": 0.03125,
+      "start": 0.0625,
+      "type": "b"
+    },
+    {
+      "end": 0.125,
+      "id": "gap-5",
+      "length": 0.03125,
+      "start": 0.09375,
+      "type": "b"
+    },
+    {
+      "end": 0.15625,
+      "id": "gap-6",
+      "length": 0.03125,
+      "start": 0.125,
+      "type": "b"
+    },
+    {
+      "end": 0.1875,
+      "id": "gap-7",
+      "length": 0.03125,
+      "start": 0.15625,
+      "type": "b"
+    },
+    {
+      "end": 0.21875,
+      "id": "gap-8",
+      "length": 0.03125,
+      "start": 0.1875,
+      "type": "b"
+    },
+    {
+      "end": 0.25,
+      "id": "gap-9",
+      "length": 0.03125,
+      "start": 0.21875,
+      "type": "b"
+    },
+    {
+      "end": 0.28125,
+      "id": "gap-10",
+      "length": 0.03125,
+      "start": 0.25,
+      "type": "b"
+    },
+    {
+      "end": 0.3125,
+      "id": "gap-11",
+      "length": 0.03125,
+      "start": 0.28125,
+      "type": "b"
+    },
+    {
+      "end": 0.34375,
+      "id": "gap-12",
+      "length": 0.03125,
+      "start": 0.3125,
+      "type": "b"
+    },
+    {
+      "end": 0.375,
+      "id": "gap-13",
+      "length": 0.03125,
+      "start": 0.34375,
+      "type": "b"
+    },
+    {
+      "end": 0.40625,
+      "id": "gap-14",
+      "length": 0.03125,
+      "start": 0.375,
+      "type": "b"
+    },
+    {
+      "end": 0.4375,
+      "id": "gap-15",
+      "length": 0.03125,
+      "start": 0.40625,
+      "type": "b"
+    },
+    {
+      "end": 0.46875,
+      "id": "gap-16",
+      "length": 0.03125,
+      "start": 0.4375,
+      "type": "b"
+    },
+    {
+      "end": 0.5,
+      "id": "gap-17",
+      "length": 0.03125,
+      "start": 0.46875,
+      "type": "b"
+    },
+    {
+      "end": 0.53125,
+      "id": "gap-18",
+      "length": 0.03125,
+      "start": 0.5,
+      "type": "b"
+    },
+    {
+      "end": 0.5625,
+      "id": "gap-19",
+      "length": 0.03125,
+      "start": 0.53125,
+      "type": "b"
+    },
+    {
+      "end": 0.59375,
+      "id": "gap-20",
+      "length": 0.03125,
+      "start": 0.5625,
+      "type": "b"
+    },
+    {
+      "end": 0.625,
+      "id": "gap-21",
+      "length": 0.03125,
+      "start": 0.59375,
+      "type": "b"
+    },
+    {
+      "end": 0.65625,
+      "id": "gap-22",
+      "length": 0.03125,
+      "start": 0.625,
+      "type": "b"
+    },
+    {
+      "end": 0.6875,
+      "id": "gap-23",
+      "length": 0.03125,
+      "start": 0.65625,
+      "type": "b"
+    },
+    {
+      "end": 0.71875,
+      "id": "gap-24",
+      "length": 0.03125,
+      "start": 0.6875,
+      "type": "b"
+    },
+    {
+      "end": 0.75,
+      "id": "gap-25",
+      "length": 0.03125,
+      "start": 0.71875,
+      "type": "b"
+    },
+    {
+      "end": 0.78125,
+      "id": "gap-26",
+      "length": 0.03125,
+      "start": 0.75,
+      "type": "b"
+    },
+    {
+      "end": 0.8125,
+      "id": "gap-27",
+      "length": 0.03125,
+      "start": 0.78125,
+      "type": "b"
+    },
+    {
+      "end": 0.84375,
+      "id": "gap-28",
+      "length": 0.03125,
+      "start": 0.8125,
+      "type": "b"
+    },
+    {
+      "end": 0.875,
+      "id": "gap-29",
+      "length": 0.03125,
+      "start": 0.84375,
+      "type": "b"
+    },
+    {
+      "end": 0.90625,
+      "id": "gap-30",
+      "length": 0.03125,
+      "start": 0.875,
+      "type": "b"
+    },
+    {
+      "end": 0.9375,
+      "id": "gap-31",
+      "length": 0.03125,
+      "start": 0.90625,
+      "type": "b"
+    },
+    {
+      "end": 0.96875,
+      "id": "gap-32",
+      "length": 0.03125,
+      "start": 0.9375,
+      "type": "b"
+    },
+    {
+      "end": 0.0,
+      "id": "gap-33",
+      "length": 0.03125,
+      "start": 0.96875,
+      "type": "b"
+    }
+  ],
+  "groups": [
+    {
+      "color": "#f1b66e",
+      "count": 4,
+      "length": 0.015625,
+      "type": "a"
+    },
+    {
+      "color": "#58d2c2",
+      "count": 30,
+      "length": 0.03125,
+      "type": "b"
+    }
+  ],
+  "hash": "bbeaf27b80ec8446e6add705325403d9d63afdd30667981187d881769c3bd566",
+  "method": "direct-sorted-orbit",
+  "methodVersion": "0.01.000",
+  "pointCount": 34,
+  "points": [
+    {
+      "index": 0,
+      "value": 0.0
+    },
+    {
+      "index": 1,
+      "value": 0.5
+    },
+    {
+      "index": 2,
+      "value": 0.25
+    },
+    {
+      "index": 3,
+      "value": 0.75
+    },
+    {
+      "index": 4,
+      "value": 0.125
+    },
+    {
+      "index": 5,
+      "value": 0.375
+    },
+    {
+      "index": 6,
+      "value": 0.625
+    },
+    {
+      "index": 7,
+      "value": 0.875
+    },
+    {
+      "index": 8,
+      "value": 0.0625
+    },
+    {
+      "index": 9,
+      "value": 0.1875
+    },
+    {
+      "index": 10,
+      "value": 0.3125
+    },
+    {
+      "index": 11,
+      "value": 0.4375
+    },
+    {
+      "index": 12,
+      "value": 0.5625
+    },
+    {
+      "index": 13,
+      "value": 0.6875
+    },
+    {
+      "index": 14,
+      "value": 0.8125
+    },
+    {
+      "index": 15,
+      "value": 0.9375
+    },
+    {
+      "index": 16,
+      "value": 0.03125
+    },
+    {
+      "index": 17,
+      "value": 0.09375
+    },
+    {
+      "index": 18,
+      "value": 0.15625
+    },
+    {
+      "index": 19,
+      "value": 0.21875
+    },
+    {
+      "index": 20,
+      "value": 0.28125
+    },
+    {
+      "index": 21,
+      "value": 0.34375
+    },
+    {
+      "index": 22,
+      "value": 0.40625
+    },
+    {
+      "index": 23,
+      "value": 0.46875
+    },
+    {
+      "index": 24,
+      "value": 0.53125
+    },
+    {
+      "index": 25,
+      "value": 0.59375
+    },
+    {
+      "index": 26,
+      "value": 0.65625
+    },
+    {
+      "index": 27,
+      "value": 0.71875
+    },
+    {
+      "index": 28,
+      "value": 0.78125
+    },
+    {
+      "index": 29,
+      "value": 0.84375
+    },
+    {
+      "index": 30,
+      "value": 0.90625
+    },
+    {
+      "index": 31,
+      "value": 0.96875
+    },
+    {
+      "index": 32,
+      "value": 0.015625
+    },
+    {
+      "index": 33,
+      "value": 0.046875
+    }
+  ],
+  "scenarioId": "farthest-contrast",
+  "source": [
+    "arXiv:2308.11999",
+    "HAL:hal-04769002"
+  ],
+  "sumCheck": {
+    "holds": true,
+    "residual": 0.0
+  },
+  "theoremStatus": "contrast"
+}

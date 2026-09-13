@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,hyperref}
+\title{GapTheo: A Reproducible Visual Atlas of Three-Gap Dynamics}
+\author{Felipe Santibáñez-Leal}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+GapTheo is a browser-native research instrument for the three-gap theorem.
+It keeps the direct finite rotation orbit as an authoritative oracle while
+synchronizing exact gap certificates with Farey geometry, continued fractions,
+dual return times, cyclic words, lattice coordinates, and a finite
+zero-dimensional Rips filtration. The contribution is an expository and
+reproducibility protocol, not a new theorem or proof.
+\end{abstract}
+
+\section{Scope and conventions}
+For an irrational $\alpha\in(0,1)$, consider the points
+\[
+  \{0\alpha\},\{1\alpha\},\ldots,\{(N-1)\alpha\}\in\mathbb{R}/\mathbb{Z}.
+\]
+After sorting the points, the consecutive circular arcs have at most three
+distinct lengths. If three lengths occur, the largest equals the sum of the
+other two. GapTheo calls $N$ the number of points; sources using $n+1$ points
+therefore use $n=N-1$ in the corresponding formula.
+
+The app separates four statuses: certified, boundary, contrast, and warning.
+Exact rational inputs are periodic boundary cases. A finite decimal cannot
+certify irrationality. Farthest-point and random allocators are contrast
+processes, not theorem inputs.
+
+\section{Direct orbit and gap genealogy}
+The live lane computes the fractional parts directly, sorts them, and emits
+each circular gap with endpoints, length, rank, and stable identifier. The
+incremental view inserts points in time order. A new point lies in one parent
+empty arc and emits two child arcs. This lineage makes the additive relation
+visible while the sorted oracle remains the source of truth.
+
+\section{Farey event atlas}
+Following Hamada, the $\alpha$--height diagram is partitioned by the lines
+$h=\{i\alpha\}$. In the relevant Farey cell
+$a/b<\alpha<c/d$, the candidates are
+\[
+ b\alpha-a,\qquad c-d\alpha,\qquad
+ (b-d)\alpha+c-a,
+\]
+with multiplicities $N-b$, $N-d$, and $b+d-N$ when the last is positive.
+The third expression is the sum of the first two. GapTheo renders the active
+cell, the moving $\alpha$ cursor, and residual comparisons with the direct
+oracle.
+
+\section{Dual returns}
+For a target interval $[0,\beta)$, GapTheo selects indices satisfying
+$\{i\alpha\}<\beta$ and records successive index differences. This dual
+view has its own two-gap and three-gap regimes and an explicit strict-boundary
+control. It is shown as related structure, not silently merged with the
+primal theorem.
+
+\section{Words, lattices, exchanges, and topology}
+The cyclic sequence of gap labels becomes a word over at most three letters.
+The app supplies a local symmetry probe around a largest-gap anchor. The
+lattice view follows the space-of-lattices perspective: active short vectors
+are shown alongside the circle certificate. Rotation is also rendered as a
+two-interval exchange, with a zippered-rectangle-inspired schematic.
+
+For the topology lens, a threshold grows on the sampled circle. In the finite
+zero-dimensional Rips filtration, adjacent gaps are the merge thresholds.
+GapTheo draws the component count and finite bars with direct gap identifiers.
+It does not claim a general persistent-homology engine.
+
+\section{Controlled extensions}
+The farthest-point allocator places each new point at the midpoint of a
+largest empty arc. Seeded random placement tests reproducibility. A
+two-frequency sequence tests the change in the number of observed lengths.
+These modes are useful falsification and boundary experiments. They do not
+extend the one-dimensional theorem.
+
+\section{Implementation and reproducibility}
+The Python reference lane emits JSON certificates with canonical hashes. The
+TypeScript live lane uses the same scenario and certificate vocabulary. The
+analytic pipeline has no training stage: the template slot is explicitly not
+applicable. The checked-in canonical scenarios cover an irrational baseline,
+a rational boundary, and a farthest-point contrast. Unit tests compare the
+three-gap bound, additive residual, rational collision labelling, and seeded
+reproducibility.
+
+\section{Novelty boundary}
+The reviewed literature contains the individual mathematical mechanisms:
+Farey and continued-fraction proofs, dual return times, combinatorics on words,
+space of lattices, interval exchanges, and topology applications. GapTheo's
+original contribution is their synchronized, deterministic, browser-native
+visual atlas with an explicit proof boundary and reproducible artifacts. No
+new theorem, proof, asymptotic claim, or formal verification result is
+asserted.
+
+\section{References}
+\begin{enumerate}
+\item T. Hamada, \emph{A concise geometric proof of the three distance theorem},
+arXiv:2308.11999, \url{https://arxiv.org/abs/2308.11999}.
+\item V. Alessandri and V. Berthé, \emph{Three distance theorems and
+combinatorics on words}, \url{https://www.irif.fr/~berthe/Articles/3d.pdf}.
+\item V. Berthé and C. Reutenauer, \emph{On the Three-Distance Theorem},
+HAL:hal-04769002v1, \url{https://hal.science/hal-04769002v1}.
+\item J. Marklof and A. Strömbergsson, \emph{The three gap theorem and the
+space of lattices}, \url{https://arxiv.org/abs/1612.04906}.
+\item A. Taha, \emph{The Three Gap Theorem, Interval Exchange Transformations,
+and Zippered Rectangles}, \url{https://arxiv.org/abs/1708.04380}.
+\item A. Dasgupta and D. Roeder, \emph{Symmetries of the Three-Gap Theorem},
+DOI:10.1080/00029890.2022.2158021.
+\item L. Suarez Salas and J. A. Perea, \emph{Estimation of Persistence
+Diagrams via the Three Gap Theorem}, \url{https://arxiv.org/abs/2603.04570}.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaptheo.fasl-work.com/contracts/certificate.schema.json",
+  "title": "GapTheo deterministic certificate",
+  "type": "object",
+  "required": ["scenarioId", "method", "theoremStatus", "pointCount", "distinctCount", "groups", "sumCheck", "hash"],
+  "properties": {
+    "scenarioId": { "type": "string" },
+    "method": { "type": "string" },
+    "methodVersion": { "type": "string" },
+    "theoremStatus": { "enum": ["certified", "boundary", "contrast", "warning"] },
+    "pointCount": { "type": "integer", "minimum": 3 },
+    "distinctCount": { "type": "integer", "minimum": 1 },
+    "groups": { "type": "array", "items": { "type": "object", "required": ["type", "length", "count"], "properties": { "type": { "type": "string" }, "length": { "type": "number", "minimum": 0 }, "count": { "type": "integer", "minimum": 1 } } } },
+    "sumCheck": { "type": "object", "required": ["holds", "residual"], "properties": { "holds": { "type": "boolean" }, "residual": { "type": "number", "minimum": 0 } } },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": true
+}

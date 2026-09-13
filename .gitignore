@@ -1,0 +1,11 @@
+node_modules/
+frontend/dist/
+frontend/.vite/
+__pycache__/
+.pytest_cache/
+.coverage
+*.pyc
+.DS_Store
+*.log
+qa-artifacts/
+secrets/

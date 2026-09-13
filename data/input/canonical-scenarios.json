@@ -1,0 +1,41 @@
+[
+  {
+    "id": "golden-baseline",
+    "alpha": 0.6180339887498949,
+    "alphaMode": "irrational",
+    "rationalP": 5,
+    "rationalQ": 13,
+    "pointCount": 34,
+    "phase": 0,
+    "beta": 0.31,
+    "allocator": "rotation",
+    "seed": 17,
+    "strictBeta": true
+  },
+  {
+    "id": "rational-boundary",
+    "alpha": 0.38461538461538464,
+    "alphaMode": "rational",
+    "rationalP": 5,
+    "rationalQ": 13,
+    "pointCount": 34,
+    "phase": 0,
+    "beta": 0.31,
+    "allocator": "rotation",
+    "seed": 17,
+    "strictBeta": true
+  },
+  {
+    "id": "farthest-contrast",
+    "alpha": 0.6180339887498949,
+    "alphaMode": "irrational",
+    "rationalP": 5,
+    "rationalQ": 13,
+    "pointCount": 34,
+    "phase": 0,
+    "beta": 0.31,
+    "allocator": "farthest",
+    "seed": 17,
+    "strictBeta": true
+  }
+]
