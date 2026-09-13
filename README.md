@@ -31,7 +31,7 @@ frontend/public/artifacts.
 
 ## Research and reproducibility
 
-- Research dossier: wip/gaptheo/deep-research-2026-09-13.md
+- Public deep review: docs/research/deep-review.md
 - Architecture: docs/architecture/overview.md
 - Mathematical contract: docs/research/mathematical-contract.md
 - Reproducibility guide: docs/research/reproducibility.md
