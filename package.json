@@ -1,6 +1,6 @@
 {
   "name": "caos-res-gaptheo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "GapTheo: a reproducible visual atlas of three-gap dynamics.",
   "scripts": {
@@ -9,6 +9,8 @@
     "test": "npm --prefix frontend run test",
     "typecheck": "npm --prefix frontend run typecheck",
     "generate": "python data_pipeline/run.py",
-    "validate": "python scripts/validate_artifacts.py"
+    "validate": "python scripts/validate_artifacts.py",
+    "guards": "python scripts/check_content_standards.py && python scripts/check_template_residue.py && python scripts/check_product_completeness.py",
+    "ci": "npm run guards && python -m unittest discover -s tests -p \"test_*.py\" && npm run typecheck && npm test && npm run build"
   }
 }
