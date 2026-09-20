@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.02.002 - 2026-09-19
+
+### Fixed
+
+- Constrained documentation routes and benchmark cards to the phone viewport at 680px and below.
+
 ## 0.02.001 - 2026-09-19
 
 ### Fixed
