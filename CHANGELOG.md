@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.02.001 - 2026-09-19
+
+### Fixed
+
+- Separated benchmark scenario, category, and count fields in compact and light-theme cards.
+
 ## 0.02.000 - 2026-09-19
 
 ### Added

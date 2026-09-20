@@ -10,6 +10,15 @@ import {
 } from "@fasl-work/caos-app-shell";
 import benchmark from "../data/benchmark.json";
 
+const CATEGORY_ES: Record<string, string> = {
+  "Irrational rotations": "Rotaciones irracionales",
+  "Transcendental rotations": "Rotaciones trascendentes",
+  "Phase and finite size": "Fase y tamaño finito",
+  "Numerical conditioning": "Condicionamiento numérico",
+  "Rational boundaries": "Fronteras racionales",
+  "Process contrasts": "Contrastes de proceso",
+};
+
 type Copy = { en: string; es: string };
 
 function useT() {
@@ -988,6 +997,7 @@ export function ExperimentsPage() {
 
 export function BenchmarkPage() {
   const t = useT();
+  const es = useShellLang() === "es";
   const maxResidual = Math.max(
     ...benchmark.cells.map((cell) => cell.sumResidual),
   );
@@ -1012,10 +1022,16 @@ export function BenchmarkPage() {
                 />
                 <div>
                   <strong>{cell.scenarioId}</strong>
-                  <small>{cell.category}</small>
+                  <small>
+                    {es
+                      ? (CATEGORY_ES[cell.category] ?? cell.category)
+                      : cell.category}
+                  </small>
                 </div>
-                <b>{cell.distinctCount}</b>
-                <small>{t({ en: "gaps", es: "brechas" })}</small>
+                <span className="benchmark-count">
+                  <b>{cell.distinctCount}</b>
+                  <small>{t({ en: "gaps", es: "brechas" })}</small>
+                </span>
               </article>
             ))}
           </div>
