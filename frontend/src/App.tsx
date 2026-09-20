@@ -54,6 +54,14 @@ type ScenarioPreset = Scenario & {
   anchor: string;
 };
 const presets = scenarioData as ScenarioPreset[];
+const CATEGORY_ES: Record<string, string> = {
+  "Irrational rotations": "Rotaciones irracionales",
+  "Transcendental rotations": "Rotaciones trascendentes",
+  "Phase and finite size": "Fase y tamaño finito",
+  "Numerical conditioning": "Condicionamiento numérico",
+  "Rational boundaries": "Fronteras racionales",
+  "Process contrasts": "Contrastes de proceso",
+};
 const scenarioFromPreset = ({
   id: _id,
   name: _name,
@@ -426,7 +434,9 @@ function Explore({
             cases={presets.map((item) => ({
               id: item.id,
               name: es ? item.nameEs : item.name,
-              category: item.category,
+              category: es
+                ? (CATEGORY_ES[item.category] ?? item.category)
+                : item.category,
               anchor: item.anchor + " | " + item.expression,
             }))}
             selectedId={selectedId}
