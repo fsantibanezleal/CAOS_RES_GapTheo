@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.02.000 - 2026-09-19
+
+### Added
+
+- Twelve-case canonical scenario matrix with generated benchmark evidence.
+- Deep Introduction, Methodology, Implementation, Experiments, and Benchmark routes.
+- Five themed architecture diagrams, discrepancy view, and finite-size event sweep.
+- Staged Python reference pipeline, product guards, and a hierarchical documentation wiki.
+
+### Changed
+
+- Upgraded the GitHub Actions and Vite/Vitest toolchains.
+- Moved release evidence generation out of deployment and into an intentional bake step.
+- Adopted Apache-2.0 and synchronized runtime version display with `VERSION`.
+
+### Fixed
+
+- Restored the exact six-route public information architecture.
+- Removed development dependency vulnerabilities and expanded cross-method validation.
+
 ## 0.01.000 - 2026-09-13
 
 - Initial public research workbench.
