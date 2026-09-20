@@ -1,5 +1,130 @@
 {
+  "category": "Rational boundaries",
+  "continuedFraction": {
+    "convergents": [
+      {
+        "error": 0.38461538461538464,
+        "p": 0,
+        "q": 1
+      },
+      {
+        "error": 0.11538461538461536,
+        "p": 1,
+        "q": 2
+      },
+      {
+        "error": 0.05128205128205132,
+        "p": 1,
+        "q": 3
+      },
+      {
+        "error": 0.015384615384615385,
+        "p": 2,
+        "q": 5
+      },
+      {
+        "error": 0.0,
+        "p": 5,
+        "q": 13
+      }
+    ],
+    "terms": [
+      0,
+      2,
+      1,
+      1,
+      2
+    ]
+  },
   "distinctCount": 2,
+  "dual": {
+    "distinct": [
+      2,
+      3
+    ],
+    "distinctCount": 2,
+    "jumps": [
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "selected": [
+      0,
+      3,
+      6,
+      8,
+      11,
+      13,
+      16,
+      19,
+      21,
+      24,
+      26,
+      29,
+      32,
+      34,
+      37,
+      39,
+      42,
+      45,
+      47,
+      50,
+      52,
+      55,
+      58,
+      60,
+      63,
+      65,
+      68,
+      71,
+      73,
+      76,
+      78,
+      81,
+      84,
+      86
+    ]
+  },
+  "farey": {
+    "left": [
+      5,
+      13
+    ],
+    "right": [
+      12,
+      31
+    ]
+  },
   "gaps": [
     {
       "end": 0.0,
@@ -254,9 +379,10 @@
       "type": "b"
     }
   ],
-  "hash": "e30bd3466f7a2f8f3ad275990669193016d10cb5edc7dc0bbce8a622e5eb0776",
+  "hash": "c96580ad3a1219c30999fc04831c3caecdd20c0097ebfc5c0a3402aa6c3e2004",
   "method": "direct-sorted-orbit",
-  "methodVersion": "0.01.000",
+  "methodVersion": "0.02.000",
+  "partitionResidual": 0.0,
   "pointCount": 34,
   "points": [
     {
@@ -396,11 +522,12 @@
       "value": 0.6923076923076923
     }
   ],
-  "scenarioId": "rational-boundary",
+  "scenarioId": "rational-five-thirteenths",
   "source": [
     "arXiv:2308.11999",
     "HAL:hal-04769002"
   ],
+  "starDiscrepancy": 0.08823529411764706,
   "sumCheck": {
     "holds": true,
     "residual": 0.0

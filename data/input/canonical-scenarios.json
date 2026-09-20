@@ -1,41 +1,14 @@
 [
-  {
-    "id": "golden-baseline",
-    "alpha": 0.6180339887498949,
-    "alphaMode": "irrational",
-    "rationalP": 5,
-    "rationalQ": 13,
-    "pointCount": 34,
-    "phase": 0,
-    "beta": 0.31,
-    "allocator": "rotation",
-    "seed": 17,
-    "strictBeta": true
-  },
-  {
-    "id": "rational-boundary",
-    "alpha": 0.38461538461538464,
-    "alphaMode": "rational",
-    "rationalP": 5,
-    "rationalQ": 13,
-    "pointCount": 34,
-    "phase": 0,
-    "beta": 0.31,
-    "allocator": "rotation",
-    "seed": 17,
-    "strictBeta": true
-  },
-  {
-    "id": "farthest-contrast",
-    "alpha": 0.6180339887498949,
-    "alphaMode": "irrational",
-    "rationalP": 5,
-    "rationalQ": 13,
-    "pointCount": 34,
-    "phase": 0,
-    "beta": 0.31,
-    "allocator": "farthest",
-    "seed": 17,
-    "strictBeta": true
-  }
+  {"id":"golden-baseline","name":"Golden conjugate","nameEs":"Conjugado áureo","category":"Irrational rotations","expression":"(sqrt(5)-1)/2","anchor":"Badly approximable baseline with N=34","alpha":0.6180339887498949,"alphaMode":"irrational","rationalP":5,"rationalQ":13,"pointCount":34,"phase":0,"beta":0.31,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"silver-ratio","name":"Silver conjugate","nameEs":"Conjugado plateado","category":"Irrational rotations","expression":"sqrt(2)-1","anchor":"Independent quadratic irrational with N=41","alpha":0.41421356237309515,"alphaMode":"irrational","rationalP":5,"rationalQ":12,"pointCount":41,"phase":0,"beta":0.27,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"sqrt-three","name":"Square-root-three tail","nameEs":"Cola de raíz de tres","category":"Irrational rotations","expression":"sqrt(3)-1","anchor":"Quadratic irrational with a different continued fraction","alpha":0.7320508075688772,"alphaMode":"irrational","rationalP":11,"rationalQ":15,"pointCount":55,"phase":0,"beta":0.36,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"e-tail","name":"Euler tail","nameEs":"Cola de Euler","category":"Transcendental rotations","expression":"e-2","anchor":"Known irrational constant in the numerical lane","alpha":0.7182818284590451,"alphaMode":"irrational","rationalP":18,"rationalQ":25,"pointCount":47,"phase":0,"beta":0.29,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"pi-tail","name":"Pi tail","nameEs":"Cola de pi","category":"Transcendental rotations","expression":"pi-3","anchor":"Small irrational angle with N=64","alpha":0.14159265358979312,"alphaMode":"irrational","rationalP":1,"rationalQ":7,"pointCount":64,"phase":0,"beta":0.22,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"phase-shifted-golden","name":"Phase-shifted golden","nameEs":"Áureo con fase","category":"Phase and finite size","expression":"phi-1 with phase","anchor":"Checks rotational invariance of gap lengths","alpha":0.6180339887498949,"alphaMode":"irrational","rationalP":5,"rationalQ":13,"pointCount":34,"phase":0.2718281828,"beta":0.31,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"low-n-golden","name":"Low-N golden","nameEs":"Áureo con N bajo","category":"Phase and finite size","expression":"(sqrt(5)-1)/2","anchor":"Small finite orbit with N=7","alpha":0.6180339887498949,"alphaMode":"irrational","rationalP":5,"rationalQ":13,"pointCount":7,"phase":0,"beta":0.4,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"near-five-thirteenths","name":"Near 5/13","nameEs":"Cerca de 5/13","category":"Numerical conditioning","expression":"5/13 + 1e-5","anchor":"Near-rational stress case, not an irrationality certificate","alpha":0.38462538461538465,"alphaMode":"numeric","rationalP":5,"rationalQ":13,"pointCount":89,"phase":0,"beta":0.31,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"rational-five-thirteenths","name":"Rational 5/13","nameEs":"Racional 5/13","category":"Rational boundaries","expression":"5/13","anchor":"Periodic collision boundary","alpha":0.38461538461538464,"alphaMode":"rational","rationalP":5,"rationalQ":13,"pointCount":34,"phase":0,"beta":0.31,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"rational-eight-twenty-one","name":"Rational 8/21","nameEs":"Racional 8/21","category":"Rational boundaries","expression":"8/21","anchor":"Second periodic denominator and collision pattern","alpha":0.38095238095238093,"alphaMode":"rational","rationalP":8,"rationalQ":21,"pointCount":55,"phase":0.1,"beta":0.33,"allocator":"rotation","seed":17,"strictBeta":true},
+  {"id":"farthest-contrast","name":"Farthest-point allocator","nameEs":"Asignador del punto más lejano","category":"Process contrasts","expression":"greedy largest-gap bisection","anchor":"Deterministic non-rotation contrast","alpha":0.6180339887498949,"alphaMode":"irrational","rationalP":5,"rationalQ":13,"pointCount":34,"phase":0,"beta":0.31,"allocator":"farthest","seed":17,"strictBeta":true},
+  {"id":"seeded-random-contrast","name":"Seeded random","nameEs":"Aleatorio con semilla","category":"Process contrasts","expression":"deterministic PRNG seed 73","anchor":"Reproducible non-arithmetic negative control","alpha":0.6180339887498949,"alphaMode":"irrational","rationalP":5,"rationalQ":13,"pointCount":34,"phase":0,"beta":0.31,"allocator":"random","seed":73,"strictBeta":true}
 ]
