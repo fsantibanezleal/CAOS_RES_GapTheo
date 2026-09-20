@@ -1,0 +1,222 @@
+{
+  "cells": [
+    {
+      "category": "Irrational rotations",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "golden-baseline",
+      "starDiscrepancy": 0.029411764705882353,
+      "status": "certified",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Irrational rotations",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "silver-ratio",
+      "starDiscrepancy": 0.041213602637171554,
+      "status": "certified",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Irrational rotations",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 3,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "sqrt-three",
+      "starDiscrepancy": 0.026128103333038083,
+      "status": "certified",
+      "sumResidual": 3.9968028886505635e-15
+    },
+    {
+      "category": "Transcendental rotations",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 3,
+      "dualDistinctCount": 2,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "e-tail",
+      "starDiscrepancy": 0.05122426860103846,
+      "status": "certified",
+      "sumResidual": 8.881784197001252e-16
+    },
+    {
+      "category": "Transcendental rotations",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "pi-tail",
+      "starDiscrepancy": 0.06096217615696631,
+      "status": "certified",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Phase and finite size",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "phase-shifted-golden",
+      "starDiscrepancy": 0.022289464258823555,
+      "status": "certified",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Phase and finite size",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 3,
+      "dualDistinctCount": 2,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "low-n-golden",
+      "starDiscrepancy": 0.19554434196481119,
+      "status": "certified",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Numerical conditioning",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 3,
+      "dualDistinctCount": 2,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "near-five-thirteenths",
+      "starDiscrepancy": 0.08129890233362067,
+      "status": "certified",
+      "sumResidual": 3.552713678800501e-15
+    },
+    {
+      "category": "Rational boundaries",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 2,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "rational-five-thirteenths",
+      "starDiscrepancy": 0.08823529411764706,
+      "status": "boundary",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Rational boundaries",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": 3,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "rational-eight-twenty-one",
+      "starDiscrepancy": 0.05584415584415592,
+      "status": "boundary",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Process contrasts",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 2,
+      "dualDistinctCount": null,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "farthest-contrast",
+      "starDiscrepancy": 0.08455882352941177,
+      "status": "contrast",
+      "sumResidual": 0.0
+    },
+    {
+      "category": "Process contrasts",
+      "checks": {
+        "dualBound": true,
+        "partition": true,
+        "threeGap": true
+      },
+      "distinctCount": 34,
+      "dualDistinctCount": null,
+      "partitionResidual": 0.0,
+      "passed": true,
+      "scenarioId": "seeded-random-contrast",
+      "starDiscrepancy": 0.13163819024339318,
+      "status": "contrast",
+      "sumResidual": 0.0
+    }
+  ],
+  "partitions": {
+    "boundary": [
+      "rational-five-thirteenths",
+      "rational-eight-twenty-one"
+    ],
+    "contrast": [
+      "farthest-contrast",
+      "seeded-random-contrast"
+    ],
+    "theorem": [
+      "golden-baseline",
+      "silver-ratio",
+      "sqrt-three",
+      "e-tail",
+      "pi-tail",
+      "phase-shifted-golden",
+      "low-n-golden",
+      "near-five-thirteenths"
+    ]
+  },
+  "protocol": "deterministic full canonical matrix",
+  "summary": {
+    "passed": 12,
+    "total": 12
+  },
+  "version": "0.02.000"
+}

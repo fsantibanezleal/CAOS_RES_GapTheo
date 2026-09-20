@@ -12,11 +12,14 @@ jobs:
   analytic:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - run: python data_pipeline/run.py
+      - run: python scripts/check_content_standards.py
+      - run: python scripts/check_template_residue.py
+      - run: python scripts/check_product_completeness.py
+      - run: python data_pipeline/run.py --output "${{ runner.temp }}/gaptheo-smoke"
       - run: python scripts/validate_artifacts.py
       - run: python -m unittest discover -s tests -p "test_*.py"
 
@@ -26,8 +29,8 @@ jobs:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
