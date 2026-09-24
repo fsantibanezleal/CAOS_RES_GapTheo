@@ -9,6 +9,8 @@ import {
   Equation,
   InlineMath,
   Refs,
+  SubTabs,
+  Tabs,
   usePausedViz,
   useShellLang,
 } from "@fasl-work/caos-app-shell";
@@ -72,8 +74,6 @@ const scenarioFromPreset = ({
   ...scenario
 }: ScenarioPreset): Scenario => scenario;
 const initialScenario: Scenario = scenarioFromPreset(presets[0]);
-
-type Tab = "explore" | "atlas" | "return" | "topology" | "extensions";
 
 function formatNumber(value: number, digits = 5): string {
   return Number.isFinite(value) ? value.toFixed(digits) : "n/a";
@@ -285,8 +285,8 @@ function CircleOrbit({
       >
         <defs>
           <radialGradient id="orbitGlow">
-            <stop offset="0" stopColor="#58d2c2" stopOpacity=".18" />
-            <stop offset="1" stopColor="#58d2c2" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--gap-b)" stopOpacity=".18" />
+            <stop offset="1" stopColor="var(--gap-b)" stopOpacity="0" />
           </radialGradient>
         </defs>
         <circle cx="260" cy="260" r="224" fill="url(#orbitGlow)" />
@@ -299,7 +299,7 @@ function CircleOrbit({
           const gapColor =
             certificate.groups.find(
               (group) => Math.abs(group.length - gap.length) < 1e-8,
-            )?.color ?? "#789";
+            )?.color ?? "var(--color-fg-subtle)";
           const path =
             "M " +
             x1 +
@@ -611,13 +611,13 @@ function Explore({
               label={es ? "Brechas distintas" : "Distinct gaps"}
               value={String(certificate.distinctCount)}
               note={es ? "límite ≤ 3" : "bound ≤ 3"}
-              accent="#58d2c2"
+              accent="var(--gap-b)"
             />
             <Metric
               label={es ? "Residuo mayor" : "Largest residual"}
               value={formatNumber(certificate.sumCheck.residual, 7)}
               note="c − a − b"
-              accent="#f1b66e"
+              accent="var(--gap-a)"
             />
           </div>
           <div className="equation-line">
@@ -659,13 +659,13 @@ function Explore({
           <div className="visual-footer">
             <div className="legend">
               <span>
-                <i style={{ background: "#f1b66e" }} />a
+                <i style={{ background: "var(--gap-a)" }} />a
               </span>
               <span>
-                <i style={{ background: "#58d2c2" }} />b
+                <i style={{ background: "var(--gap-b)" }} />b
               </span>
               <span>
-                <i style={{ background: "#d98cff" }} />c = a + b
+                <i style={{ background: "var(--gap-c)" }} />c = a + b
               </span>
             </div>
             <span className="quiet">
@@ -766,8 +766,8 @@ function ProofAtlas({
         >
           <defs>
             <linearGradient id="atlas-bg" x1="0" x2="1">
-              <stop stopColor="#0c1c27" />
-              <stop offset="1" stopColor="#102d36" />
+              <stop stopColor="var(--color-surface)" />
+              <stop offset="1" stopColor="var(--color-surface-2)" />
             </linearGradient>
           </defs>
           <rect
@@ -785,7 +785,7 @@ function ProofAtlas({
                 y={34 + (i % 2) * 18}
                 width={cell.width * 640}
                 height={215 - (i % 4) * 22}
-                fill={cell.shade ? "#58d2c2" : "#f1b66e"}
+                fill={cell.shade ? "var(--gap-b)" : "var(--gap-a)"}
                 opacity=".08"
               />
               <line
@@ -793,7 +793,7 @@ function ProofAtlas({
                 y1="28"
                 x2={cell.x * 640 + cell.width * 640}
                 y2="248"
-                stroke={cell.shade ? "#58d2c2" : "#f1b66e"}
+                stroke={cell.shade ? "var(--gap-b)" : "var(--gap-a)"}
                 opacity=".22"
                 strokeDasharray="3 5"
               />
@@ -812,7 +812,7 @@ function ProofAtlas({
                 ", 620 " +
                 (45 + i * 42)
               }
-              stroke={["#f1b66e", "#58d2c2", "#d98cff"][i]}
+              stroke={["var(--gap-a)", "var(--gap-b)", "var(--gap-c)"][i]}
               strokeWidth="2"
               fill="none"
               opacity=".85"
@@ -823,17 +823,17 @@ function ProofAtlas({
             x2={cursor}
             y1="18"
             y2="257"
-            stroke="#fff4dc"
+            stroke="var(--color-fg)"
             strokeWidth="2"
           />
-          <circle cx={cursor} cy="18" r="6" fill="#fff4dc" />
-          <text x="22" y="276" fill="#a4b9ba" fontSize="11">
+          <circle cx={cursor} cy="18" r="6" fill="var(--color-fg)" />
+          <text x="22" y="276" fill="var(--color-fg-subtle)" fontSize="11">
             0
           </text>
-          <text x="600" y="276" fill="#a4b9ba" fontSize="11">
+          <text x="600" y="276" fill="var(--color-fg-subtle)" fontSize="11">
             1
           </text>
-          <text x={cursor + 9} y="30" fill="#fff4dc" fontSize="11">
+          <text x={cursor + 9} y="30" fill="var(--color-fg)" fontSize="11">
             α = {formatNumber(scenario.alpha, 4)}
           </text>
         </svg>
@@ -1039,7 +1039,7 @@ function Topology({
             label={es ? "componentes" : "components"}
             value={String(certificate.topology.components)}
             note={(es ? "umbral " : "threshold ") + formatNumber(threshold, 4)}
-            accent="#58d2c2"
+            accent="var(--gap-b)"
           />
         </div>
         <div className="topology-slider">
@@ -1266,104 +1266,63 @@ function Extensions({
   certificate: Certificate;
   scenario: Scenario;
 }) {
-  const [view, setView] = useState("word");
-  const lang = useShellLang();
-  const es = lang === "es";
+  const es = useShellLang() === "es";
   const history = useMemo(
     () => gapCountHistory(scenario, Math.min(80, scenario.pointCount)),
     [scenario],
   );
   const discrepancy = starDiscrepancy(certificate.points);
-  return (
-    <div className="extension-layout">
-      <div className="extension-tabs">
-        {[
-          { id: "word", label: es ? "Palabra" : "Gap word", icon: Waypoints },
-          { id: "lattice", label: es ? "Retículo" : "Lattice", icon: Grid3X3 },
-          { id: "exchange", label: "2-IET", icon: GitBranch },
-          {
-            id: "discrepancy",
-            label: es ? "Discrepancia" : "Discrepancy",
-            icon: Gauge,
-          },
-          {
-            id: "events",
-            label: es ? "Eventos N" : "N events",
-            icon: Activity,
-          },
-          { id: "contrast", label: es ? "Contrastes" : "Contrasts", icon: Dna },
-        ].map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            className={view === id ? "active" : ""}
-            onClick={() => setView(id)}
-          >
-            <Icon size={16} />
-            {label}
-          </button>
-        ))}
-      </div>
-      {view === "word" && <WordView certificate={certificate} />}
-      {view === "lattice" && (
-        <LatticeView certificate={certificate} scenario={scenario} />
-      )}
-      {view === "exchange" && (
+  const tabs = [
+    {
+      id: "word",
+      label: es ? "Palabra" : "Gap word",
+      content: <WordView certificate={certificate} />,
+    },
+    {
+      id: "lattice",
+      label: es ? "Retículo" : "Lattice",
+      content: <LatticeView certificate={certificate} scenario={scenario} />,
+    },
+    {
+      id: "exchange",
+      label: "2-IET",
+      content: (
         <div className="extension-card full">
           <div className="panel-kicker">
-            <GitBranch size={15} />{" "}
-            {es ? "INTERCAMBIO DE INTERVALOS" : "INTERVAL EXCHANGE"}
+            <GitBranch size={15} /> {es ? "INTERCAMBIO DE INTERVALOS" : "INTERVAL EXCHANGE"}
           </div>
-          <h3>
-            {es
-              ? "La rotación es un intercambio de dos intervalos"
-              : "Rotation is a two-interval exchange"}
-          </h3>
+          <h3>{es ? "La rotación es un intercambio de dos intervalos" : "Rotation is a two-interval exchange"}</h3>
           <div className="exchange-diagram">
             <div className="exchange-line">
-              <span style={{ width: (1 - scenario.alpha) * 100 + "%" }}>
-                I₁
-              </span>
+              <span style={{ width: (1 - scenario.alpha) * 100 + "%" }}>I₁</span>
               <span style={{ width: scenario.alpha * 100 + "%" }}>I₂</span>
             </div>
             <ArrowDownRight size={26} />
             <div className="exchange-line reversed">
               <span style={{ width: scenario.alpha * 100 + "%" }}>I₂</span>
-              <span style={{ width: (1 - scenario.alpha) * 100 + "%" }}>
-                I₁
-              </span>
+              <span style={{ width: (1 - scenario.alpha) * 100 + "%" }}>I₁</span>
             </div>
           </div>
-          <p>
-            Cut the circle at the orbit origin, rotate by alpha, and reassemble
-            two intervals. The zippered-rectangle view is a geometric extension,
-            not a new certificate for arbitrary exchanges.
-          </p>
-          <Refs
-            ids={["taha2018", "alessandri1998"]}
-            label={es ? "Fuentes" : "Sources"}
-          />
+          <p>{es
+            ? "Cortar el círculo en el origen de la órbita convierte la rotación en un intercambio de dos intervalos. Esta lectura conserva el mismo estado; no extiende el certificado a intercambios arbitrarios."
+            : "Cutting the circle at the orbit origin turns the rotation into a two-interval exchange. This reading preserves the same state; it does not extend the certificate to arbitrary exchanges."}</p>
+          <Refs ids={["taha2018", "alessandri1998"]} label={es ? "Fuentes" : "Sources"} />
         </div>
-      )}
-      {view === "discrepancy" && (
+      ),
+    },
+    {
+      id: "discrepancy",
+      label: es ? "Discrepancia" : "Discrepancy",
+      content: (
         <div className="extension-card full">
           <div className="panel-kicker">
-            <Gauge size={15} />{" "}
-            {es ? "DISTRIBUCIÓN EMPÍRICA" : "EMPIRICAL DISTRIBUTION"}
+            <Gauge size={15} /> {es ? "DISTRIBUCIÓN EMPÍRICA" : "EMPIRICAL DISTRIBUTION"}
           </div>
-          <h3>
-            {es
-              ? "Discrepancia estrella de la órbita"
-              : "Star discrepancy of the orbit"}
-          </h3>
-          <p>
-            {es
-              ? "La escalera empírica se compara con la distribución uniforme. La barra más alta es la discrepancia unilateral máxima para el estado finito seleccionado."
-              : "The empirical staircase is compared with the uniform distribution. The tallest deviation is the maximum one-sided discrepancy for the selected finite state."}
-          </p>
-          <div
-            className="discrepancy-chart"
-            aria-label={es ? "Perfil de discrepancia" : "Discrepancy profile"}
-          >
+          <h3>{es ? "Discrepancia estrella de la órbita" : "Star discrepancy of the orbit"}</h3>
+          <p>{es
+            ? "La escalera empírica se compara con la distribución uniforme. Cada barra es una desviación recalculada para el estado finito seleccionado."
+            : "The empirical staircase is compared with the uniform distribution. Every bar is a deviation recomputed for the selected finite state."}</p>
+          <div className="discrepancy-chart" aria-label={es ? "Perfil de discrepancia" : "Discrepancy profile"}>
             {certificate.sortedPoints.map((point, index) => (
               <i
                 key={point.id}
@@ -1377,151 +1336,91 @@ function Extensions({
           </div>
           <div className="word-meta">
             <Metric label="D*N" value={formatNumber(discrepancy, 6)} />
-            <Metric
-              label={es ? "puntos" : "points"}
-              value={String(certificate.points.length)}
-            />
-            <Metric
-              label={es ? "proceso" : "process"}
-              value={scenario.allocator}
-            />
+            <Metric label={es ? "puntos" : "points"} value={String(certificate.points.length)} />
+            <Metric label={es ? "proceso" : "process"} value={scenario.allocator} />
           </div>
-          <Callout
-            variant="honest"
-            title={es ? "Lectura finita" : "Finite reading"}
-          >
-            <span>
-              {es
-                ? "La discrepancia cuantifica uniformidad en esta muestra; no certifica irracionalidad ni convergencia asintótica."
-                : "Discrepancy quantifies uniformity in this sample; it does not certify irrationality or asymptotic convergence."}
-            </span>
+          <Callout variant="honest" title={es ? "Lectura finita" : "Finite reading"}>
+            <span>{es
+              ? "La discrepancia cuantifica uniformidad en esta muestra; no certifica irracionalidad ni convergencia asintótica."
+              : "Discrepancy quantifies uniformity in this sample; it does not certify irrationality or asymptotic convergence."}</span>
           </Callout>
-          <Refs
-            ids={["haynes2014", "marklof2017"]}
-            label={es ? "Fuentes" : "Sources"}
-          />
+          <Refs ids={["haynes2014", "marklof2017"]} label={es ? "Fuentes" : "Sources"} />
         </div>
-      )}
-      {view === "events" && (
+      ),
+    },
+    {
+      id: "events",
+      label: es ? "Eventos N" : "N events",
+      content: (
         <div className="extension-card full">
           <div className="panel-kicker">
-            <Activity size={15} />{" "}
-            {es ? "BARRIDO DE TAMAÑO FINITO" : "FINITE-SIZE SWEEP"}
+            <Activity size={15} /> {es ? "BARRIDO DE TAMAÑO FINITO" : "FINITE-SIZE SWEEP"}
           </div>
-          <h3>
-            {es
-              ? "Cuándo cambia el alfabeto de brechas"
-              : "When the gap alphabet changes"}
-          </h3>
-          <p>
-            {es
-              ? "Cada columna recalcula la partición directa para un valor de N. Los cambios de color exponen eventos discretos organizados por denominadores convergentes."
-              : "Each column recomputes the direct partition for one N value. Color changes expose discrete events organized by convergent denominators."}
-          </p>
+          <h3>{es ? "Cuándo cambia el alfabeto de brechas" : "When the gap alphabet changes"}</h3>
+          <p>{es
+            ? "Cada columna recalcula la partición directa para un valor de N. Los cambios de color exponen eventos discretos organizados por denominadores convergentes."
+            : "Each column recomputes the direct partition for one N value. Color changes expose discrete events organized by convergent denominators."}</p>
           <div className="event-sweep">
             {history.map((item) => (
               <span
                 key={item.n}
+                className={`gap-count-${Math.min(3, item.count)}`}
                 title={`N=${item.n}, D=${item.count}`}
-                style={{
-                  height: `${28 + item.count * 18}px`,
-                  background: ["#789", "#f1b66e", "#58d2c2", "#d98cff"][
-                    item.count
-                  ],
-                }}
+                style={{ height: `${28 + item.count * 18}px` }}
               />
             ))}
           </div>
-          <div className="event-axis">
-            <span>N = 3</span>
-            <span>N = {history.at(-1)?.n}</span>
-          </div>
+          <div className="event-axis"><span>N = 3</span><span>N = {history.at(-1)?.n}</span></div>
           <div className="word-meta">
-            <Metric
-              label={es ? "eventos" : "events"}
-              value={String(
-                history.filter(
-                  (item, index) =>
-                    index > 0 && item.count !== history[index - 1].count,
-                ).length,
-              )}
-            />
-            <Metric
-              label="max D"
-              value={String(Math.max(...history.map((item) => item.count)))}
-            />
-            <Metric
-              label={es ? "muestras" : "samples"}
-              value={String(history.length)}
-            />
+            <Metric label={es ? "eventos" : "events"} value={String(history.filter((item, index) => index > 0 && item.count !== history[index - 1].count).length)} />
+            <Metric label="max D" value={String(Math.max(...history.map((item) => item.count)))} />
+            <Metric label={es ? "muestras" : "samples"} value={String(history.length)} />
           </div>
-          <Refs
-            ids={["hamada2024", "berthe2024"]}
-            label={es ? "Fuentes" : "Sources"}
-          />
+          <Refs ids={["hamada2024", "berthe2024"]} label={es ? "Fuentes" : "Sources"} />
         </div>
-      )}
-      {view === "contrast" && (
+      ),
+    },
+    {
+      id: "contrast",
+      label: es ? "Contrastes" : "Contrasts",
+      content: (
         <div className="extension-card full">
           <div className="panel-kicker">
-            <Dna size={15} />{" "}
-            {es ? "CONTRASTES CONTROLADOS" : "CONTROLLED CONTRASTS"}
+            <Dna size={15} /> {es ? "CONTRASTES CONTROLADOS" : "CONTROLLED CONTRASTS"}
           </div>
-          <h3>
-            {es
-              ? "Cambia el proceso y observa el límite"
-              : "Change the process, watch the bound change"}
-          </h3>
-          <p>
-            Rotation is arithmetic. Farthest-point insertion optimizes empty
-            space. Two-frequency sampling creates a different Kronecker-style
-            experiment. These controls are designed to test assumptions, not to
-            manufacture a failure.
-          </p>
+          <h3>{es ? "Cambiar el proceso cambia la pregunta" : "Changing the process changes the question"}</h3>
+          <p>{es
+            ? "La rotación es aritmética; la inserción más lejana optimiza espacio vacío y el muestreo de dos frecuencias estudia otro sistema. Son controles de hipótesis, no contraejemplos fabricados."
+            : "Rotation is arithmetic; farthest-point insertion optimizes empty space, and two-frequency sampling studies another system. These are hypothesis controls, not manufactured counterexamples."}</p>
           <div className="contrast-grid">
             {[
-              {
-                label: "rotation",
-                value: certificate.distinctCount,
-                color: "#58d2c2",
-              },
-              {
-                label: "two-frequency",
-                value: certificate.extension.distinctCount,
-                color: "#d98cff",
-              },
-              {
-                label: "farthest point",
-                value: computeCertificate({
-                  ...scenario,
-                  allocator: "farthest",
-                }).distinctCount,
-                color: "#f1b66e",
-              },
+              { label: es ? "rotación" : "rotation", value: certificate.distinctCount, tone: "b" },
+              { label: es ? "dos frecuencias" : "two-frequency", value: certificate.extension.distinctCount, tone: "c" },
+              { label: es ? "punto más lejano" : "farthest point", value: computeCertificate({ ...scenario, allocator: "farthest" }).distinctCount, tone: "a" },
             ].map((item) => (
-              <div key={item.label} className="contrast-stat">
+              <div key={item.label} className={`contrast-stat tone-${item.tone}`}>
                 <span>{item.label}</span>
-                <strong style={{ color: item.color }}>{item.value}</strong>
-                <small>distinct gaps</small>
+                <strong>{item.value}</strong>
+                <small>{es ? "brechas distintas" : "distinct gaps"}</small>
               </div>
             ))}
           </div>
-          <Callout
-            variant="honest"
-            title={es ? "Frontera preservada" : "Boundary preserved"}
-          >
-            <span>
-              Higher-dimensional and allocator results are comparison
-              experiments. The classical three-gap badge applies only to the
-              declared rotation regime.
-            </span>
+          <Callout variant="honest" title={es ? "Frontera preservada" : "Boundary preserved"}>
+            <span>{es
+              ? "Los resultados de mayor dimensión y de otros asignadores son comparaciones. El distintivo clásico se aplica solo al régimen de rotación declarado."
+              : "Higher-dimensional and allocator results are comparisons. The classical badge applies only to the declared rotation regime."}</span>
           </Callout>
-          <Refs
-            ids={["alessandri1998", "marklof2017"]}
-            label={es ? "Fuentes" : "Sources"}
-          />
+          <Refs ids={["alessandri1998", "marklof2017"]} label={es ? "Fuentes" : "Sources"} />
         </div>
-      )}
+      ),
+    },
+  ];
+  return (
+    <div className="extension-layout">
+      <SubTabs
+        tabs={tabs}
+        ariaLabel={es ? "Lecturas extendidas" : "Extended readings"}
+      />
     </div>
   );
 }
@@ -1529,29 +1428,12 @@ function Extensions({
 function App() {
   const [scenario, setScenario] = useState<Scenario>(initialScenario);
   const [selectedId, setSelectedId] = useState(presets[0].id);
-  const [tab, setTab] = useState<Tab>("explore");
   const [threshold, setThreshold] = useState(0.03);
   const certificate = useMemo(
     () => computeCertificate(scenario, threshold),
     [scenario, threshold],
   );
   const lang = useShellLang();
-  const labels =
-    lang === "es"
-      ? {
-          explore: "Explorar",
-          atlas: "Atlas de prueba",
-          return: "Retornos",
-          topology: "Topología",
-          extensions: "Extensiones",
-        }
-      : {
-          explore: "Explore",
-          atlas: "Proof Atlas",
-          return: "Return Gaps",
-          topology: "Topology",
-          extensions: "Extensions",
-        };
   const shellConfig = {
     product: { name: "GapTheo", mark: <Sparkles size={18} /> },
     routes: [
@@ -1599,9 +1481,6 @@ function App() {
     <CitationsProvider items={CITATIONS}>
       <AppShell config={shellConfig}>
         <RoutesView
-          tab={tab}
-          setTab={setTab}
-          labels={labels}
           scenario={scenario}
           setScenario={setScenario}
           certificate={certificate}
@@ -1616,9 +1495,6 @@ function App() {
 }
 
 function RoutesView({
-  tab,
-  setTab,
-  labels,
   scenario,
   setScenario,
   certificate,
@@ -1627,9 +1503,6 @@ function RoutesView({
   selectedId,
   onSelectPreset,
 }: {
-  tab: Tab;
-  setTab: (tab: Tab) => void;
-  labels: Record<Tab, string>;
   scenario: Scenario;
   setScenario: (scenario: Scenario) => void;
   certificate: Certificate;
@@ -1649,73 +1522,11 @@ function RoutesView({
         }
       />
     );
-  const tabs: Array<{ id: Tab; icon: ReactNode }> = [
-    { id: "explore", icon: <CircleDot size={15} /> },
-    { id: "atlas", icon: <Aperture size={15} /> },
-    { id: "return", icon: <Target size={15} /> },
-    { id: "topology", icon: <Layers3 size={15} /> },
-    { id: "extensions", icon: <Dna size={15} /> },
-  ];
-  return (
-    <main className="app-main">
-      <section className="hero-strip">
-        <div>
-          <span className="eyebrow">
-            {es
-              ? "INSTRUMENTO DE INVESTIGACIÓN / DINÁMICA DE TRES BRECHAS"
-              : "RESEARCH INSTRUMENT / THREE-GAP DYNAMICS"}
-          </span>
-          <h1>
-            {es
-              ? "Mira la huella de la aritmética."
-              : "See arithmetic leave a trace."}
-          </h1>
-          <p>
-            {es
-              ? "GapTheo transforma rotaciones del círculo en un atlas explorable de geometría, combinatoria, topología y cómputo consciente de la prueba."
-              : "GapTheo turns circle rotations into an explorable atlas of geometry, combinatorics, topology, and proof-aware computation."}
-          </p>
-        </div>
-        <div className="hero-proof">
-          <div className="proof-orbit">
-            {[0, 0.19, 0.38, 0.61, 0.82].map((value) => (
-              <span
-                key={value}
-                style={{
-                  transform: "rotate(" + value * 360 + "deg) translateY(-35px)",
-                }}
-              />
-            ))}
-          </div>
-          <div>
-            <StatusBadge certificate={certificate} />
-            <b>
-              {es ? "Como máximo tres longitudes" : "At most three lengths"}
-            </b>
-            <small>
-              {es
-                ? "con c = a + b cuando hay tres brechas"
-                : "with c = a + b in the three-gap state"}
-            </small>
-          </div>
-        </div>
-      </section>
-      <nav
-        className="app-tabs"
-        aria-label={es ? "Vistas de investigación" : "Research views"}
-      >
-        {tabs.map((item) => (
-          <button
-            key={item.id}
-            className={tab === item.id ? "active" : ""}
-            onClick={() => setTab(item.id)}
-          >
-            {item.icon}
-            {labels[item.id]}
-          </button>
-        ))}
-      </nav>
-      {tab === "explore" && (
+  const tabs = [
+    {
+      id: "explore",
+      label: es ? "Explorar" : "Explore",
+      content: (
         <Explore
           certificate={certificate}
           scenario={scenario}
@@ -1723,23 +1534,52 @@ function RoutesView({
           selectedId={selectedId}
           onSelectPreset={onSelectPreset}
         />
-      )}
-      {tab === "atlas" && (
-        <ProofAtlas certificate={certificate} scenario={scenario} />
-      )}
-      {tab === "return" && (
-        <ReturnGaps certificate={certificate} scenario={scenario} />
-      )}
-      {tab === "topology" && (
+      ),
+    },
+    {
+      id: "atlas",
+      label: es ? "Atlas de prueba" : "Proof Atlas",
+      content: <ProofAtlas certificate={certificate} scenario={scenario} />,
+    },
+    {
+      id: "return",
+      label: es ? "Retornos" : "Return Gaps",
+      content: <ReturnGaps certificate={certificate} scenario={scenario} />,
+    },
+    {
+      id: "topology",
+      label: es ? "Topología" : "Topology",
+      content: (
         <Topology
           certificate={certificate}
           threshold={threshold}
           setThreshold={setThreshold}
         />
-      )}
-      {tab === "extensions" && (
-        <Extensions certificate={certificate} scenario={scenario} />
-      )}
+      ),
+    },
+    {
+      id: "extensions",
+      label: es ? "Extensiones" : "Extensions",
+      content: <Extensions certificate={certificate} scenario={scenario} />,
+    },
+  ];
+  return (
+    <main className="page-body wide app-main">
+      <section className="workbench-statusbar">
+        <div>
+          <span className="eyebrow">
+            {es ? "INSTRUMENTO DE INVESTIGACIÓN" : "RESEARCH INSTRUMENT"}
+          </span>
+          <strong>{es ? "Dinámica finita de tres brechas" : "Finite three-gap dynamics"}</strong>
+        </div>
+        <div className="workbench-live-status">
+          <StatusBadge certificate={certificate} />
+          <span className="mono">N={scenario.pointCount}</span>
+          <span className="mono">D={certificate.distinctCount}</span>
+          <span className="mono">ρΣ={certificate.sumCheck.residual.toExponential(1)}</span>
+        </div>
+      </section>
+      <Tabs tabs={tabs} ariaLabel={es ? "Vistas de investigación" : "Research views"} />
     </main>
   );
 }

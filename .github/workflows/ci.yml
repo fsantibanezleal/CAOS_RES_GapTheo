@@ -23,6 +23,7 @@ jobs:
       - run: python scripts/check_content_standards.py
       - run: python scripts/check_template_residue.py
       - run: python scripts/check_product_completeness.py
+      - run: python scripts/check_frontend_adr.py
       - run: python data_pipeline/run.py --output "${{ runner.temp }}/gaptheo-smoke"
       - run: python scripts/validate_artifacts.py
       - run: python -m unittest discover -s tests -p "test_*.py"
