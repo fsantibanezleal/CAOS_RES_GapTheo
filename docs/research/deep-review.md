@@ -44,7 +44,7 @@ inputs. This boundary is part of the product rather than a footnote.
 - [Hamada, arXiv:2308.11999](https://arxiv.org/abs/2308.11999) gives a modern
   geometric treatment of the finite orbit, including the alpha-height/Farey
   description and explicit formulas for the possible lengths and their
-  multiplicities. It is the main source for the Proof Atlas lane.
+  multiplicities. It is the main source for the Farey / continued-fraction certificate lane.
 - [Berthé and Reutenauer, HAL: hal-04769002](https://hal.science/hal-04769002)
   develops a word-theoretic and arithmetic framework around three-distance
   phenomena. The repository records the HAL metadata and uses the paper as a
@@ -108,7 +108,7 @@ usually separated by purpose:
 | Layer | Established capability | GapTheo treatment |
 | --- | --- | --- |
 | Direct theorem | Sort the orbit and count at most three lengths | Live direct oracle with visible residual checks |
-| Arithmetic atlas | Farey intervals, convergents, exact candidate lengths | Proof Atlas tied to the current \(\alpha\) and \(N\) |
+| Arithmetic certificate | Farey intervals, convergents, exact candidate lengths | Farey / continued-fraction certificate tied to the current \(\alpha\) and \(N\) |
 | Symbolic dynamics | Cyclic words and substitutions/symmetries | Gap word, genealogy, and symmetry probe |
 | Dual dynamics | Return-time/target-interval theorem | Separate Return Gaps workbench |
 | Geometry | Lattice and interval-exchange interpretations | Linked schematic lenses with boundary labels |
@@ -131,7 +131,7 @@ linked observations:
 1. **Orbit geometry.** The circle shows the actual finite orbit and the
    animated insertion order. Each gap is a stable object with a length,
    multiplicity, and lineage entry.
-2. **Arithmetic event geometry.** The Proof Atlas shows the current Farey
+2. **Arithmetic event geometry.** The Farey / continued-fraction certificate shows the current Farey
    bracket, candidate lengths, multiplicities, convergents, and the changing
    combinatorial regime as the user moves \(\alpha\) or \(N\).
 3. **Dual and topological readings.** The same experiment can be re-read as
@@ -207,4 +207,3 @@ steps before uploading the frontend bundle. The custom domain is represented
 both by `frontend/public/CNAME` and by the GitHub Pages custom-domain setting.
 The release evidence is kept in the deployment documentation and the public
 workflow history.
-
