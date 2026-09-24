@@ -82,6 +82,38 @@ def main() -> int:
         require(legacy_token not in app_css, f"legacy bespoke token {legacy_token} is forbidden", failures)
     require('className="card control-panel"' in app, "workbench panels must compose the shell card", failures)
     require('className="btn primary"' in app, "primary actions must compose the shell button", failures)
+    require(
+        "<linearGradient" not in app and "<radialGradient" not in app,
+        "workbench SVGs may not introduce decorative gradients",
+        failures,
+    )
+
+    imprecise_headings = (
+        "One rotation, many readings",
+        "Seed the orbit",
+        "The theorem as a moving cell",
+        "The circle as a cyclic sentence",
+        "One orbit, one lattice window",
+        "Changing the process changes the question",
+        "Una rotación, muchas lecturas",
+        "Inicializa la órbita",
+        "El teorema como celda móvil",
+        "El círculo como oración cíclica",
+        "Una órbita, una ventana de retículo",
+        "Cambiar el proceso cambia la pregunta",
+    )
+    interface_copy = app + pages
+    for heading in imprecise_headings:
+        require(heading not in interface_copy, f"imprecise promotional heading is forbidden: {heading}", failures)
+    for required_heading in (
+        "Circular gap partition",
+        "Rotation parameters",
+        "Farey cell for the current α and N",
+        "Cyclic word of gap types",
+        "Lattice representation of the rotation",
+        "Gap counts by point-generation process",
+    ):
+        require(required_heading in app, f"missing literal scientific heading: {required_heading}", failures)
 
     page_order = ["Introduction", "Methodology", "Implementation", "Experiments", "Benchmark"]
     next_names = page_order[1:] + [None]

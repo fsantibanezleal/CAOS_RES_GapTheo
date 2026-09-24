@@ -1,11 +1,11 @@
 # GapTheo
 
 [![CI](https://github.com/fsantibanezleal/CAOS_RES_GapTheo/actions/workflows/ci.yml/badge.svg)](https://github.com/fsantibanezleal/CAOS_RES_GapTheo/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-0.03.001-58a6ff)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.03.002-58a6ff)](VERSION)
 [![License](https://img.shields.io/badge/license-Apache--2.0-58a6ff)](LICENSE)
 [![Live](https://img.shields.io/badge/live-gaptheo.fasl--work.com-58a6ff)](https://gaptheo.fasl-work.com/)
 
-GapTheo is a public, research-grade visual atlas of the three-gap theorem. It connects exact finite circle rotations to gap genealogy, Farey cells, continued fractions, return times, cyclic words, lattice geometry, interval exchange, star discrepancy, finite topology, and controlled contrasts.
+GapTheo is a public client-side research application for finite computations related to the three-gap theorem. It connects exact finite circle rotations to gap genealogy, Farey cells, continued fractions, return times, cyclic words, lattice geometry, interval exchange, star discrepancy, finite topology, and controlled contrasts.
 
 ## Product surface
 

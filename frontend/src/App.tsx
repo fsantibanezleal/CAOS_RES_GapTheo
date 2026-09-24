@@ -283,13 +283,6 @@ function CircleOrbit({
             : "Animated orbit on the unit circle"
         }
       >
-        <defs>
-          <radialGradient id="orbitGlow">
-            <stop offset="0" stopColor="var(--color-magenta)" stopOpacity=".18" />
-            <stop offset="1" stopColor="var(--color-magenta)" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <circle cx="260" cy="260" r="224" fill="url(#orbitGlow)" />
         <circle cx="260" cy="260" r="184" className="orbit-ring" />
         {circleGaps.map((gap, index) => {
           const [x1, y1] = polar(gap.start, 184, 260);
@@ -423,7 +416,7 @@ function Explore({
             {es ? "PARÁMETROS VIVOS" : "LIVE PARAMETERS"}
           </div>
           <div className="control-heading">
-            <h2>{es ? "Inicializa la órbita" : "Seed the orbit"}</h2>
+            <h2>{es ? "Parámetros de rotación" : "Rotation parameters"}</h2>
             <p>
               {es
                 ? "Cada control actualiza el mismo certificado, círculo, palabra y topología."
@@ -639,8 +632,8 @@ function Explore({
               </div>
               <h2>
                 {es
-                  ? "Una rotación, muchas lecturas"
-                  : "One rotation, many readings"}
+                  ? "Partición circular de brechas"
+                  : "Circular gap partition"}
               </h2>
             </div>
             <div className="alpha-readout">
@@ -747,8 +740,8 @@ function ProofAtlas({
           <div>
             <h2>
               {es
-                ? "El teorema como celda móvil"
-                : "The theorem as a moving cell"}
+                ? "Celda de Farey para α y N actuales"
+                : "Farey cell for the current α and N"}
             </h2>
             <p>
               At fixed N, the alpha-height diagram changes combinatorial type
@@ -764,19 +757,13 @@ function ProofAtlas({
           role="img"
           aria-label="Farey parameter atlas"
         >
-          <defs>
-            <linearGradient id="atlas-bg" x1="0" x2="1">
-              <stop stopColor="var(--color-surface)" />
-              <stop offset="1" stopColor="var(--color-surface-2)" />
-            </linearGradient>
-          </defs>
           <rect
             x="0"
             y="0"
             width="640"
             height="290"
             rx="16"
-            fill="url(#atlas-bg)"
+            fill="var(--color-surface)"
           />
           {cells.map((cell, i) => (
             <g key={i}>
@@ -1148,8 +1135,8 @@ function WordView({ certificate }: { certificate: Certificate }) {
       </div>
       <h3>
         {es
-          ? "El círculo como oración cíclica"
-          : "The circle as a cyclic sentence"}
+          ? "Palabra cíclica de tipos de brecha"
+          : "Cyclic word of gap types"}
       </h3>
       <p>
         Gap types become a word around the circle. The largest-gap anchor gives
@@ -1208,8 +1195,8 @@ function LatticeView({
       </div>
       <h3>
         {es
-          ? "Una órbita, una ventana de retículo"
-          : "One orbit, one lattice window"}
+          ? "Representación reticular de la rotación"
+          : "Lattice representation of the rotation"}
       </h3>
       <p>
         Rotation data can be lifted to a unimodular lattice. Active short
@@ -1392,7 +1379,7 @@ function Extensions({
           <div className="panel-kicker">
             <Dna size={15} /> {es ? "CONTRASTES CONTROLADOS" : "CONTROLLED CONTRASTS"}
           </div>
-          <h3>{es ? "Cambiar el proceso cambia la pregunta" : "Changing the process changes the question"}</h3>
+          <h3>{es ? "Recuentos de brechas por proceso de generación" : "Gap counts by point-generation process"}</h3>
           <p>{es
             ? "La rotación es aritmética; la inserción más lejana optimiza espacio vacío y el muestreo de dos frecuencias estudia otro sistema. Son controles de hipótesis, no contraejemplos fabricados."
             : "Rotation is arithmetic; farthest-point insertion optimizes empty space, and two-frequency sampling studies another system. These are hypothesis controls, not manufactured counterexamples."}</p>
@@ -1543,7 +1530,7 @@ function RoutesView({
     },
     {
       id: "atlas",
-      label: es ? "Atlas de prueba" : "Proof Atlas",
+      label: es ? "Certificado Farey / FC" : "Farey / CF certificate",
       content: <ProofAtlas certificate={certificate} scenario={scenario} />,
     },
     {

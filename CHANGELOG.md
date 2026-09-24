@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.03.002 - 2026-09-24
+
+### Changed
+
+- Replaced promotional and metaphorical workbench headings with literal
+  mathematical descriptions in English and Spanish.
+- Renamed the branded `Proof Atlas` tab to `Farey / CF certificate` and aligned
+  the research documentation and architecture diagram with that terminology.
+- Removed the remaining decorative SVG gradients; structural figure surfaces
+  use shell-owned tokens.
+
+### Fixed
+
+- Added a frontend guard that rejects the removed promotional headings and
+  decorative SVG gradients while requiring the precise replacement labels.
+
 ## 0.03.001 - 2026-09-24
 
 ### Changed

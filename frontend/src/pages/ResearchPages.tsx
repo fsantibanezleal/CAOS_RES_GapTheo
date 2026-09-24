@@ -33,7 +33,7 @@ function PageHead({ title, lede }: { title: Copy; lede: Copy }) {
   const t = useT();
   return (
     <div className="page-head">
-      <span className="eyebrow">GAPTHEO · RESEARCH ATLAS</span>
+      <span className="eyebrow">GAPTHEO · THREE-GAP THEOREM</span>
       <h1>{t(title)}</h1>
       <p className="lede">{t(lede)}</p>
     </div>
@@ -237,7 +237,7 @@ export function IntroductionPage() {
       content: (
         <section className="research-chapter">
           <span className="eyebrow">{t({ en: "WHY MORE THAN ONE VIEW?", es: "¿POR QUÉ MÁS DE UNA VISTA?" })}</span>
-          <h2>{t({ en: "One certificate, synchronized projections", es: "Un certificado, proyecciones sincronizadas" })}</h2>
+          <h2>{t({ en: "Views computed from one finite certificate", es: "Vistas calculadas desde un certificado finito" })}</h2>
           <p>{t({ en: "The circle exposes primary geometry but not the rational skeleton controlling event changes. Farey neighbours and continued fractions explain arithmetic scales; return times ask a dual question about visits to a target interval; cyclic words preserve class order; the lattice view packages Diophantine information geometrically; and finite H0 records observed gaps as merge thresholds. These are projections of one selected state, not decorative topics assembled on one page.", es: "El círculo expone la geometría primaria, pero no el esqueleto racional que controla los eventos. Farey y fracciones explican escalas aritméticas; los retornos formulan una pregunta dual; las palabras preservan el orden; el retículo empaqueta información diofántica; y H0 registra brechas como umbrales. Son proyecciones de un estado seleccionado, no temas decorativos reunidos en una página." })}</p>
           <p>{t({ en: "Changing alpha, N, phase, beta, allocator, or seed first creates a new immutable direct certificate. Every secondary panel consumes that state and exposes residuals when a predicted inventory disagrees. No panel owns a hidden scenario, so a visually plausible but stale view cannot silently survive a control change.", es: "Cambiar alfa, N, fase, beta, asignador o semilla crea primero un nuevo certificado directo inmutable. Cada panel secundario consume ese estado y expone residuos si un inventario predicho discrepa. Ningún panel conserva un escenario oculto, por lo que una vista plausible pero obsoleta no sobrevive silenciosamente a un control." })}</p>
           <Equation tex={"C=F(\\alpha,N,\\phi,\\beta,\\mathrm{allocator},\\mathrm{seed}),\\qquad V_j=\\pi_j(C)"} caption={t({ en: "Every reading is a named projection of one deterministic certificate.", es: "Cada lectura es una proyección nombrada de un certificado determinista." })} />
@@ -279,8 +279,8 @@ export function IntroductionPage() {
       label: t({ en: "Scope", es: "Alcance" }),
       content: (
         <section className="research-chapter">
-          <span className="eyebrow">{t({ en: "HONEST CLAIMS", es: "AFIRMACIONES HONESTAS" })}</span>
-          <h2>{t({ en: "What this atlas establishes, and what it refuses to claim", es: "Qué establece este atlas y qué se niega a afirmar" })}</h2>
+          <span className="eyebrow">{t({ en: "CLAIM BOUNDARY", es: "LÍMITE DE LAS AFIRMACIONES" })}</span>
+          <h2>{t({ en: "Scope of the computed certificate", es: "Alcance del certificado calculado" })}</h2>
           <p>{t({ en: "The app establishes reproducible finite statements about implemented scenarios: orbit points, circular gaps, length classes, split events, rational approximants, return indices, finite topology thresholds, residuals, and content hashes. For declared irrational rotations it reports whether the computed finite partition satisfies the three-gap and additive relations. Committed artifacts make those statements replayable instead of anecdotal.", es: "La app establece afirmaciones finitas reproducibles sobre escenarios implementados: puntos, brechas, clases, divisiones, aproximantes, retornos, umbrales topológicos, residuos y hashes. Para rotaciones declaradas irracionales informa si la partición satisface las relaciones de tres brechas y aditividad. Los artefactos versionados vuelven reproducibles esas afirmaciones." })}</p>
           <p>{t({ en: "It does not prove irrationality from digits, replace a formal proof, establish a new theorem, transfer the bound to random or farthest-point processes, or implement general persistent homology. The defensible contribution is the synchronized certificate protocol: exact and numerical readings made inspectable under explicit validity boundaries.", es: "No prueba irracionalidad desde dígitos, no reemplaza una demostración formal, no establece un teorema nuevo, no transfiere el límite a procesos aleatorios o de punto más lejano ni implementa homología persistente general. La contribución defendible es el protocolo sincronizado de certificados bajo límites explícitos." })}</p>
           <Equation tex={"\\mathrm{computed\\ agreement}\\;\\not\\Rightarrow\\;\\mathrm{new\\ proof}"} caption={t({ en: "Reproducible computation and proof are deliberately not conflated.", es: "El cálculo reproducible y la prueba no se confunden deliberadamente." })} />
@@ -293,7 +293,7 @@ export function IntroductionPage() {
   ];
   return (
     <main className="page-body prose">
-      <PageHead title={{ en: "Introduction", es: "Introducción" }} lede={{ en: "A rigorous map of the finite rotation problem: what is measured, how the partition evolves, why several mathematical readings are linked, which conventions determine the result, and which claims the application deliberately refuses to make.", es: "Un mapa riguroso del problema de rotación finita: qué se mide, cómo evoluciona la partición, por qué se vinculan varias lecturas, qué convenciones determinan el resultado y qué afirmaciones la aplicación se niega deliberadamente a hacer." }} />
+      <PageHead title={{ en: "Introduction", es: "Introducción" }} lede={{ en: "Definitions, finite-orbit construction, partition update rule, linked invariants, and the exact scope of the computed certificate.", es: "Definiciones, construcción de la órbita finita, regla de actualización de la partición, invariantes vinculados y alcance exacto del certificado calculado." }} />
       <Tabs tabs={tabs} ariaLabel={t({ en: "Introduction chapters", es: "Capítulos de introducción" })} />
     </main>
   );

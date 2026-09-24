@@ -28,7 +28,7 @@ def main() -> int:
         require((ROOT / "docs" / directory / f"{directory}.md").is_file(), f"missing docs/{directory}/{directory}.md", failures)
     require("Apache License" in (ROOT / "LICENSE").read_text(encoding="utf-8"), "LICENSE must be Apache-2.0", failures)
     version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-    require(version == "0.03.001", f"unexpected release version {version}", failures)
+    require(version == "0.03.002", f"unexpected release version {version}", failures)
     if failures:
         print("\n".join(failures))
         return 1
