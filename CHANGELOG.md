@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.03.000 - 2026-09-23
+
+### Added
+
+- A purpose-built scientific SVG system covering orbit closure, gap splitting,
+  Farey cells, continued fractions, return gaps, symbolic readings, lattices,
+  topology, evidence contracts, experiments, and benchmark provenance.
+- Five Introduction tabs and six-tab Implementation and Benchmark atlases using
+  the shared CAOS shell controls.
+- A frontend ADR guard for tab contracts, accessible figures, language-scoped
+  architecture labels, and theme-safe color usage.
+
+### Changed
+
+- Rebuilt the workbench as a compact research instrument with five linked views
+  and shared-shell subtabs for all extension readings.
+- Deepened every methodology chapter to four explanatory paragraphs, two
+  equations, a dedicated figure, validity boundaries, and scoped sources.
+- Expanded every documentation tab with artifact-backed scientific content and
+  bilingual explanations.
+
+### Fixed
+
+- Removed the undefined legacy SVG classes that rendered opaque black figures.
+- Restored visible shared-shell tabs on every documentation route.
+- Replaced hard-coded SVG paint values with semantic theme tokens.
+
 ## 0.02.002 - 2026-09-19
 
 ### Fixed

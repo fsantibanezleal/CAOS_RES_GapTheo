@@ -1,7 +1,7 @@
 # GapTheo
 
 [![CI](https://github.com/fsantibanezleal/CAOS_RES_GapTheo/actions/workflows/ci.yml/badge.svg)](https://github.com/fsantibanezleal/CAOS_RES_GapTheo/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-0.02.002-58d2c2)](VERSION)
+[![Version](https://img.shields.io/badge/version-0.03.000-58d2c2)](VERSION)
 [![License](https://img.shields.io/badge/license-Apache--2.0-f1b66e)](LICENSE)
 [![Live](https://img.shields.io/badge/live-gaptheo.fasl--work.com-d98cff)](https://gaptheo.fasl-work.com/)
 
