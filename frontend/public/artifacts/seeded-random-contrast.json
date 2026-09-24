@@ -332,31 +332,31 @@
   ],
   "groups": [
     {
-      "color": "#f1b66e",
+      "color": "#58a6ff",
       "count": 1,
       "length": 0.0007268227636814117,
       "type": "a"
     },
     {
-      "color": "#58d2c2",
+      "color": "#f778ba",
       "count": 1,
       "length": 0.0018355625215917826,
       "type": "b"
     },
     {
-      "color": "#d98cff",
+      "color": "#d29922",
       "count": 1,
       "length": 0.003439471358433366,
       "type": "c"
     },
     {
-      "color": "#8ca6ff",
+      "color": "#3fb1c8",
       "count": 1,
       "length": 0.0036679450422525406,
       "type": "d"
     },
     {
-      "color": "#e67e9f",
+      "color": "#f85149",
       "count": 1,
       "length": 0.005137367872521281,
       "type": "e"
@@ -536,7 +536,7 @@
       "type": "\u0082"
     }
   ],
-  "hash": "20c705736e391247b9613e2ca048aac4d6d11bd41e00ab86932a0ecf5ce5cc61",
+  "hash": "471aff081495a661da5fdffbb89c9c5df8028566a42925f518427dc8399dd1e4",
   "method": "direct-sorted-orbit",
   "methodVersion": "0.02.000",
   "partitionResidual": 0.0,

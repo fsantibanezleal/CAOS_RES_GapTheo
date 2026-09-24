@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.03.001 - 2026-09-24
+
+### Changed
+
+- Removed the application-owned teal/green theme, decorative gradients, custom
+  font stack, and local imitations of CAOS shell components.
+- Returned palette, typography, themes, cards, buttons, tabs, page structure,
+  and callouts to the shared CAOS app shell; scientific gap marks now use the
+  approved blue, magenta, and amber semantic tokens.
+- Enlarged the primary orbit instrument so the visualization owns a majority
+  of the workbench width at desktop sizes.
+
+### Fixed
+
+- Eliminated the green brand wash and non-ADR visual language from every route.
+- Added a fail-closed frontend guard that rejects root/theme ownership, literal
+  CSS colours, decorative gradients, non-shell fonts, legacy palette tokens,
+  and application overrides of shell primitives.
+- Normalized generated artifact colours to the approved CAOS data palette.
+
 ## 0.03.000 - 2026-09-23
 
 ### Added

@@ -1,8 +1,8 @@
 # GapTheo ADR compliance rebuild specification
 
-Date: 2026-09-23
+Date: 2026-09-24
 
-Status: active, user-reported release failure
+Status: corrected in v0.03.001; production verification required
 
 ## Failure statement
 
@@ -27,6 +27,21 @@ approved product. The defect is structural rather than cosmetic:
 
 The v0.02.002 completion claim is withdrawn. This rebuild starts from current
 remote `main` and preserves the ADR-0074 CI-budget correction already merged.
+
+## Shell visual-ownership correction
+
+The first rebuild still introduced a product-local teal/green visual system.
+That was an implementation defect: ADR-0012 and ADR-0016 assign global palette,
+typography, page surfaces, cards, buttons, tabs, and theme switching to the
+shared CAOS app shell. GapTheo must not restyle those primitives.
+
+From v0.03.001, the application stylesheet is limited to workbench layout and
+scientific marks. It may consume only shell tokens. The theorem's three gap
+classes use accent blue, magenta, and warning amber; success green is reserved
+for certified/valid state. The stylesheet must not define root or theme tokens,
+literal colours, decorative gradients, a font family outside the shell stack,
+or selectors that replace shell-owned page and component styling. A static
+guard enforces this boundary before tests and builds can pass.
 
 ## Required public architecture
 

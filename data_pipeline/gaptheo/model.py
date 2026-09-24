@@ -6,7 +6,7 @@ import math
 from collections.abc import Callable
 from typing import Any
 
-COLORS = ["#f1b66e", "#58d2c2", "#d98cff", "#8ca6ff", "#e67e9f"]
+COLORS = ["#58a6ff", "#f778ba", "#d29922", "#3fb1c8", "#f85149"]
 TOLERANCE = 1e-8
 
 

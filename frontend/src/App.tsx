@@ -131,7 +131,7 @@ function Segmented({
       {options.map((option) => (
         <button
           key={option.value}
-          className={value === option.value ? "active" : ""}
+          className={value === option.value ? "chip on" : "chip"}
           onClick={() => onChange(option.value)}
         >
           {option.label}
@@ -285,8 +285,8 @@ function CircleOrbit({
       >
         <defs>
           <radialGradient id="orbitGlow">
-            <stop offset="0" stopColor="var(--gap-b)" stopOpacity=".18" />
-            <stop offset="1" stopColor="var(--gap-b)" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--color-magenta)" stopOpacity=".18" />
+            <stop offset="1" stopColor="var(--color-magenta)" stopOpacity="0" />
           </radialGradient>
         </defs>
         <circle cx="260" cy="260" r="224" fill="url(#orbitGlow)" />
@@ -347,7 +347,7 @@ function CircleOrbit({
       </svg>
       <div className="orbit-controls">
         <button
-          className="icon-button primary"
+          className="btn primary icon-button"
           onClick={play}
           aria-label={
             playing
@@ -362,7 +362,7 @@ function CircleOrbit({
           {playing ? <Pause size={16} /> : <Play size={16} />}
         </button>
         <button
-          className="icon-button"
+          className="btn icon-button"
           onClick={() => {
             controller.pause();
             setPlaying(false);
@@ -417,7 +417,7 @@ function Explore({
   return (
     <div className="workbench-grid">
       <aside className="control-column">
-        <div className="panel control-panel">
+        <div className="card control-panel">
           <div className="panel-kicker">
             <SlidersHorizontal size={15} />{" "}
             {es ? "PARÁMETROS VIVOS" : "LIVE PARAMETERS"}
@@ -564,14 +564,14 @@ function Explore({
           )}
           <div className="control-actions">
             <button
-              className="button primary"
+              className="btn primary"
               onClick={() => onSelectPreset(presets[0].id)}
             >
               <RefreshCcw size={15} />{" "}
               {es ? "Restaurar base" : "Restore baseline"}
             </button>
             <button
-              className="button ghost"
+              className="btn"
               onClick={() =>
                 setScenario({
                   ...scenario,
@@ -584,7 +584,7 @@ function Explore({
             </button>
           </div>
         </div>
-        <div className="panel certificate-panel">
+        <div className="card certificate-panel">
           <div className="panel-kicker">
             <Gauge size={15} /> {es ? "CERTIFICADO" : "CERTIFICATE"}
           </div>
@@ -611,13 +611,13 @@ function Explore({
               label={es ? "Brechas distintas" : "Distinct gaps"}
               value={String(certificate.distinctCount)}
               note={es ? "límite ≤ 3" : "bound ≤ 3"}
-              accent="var(--gap-b)"
+              accent="var(--color-magenta)"
             />
             <Metric
               label={es ? "Residuo mayor" : "Largest residual"}
               value={formatNumber(certificate.sumCheck.residual, 7)}
               note="c − a − b"
-              accent="var(--gap-a)"
+              accent="var(--color-accent)"
             />
           </div>
           <div className="equation-line">
@@ -630,7 +630,7 @@ function Explore({
         </div>
       </aside>
       <section className="main-visual">
-        <div className="panel visual-panel">
+        <div className="card visual-panel">
           <div className="visual-header">
             <div>
               <div className="panel-kicker">
@@ -659,13 +659,13 @@ function Explore({
           <div className="visual-footer">
             <div className="legend">
               <span>
-                <i style={{ background: "var(--gap-a)" }} />a
+                <i style={{ background: "var(--color-accent)" }} />a
               </span>
               <span>
-                <i style={{ background: "var(--gap-b)" }} />b
+                <i style={{ background: "var(--color-magenta)" }} />b
               </span>
               <span>
-                <i style={{ background: "var(--gap-c)" }} />c = a + b
+                <i style={{ background: "var(--color-warn)" }} />c = a + b
               </span>
             </div>
             <span className="quiet">
@@ -676,7 +676,7 @@ function Explore({
           </div>
         </div>
         <div className="lower-grid">
-          <div className="panel">
+          <div className="card">
             <div className="panel-title">
               <span>{es ? "Inventario de brechas" : "Gap inventory"}</span>
               <span className="quiet">
@@ -685,7 +685,7 @@ function Explore({
             </div>
             <GapInventory certificate={certificate} />
           </div>
-          <div className="panel lineage-card">
+          <div className="card lineage-card">
             <div className="panel-title">
               <span>{es ? "Genealogía de brechas" : "Gap genealogy"}</span>
               <GitBranch size={16} />
@@ -738,7 +738,7 @@ function ProofAtlas({
   const cursor = 52 + scenario.alpha * 540;
   return (
     <div className="deep-grid">
-      <section className="panel atlas-panel">
+      <section className="card atlas-panel">
         <div className="panel-kicker">
           <Aperture size={15} />{" "}
           {es ? "ESPACIO DE PARÁMETROS DE HAMADA" : "HAMADA'S PARAMETER SPACE"}
@@ -785,7 +785,7 @@ function ProofAtlas({
                 y={34 + (i % 2) * 18}
                 width={cell.width * 640}
                 height={215 - (i % 4) * 22}
-                fill={cell.shade ? "var(--gap-b)" : "var(--gap-a)"}
+                fill={cell.shade ? "var(--color-magenta)" : "var(--color-accent)"}
                 opacity=".08"
               />
               <line
@@ -793,7 +793,7 @@ function ProofAtlas({
                 y1="28"
                 x2={cell.x * 640 + cell.width * 640}
                 y2="248"
-                stroke={cell.shade ? "var(--gap-b)" : "var(--gap-a)"}
+                stroke={cell.shade ? "var(--color-magenta)" : "var(--color-accent)"}
                 opacity=".22"
                 strokeDasharray="3 5"
               />
@@ -812,7 +812,11 @@ function ProofAtlas({
                 ", 620 " +
                 (45 + i * 42)
               }
-              stroke={["var(--gap-a)", "var(--gap-b)", "var(--gap-c)"][i]}
+              stroke={[
+                "var(--color-accent)",
+                "var(--color-magenta)",
+                "var(--color-warn)",
+              ][i]}
               strokeWidth="2"
               fill="none"
               opacity=".85"
@@ -849,7 +853,7 @@ function ProofAtlas({
         </div>
       </section>
       <aside className="stack">
-        <div className="panel">
+        <div className="card">
           <div className="panel-title">
             <span>
               {es ? "Intervalo de Farey activo" : "Active Farey bracket"}
@@ -886,7 +890,7 @@ function ProofAtlas({
             </span>
           </Callout>
         </div>
-        <div className="panel">
+        <div className="card">
           <div className="panel-title">
             <span>{es ? "Fracción continua" : "Continued fraction"}</span>
             <span className="mono">{es ? "convergentes" : "convergents"}</span>
@@ -924,7 +928,7 @@ function ReturnGaps({
   const selected = certificate.dual.selected.slice(0, 22);
   return (
     <div className="deep-grid">
-      <section className="panel return-hero">
+      <section className="card return-hero">
         <div className="panel-kicker">
           <Target size={15} />{" "}
           {es ? "TIEMPOS DE RETORNO DUALES" : "DUAL RETURN TIMES"}
@@ -971,7 +975,7 @@ function ReturnGaps({
         </div>
       </section>
       <aside className="stack">
-        <div className="panel">
+        <div className="card">
           <div className="panel-title">
             <span>
               {es ? "Inventario de retornos" : "Return-gap inventory"}
@@ -982,7 +986,7 @@ function ReturnGaps({
           </div>
           <GapInventory certificate={certificate} dual />
         </div>
-        <div className="panel">
+        <div className="card">
           <div className="panel-kicker">
             <Info size={15} /> {es ? "CONVENCIÓN" : "CONVENTION"}
           </div>
@@ -1015,7 +1019,7 @@ function Topology({
   const events = certificate.topology.events;
   return (
     <div className="deep-grid">
-      <section className="panel topology-panel">
+      <section className="card topology-panel">
         <div className="panel-kicker">
           <Layers3 size={15} />{" "}
           {es
@@ -1039,7 +1043,7 @@ function Topology({
             label={es ? "componentes" : "components"}
             value={String(certificate.topology.components)}
             note={(es ? "umbral " : "threshold ") + formatNumber(threshold, 4)}
-            accent="var(--gap-b)"
+            accent="var(--color-magenta)"
           />
         </div>
         <div className="topology-slider">
@@ -1091,7 +1095,7 @@ function Topology({
         </div>
       </section>
       <aside className="stack">
-        <div className="panel">
+        <div className="card">
           <div className="panel-title">
             <span>
               {es ? "Lectura del código de barras" : "Reading the barcode"}
