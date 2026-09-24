@@ -26,6 +26,7 @@
 - Removed the undefined legacy SVG classes that rendered opaque black figures.
 - Restored visible shared-shell tabs on every documentation route.
 - Replaced hard-coded SVG paint values with semantic theme tokens.
+- Normalized GitHub Pages trailing-slash routes before research-page dispatch.
 
 ## 0.02.002 - 2026-09-19
 

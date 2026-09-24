@@ -29,6 +29,11 @@ def main() -> int:
     require("Legacy" not in pages, "legacy research renderers are forbidden", failures)
     require("diagram-" not in pages, "undefined legacy diagram classes are forbidden", failures)
     require("extension-tabs" not in app, "custom extension tab controls are forbidden; use shell SubTabs", failures)
+    require(
+        'location.pathname.replace(/\\/+$/, "") || "/"' in app,
+        "route handling must normalize GitHub Pages trailing slashes",
+        failures,
+    )
 
     page_order = ["Introduction", "Methodology", "Implementation", "Experiments", "Benchmark"]
     next_names = page_order[1:] + [None]
