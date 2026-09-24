@@ -25,6 +25,8 @@ def main() -> int:
     pages = (FRONTEND / "src/pages/ResearchPages.tsx").read_text(encoding="utf-8")
     figures = (FRONTEND / "src/pages/ScientificFigures.tsx").read_text(encoding="utf-8")
     app = (FRONTEND / "src/App.tsx").read_text(encoding="utf-8")
+    main_tsx = (FRONTEND / "src/main.tsx").read_text(encoding="utf-8")
+    app_css = (FRONTEND / "src/styles.css").read_text(encoding="utf-8")
 
     require("Legacy" not in pages, "legacy research renderers are forbidden", failures)
     require("diagram-" not in pages, "undefined legacy diagram classes are forbidden", failures)
@@ -34,6 +36,52 @@ def main() -> int:
         "route handling must normalize GitHub Pages trailing slashes",
         failures,
     )
+    require(
+        main_tsx.index("@fasl-work/caos-app-shell/styles.css") < main_tsx.index("./styles.css"),
+        "the shared shell stylesheet must load before the app widget stylesheet",
+        failures,
+    )
+
+    forbidden_style_owners = (
+        r"^\s*:root\b",
+        r"^\s*\[data-theme",
+        r"^\s*(?:html|body|#root)\b",
+        r"^\s*\.app-shell\b",
+        r"^\s*\.page-body\b",
+        r"^\s*\.prose\b",
+        r"^\s*\.page-head\b",
+        r"^\s*\.callout\b",
+    )
+    for pattern in forbidden_style_owners:
+        require(
+            re.search(pattern, app_css, flags=re.MULTILINE) is None,
+            f"app stylesheet may not redefine shell owner matching {pattern}",
+            failures,
+        )
+    require(
+        re.search(r"^\s*--[a-zA-Z0-9-]+\s*:", app_css, flags=re.MULTILINE) is None,
+        "app stylesheet may not declare a private palette or theme tokens",
+        failures,
+    )
+    require(
+        re.search(r"#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\(", app_css) is None,
+        "app stylesheet must use shell color tokens, not literal colors",
+        failures,
+    )
+    require(
+        re.search(r"(?:linear|radial|conic)-gradient\(", app_css) is None,
+        "app stylesheet may not introduce decorative gradients",
+        failures,
+    )
+    require(
+        not any("var(--font-" not in line for line in app_css.splitlines() if "font-family:" in line),
+        "app stylesheet must use only shell typography tokens",
+        failures,
+    )
+    for legacy_token in ("--teal", "--orange", "--violet", "--gap-", "--ink", "--bg", "--panel"):
+        require(legacy_token not in app_css, f"legacy bespoke token {legacy_token} is forbidden", failures)
+    require('className="card control-panel"' in app, "workbench panels must compose the shell card", failures)
+    require('className="btn primary"' in app, "primary actions must compose the shell button", failures)
 
     page_order = ["Introduction", "Methodology", "Implementation", "Experiments", "Benchmark"]
     next_names = page_order[1:] + [None]

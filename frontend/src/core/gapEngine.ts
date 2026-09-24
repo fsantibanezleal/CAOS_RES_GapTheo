@@ -112,7 +112,11 @@ export interface Certificate {
   extension: { points: number[]; distinctCount: number; groups: GapGroup[] };
 }
 
-export const GAP_COLORS = ["var(--gap-a)", "var(--gap-b)", "var(--gap-c)"];
+export const GAP_COLORS = [
+  "var(--color-accent)",
+  "var(--color-magenta)",
+  "var(--color-warn)",
+];
 const TAU = Math.PI * 2;
 
 export function frac(value: number): number {

@@ -1,6 +1,6 @@
 # GapTheo documentation
 
-This wiki is the durable technical and scientific map for GapTheo 0.03.000.
+This wiki is the durable technical and scientific map for GapTheo 0.03.001.
 
 ## Themes
 

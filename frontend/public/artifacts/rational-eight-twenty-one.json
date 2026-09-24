@@ -569,19 +569,19 @@
   ],
   "groups": [
     {
-      "color": "#f1b66e",
+      "color": "#58a6ff",
       "count": 34,
       "length": 0.0,
       "type": "a"
     },
     {
-      "color": "#58d2c2",
+      "color": "#f778ba",
       "count": 21,
       "length": 0.04761904761904756,
       "type": "b"
     }
   ],
-  "hash": "2258dd49d7f2e55b65e94419485680a003bf9fcded60171c6b1675d688e08f08",
+  "hash": "d834551bbbc6a3e6fd09ac3ff20d594448930d6d2d6b63e63465e4d399e8b9f4",
   "method": "direct-sorted-orbit",
   "methodVersion": "0.02.000",
   "partitionResidual": 0.0,
