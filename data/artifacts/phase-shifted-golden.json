@@ -410,19 +410,19 @@
   ],
   "groups": [
     {
-      "color": "#f1b66e",
+      "color": "#58a6ff",
       "count": 13,
       "length": 0.02128623625220527,
       "type": "a"
     },
     {
-      "color": "#58d2c2",
+      "color": "#f778ba",
       "count": 21,
       "length": 0.034441853748631956,
       "type": "b"
     }
   ],
-  "hash": "b17b08c8965d7441cc40a1af06971bfd2e46311bf63d059aa187ec0bd59c9209",
+  "hash": "459d6cd67eb01df6f2bc70169ee0b1ba9f1edc655fc9f6bdd1faf8a6e5ad9c70",
   "method": "direct-sorted-orbit",
   "methodVersion": "0.02.000",
   "partitionResidual": 0.0,
