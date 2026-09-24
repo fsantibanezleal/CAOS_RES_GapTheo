@@ -1,7 +1,6 @@
 import {
   Callout,
   Equation,
-  Figure,
   InlineMath,
   Refs,
   SubTabs,
@@ -9,6 +8,10 @@ import {
   useShellLang,
 } from "@fasl-work/caos-app-shell";
 import benchmark from "../data/benchmark.json";
+import {
+  ScientificFigure,
+  type ScientificFigureKind,
+} from "./ScientificFigures";
 
 const CATEGORY_ES: Record<string, string> = {
   "Irrational rotations": "Rotaciones irracionales",
@@ -37,202 +40,115 @@ function PageHead({ title, lede }: { title: Copy; lede: Copy }) {
   );
 }
 
-function MethodFigure({
-  kind,
-}: {
-  kind: "orbit" | "farey" | "dual" | "topology" | "pipeline" | "matrix";
-}) {
-  const t = useT();
-  if (kind === "orbit")
-    return (
-      <Figure
-        caption={t({
-          en: "The sorted orbit closes with one wrap gap.",
-          es: "La órbita ordenada se cierra con una brecha envolvente.",
-        })}
-      >
-        <svg className="fig-svg" viewBox="0 0 620 260" role="img">
-          <circle cx="180" cy="130" r="92" className="diagram-ring" />
-          {[0, 0.12, 0.28, 0.46, 0.63, 0.82].map((v, i) => (
-            <circle
-              key={v}
-              cx={180 + 92 * Math.cos(v * Math.PI * 2)}
-              cy={130 + 92 * Math.sin(v * Math.PI * 2)}
-              r={i === 2 ? 8 : 5}
-              className="diagram-point"
-            />
-          ))}
-          <path
-            d="M330 70H570M330 120H520M330 170H555"
-            className="diagram-line"
-          />
-          <text x="342" y="61">
-            a
-          </text>
-          <text x="342" y="111">
-            b
-          </text>
-          <text x="342" y="161">
-            c = a + b
-          </text>
-        </svg>
-      </Figure>
-    );
-  if (kind === "farey")
-    return (
-      <Figure
-        caption={t({
-          en: "A fixed N partitions the alpha axis into Farey cells.",
-          es: "Un N fijo divide el eje alfa en celdas de Farey.",
-        })}
-      >
-        <svg className="fig-svg" viewBox="0 0 620 260" role="img">
-          <path
-            d="M30 220C140 190 190 80 300 120S470 210 590 40"
-            className="diagram-curve"
-          />
-          <path
-            d="M30 200C150 70 240 210 350 110S500 60 590 180"
-            className="diagram-curve alt"
-          />
-          {[90, 180, 275, 390, 500].map((x) => (
-            <line
-              key={x}
-              x1={x}
-              x2={x}
-              y1="32"
-              y2="228"
-              className="diagram-grid"
-            />
-          ))}
-          <line x1="365" x2="365" y1="24" y2="232" className="diagram-cursor" />
-        </svg>
-      </Figure>
-    );
-  if (kind === "dual")
-    return (
-      <Figure
-        caption={t({
-          en: "Visits to the beta interval generate index gaps.",
-          es: "Las visitas al intervalo beta generan brechas de índices.",
-        })}
-      >
-        <svg className="fig-svg" viewBox="0 0 620 220" role="img">
-          <rect
-            x="30"
-            y="75"
-            width="210"
-            height="55"
-            rx="8"
-            className="diagram-band"
-          />
-          <line x1="30" x2="590" y1="145" y2="145" className="diagram-line" />
-          {[55, 105, 180, 275, 350, 470, 545].map((x, i) => (
-            <g key={x}>
-              <line x1={x} x2={x} y1="128" y2="162" className="diagram-tick" />
-              <text x={x - 7} y="185">
-                {[0, 2, 5, 8, 10, 13, 16][i]}
-              </text>
-            </g>
-          ))}
-        </svg>
-      </Figure>
-    );
-  if (kind === "topology")
-    return (
-      <Figure
-        caption={t({
-          en: "Each component dies when the threshold reaches an observed circular gap.",
-          es: "Cada componente muere cuando el umbral alcanza una brecha circular observada.",
-        })}
-      >
-        <svg className="fig-svg" viewBox="0 0 620 250" role="img">
-          {Array.from({ length: 9 }, (_, i) => (
-            <line
-              key={i}
-              x1="60"
-              x2={130 + i * 45}
-              y1={35 + i * 22}
-              y2={35 + i * 22}
-              className="diagram-bar"
-            />
-          ))}
-          <line x1="60" x2="570" y1="228" y2="228" className="diagram-line" />
-          <text x="60" y="246">
-            0
-          </text>
-          <text x="510" y="246">
-            threshold
-          </text>
-        </svg>
-      </Figure>
-    );
-  if (kind === "pipeline")
-    return (
-      <Figure
-        caption={t({
-          en: "Canonical evidence moves through named deterministic stages.",
-          es: "La evidencia canónica atraviesa etapas deterministas nombradas.",
-        })}
-      >
-        <svg className="fig-svg wide" viewBox="0 0 760 220" role="img">
-          {[
-            "ingest",
-            "preprocess",
-            "partition",
-            "infer",
-            "evaluate",
-            "export",
-            "validate",
-          ].map((name, i) => (
-            <g key={name}>
-              <rect
-                x={20 + i * 105}
-                y="70"
-                width="90"
-                height="66"
-                rx="10"
-                className="diagram-box"
-              />
-              <text x={30 + i * 105} y="108">
-                {name}
-              </text>
-              {i < 6 && (
-                <path
-                  d={`M${110 + i * 105} 103H${122 + i * 105}`}
-                  className="diagram-line"
-                />
-              )}
-            </g>
-          ))}
-        </svg>
-      </Figure>
-    );
-  return (
-    <Figure
-      caption={t({
-        en: "Every published number is read from the committed benchmark artifact.",
-        es: "Cada número publicado se lee del artefacto de benchmark versionado.",
-      })}
-    >
-      <svg className="fig-svg" viewBox="0 0 620 240" role="img">
-        {benchmark.cells.map((cell, i) => (
-          <g key={cell.scenarioId}>
-            <rect
-              x="55"
-              y={20 + i * 17}
-              width={Math.max(4, cell.starDiscrepancy * 3800)}
-              height="10"
-              className={cell.passed ? "diagram-bar" : "diagram-bar warn"}
-            />
-          </g>
-        ))}
-        <text x="410" y="224">
-          star discrepancy
-        </text>
-      </svg>
-    </Figure>
-  );
+type ResearchFigureKind =
+  | "orbit"
+  | "farey"
+  | "dual"
+  | "topology"
+  | "pipeline"
+  | "matrix";
+
+const RESEARCH_FIGURE_MAP: Record<ResearchFigureKind, ScientificFigureKind> = {
+  orbit: "overview",
+  farey: "farey",
+  dual: "returns",
+  topology: "topology",
+  pipeline: "pipeline",
+  matrix: "benchmark",
+};
+
+const METHOD_DEPTH: Record<
+  ResearchFigureKind,
+  { paragraphs: Copy[]; equation: string; caption: Copy }
+> = {
+  orbit: {
+    paragraphs: [
+      {
+        en: "The implementation preserves the ungrouped gaps before applying any numerical equivalence relation. This makes closure, non-negativity, wrap handling, and duplicate-point behaviour independently inspectable. Stable identifiers connect each rendered arc to its raw length, grouped class, lineage event, and later topology merge.",
+        es: "La implementación conserva las brechas sin agrupar antes de aplicar equivalencia numérica. Esto permite inspeccionar por separado cierre, no negatividad, cierre circular y duplicados. Identificadores estables conectan cada arco con longitud cruda, clase, genealogía y fusión topológica.",
+      },
+      {
+        en: "Use the circle and sorted-interval readings together: the circle preserves cyclic adjacency, while the interval makes order and the mandatory wrap explicit. A discrepancy between them is treated as a release-blocking implementation defect, not a visual approximation.",
+        es: "Use juntas las lecturas circular e intervalar: el círculo preserva adyacencia cíclica y el intervalo hace explícitos el orden y el cierre. Una discrepancia se trata como defecto de implementación que bloquea el release, no como aproximación visual.",
+      },
+    ],
+    equation: "\\rho_{sum}=\\left|1-\\sum_i g_i\\right|",
+    caption: { en: "Independent partition-closure residual, evaluated before grouping.", es: "Residuo independiente de cierre, evaluado antes de agrupar." },
+  },
+  farey: {
+    paragraphs: [
+      {
+        en: "The rational skeleton is computed with integer numerators and denominators; the decimal angle appears only as a cursor within that skeleton. This prevents a rounded display value from becoming the source of the Farey relation and keeps determinant and denominator checks exact.",
+        es: "El esqueleto racional se calcula con numeradores y denominadores enteros; el ángulo decimal aparece solo como cursor. Así, un valor redondeado no se convierte en fuente de la relación de Farey y las verificaciones permanecen exactas.",
+      },
+      {
+        en: "The active cell predicts finite combinatorial structure, but the direct orbit remains the numerical oracle. Candidate lengths and multiplicities are matched explicitly, and the maximum residual remains visible instead of being hidden by diagram geometry.",
+        es: "La celda activa predice estructura combinatoria finita, pero la órbita directa sigue siendo el oráculo. Longitudes y multiplicidades se emparejan explícitamente y el residuo máximo permanece visible.",
+      },
+    ],
+    equation: "\\rho_{Farey}=\\max_j|g_j^{direct}-g_j^{predicted}|",
+    caption: { en: "Cross-description residual after matching predicted and direct classes.", es: "Residuo entre descripciones tras emparejar clases predichas y directas." },
+  },
+  dual: {
+    paragraphs: [
+      {
+        en: "The selected visit indices are retained as evidence before differences are formed. Hovering or selecting a return jump can therefore identify both endpoint visits on the circle, the integer duration, and the target-interval convention that admitted them.",
+        es: "Los índices de visita seleccionados se conservan antes de formar diferencias. Así, un salto puede identificar ambas visitas en el círculo, la duración entera y la convención del intervalo que las admitió.",
+      },
+      {
+        en: "Changing beta recomputes membership and the complete return word; it does not stretch a previously drawn histogram. Primal lengths and dual return times retain different units and are displayed side by side only for comparison, never merged into one inventory.",
+        es: "Cambiar beta recalcula pertenencia y la palabra completa; no estira un histograma previo. Longitudes primales y retornos duales conservan unidades distintas y se comparan sin fusionarse en un solo inventario.",
+      },
+    ],
+    equation: "D_R=\\#\\{n_{j+1}-n_j\\}",
+    caption: { en: "Distinct integer return-gap count, separate from the geometric D_N.", es: "Cantidad de retornos enteros distintos, separada del D_N geométrico." },
+  },
+  topology: {
+    paragraphs: [
+      {
+        en: "The filtration is assembled from observed circular distances rather than from a decorative barcode. Every death threshold points back to one or more stable gap identifiers, so moving the threshold highlights the corresponding arcs and updates the component count.",
+        es: "La filtración se construye desde distancias circulares observadas y no desde un código decorativo. Cada umbral apunta a brechas estables, por lo que moverlo resalta arcos y actualiza la cantidad de componentes.",
+      },
+      {
+        en: "Only zero-dimensional connectivity is claimed. The app does not compute higher-dimensional persistence, stability bounds, or sliding-window embeddings; those belong to the cited research and are named as external extensions rather than implied capabilities.",
+        es: "Solo se afirma conectividad de dimensión cero. La app no calcula persistencia superior, cotas de estabilidad ni embeddings de ventanas; pertenecen a la investigación citada y se nombran como extensiones externas.",
+      },
+    ],
+    equation: "r_{death}\\in\\{g_0,\\ldots,g_{N-1}\\}",
+    caption: { en: "Every finite H0 death threshold is traceable to an observed circular gap.", es: "Cada umbral de muerte H0 finito se rastrea a una brecha circular observada." },
+  },
+  pipeline: {
+    paragraphs: [
+      {
+        en: "Each stage has one input and output responsibility, writes only beneath the requested output root, and records method-version metadata. Tests use a temporary root; only an explicit local bake updates canonical artifacts. This keeps validation and deployment read-only with respect to scientific truth.",
+        es: "Cada etapa tiene una responsabilidad de entrada y salida, escribe solo bajo la raíz solicitada y registra versión del método. Las pruebas usan una raíz temporal; solo un horneado local explícito actualiza artefactos. La validación y el despliegue permanecen de solo lectura respecto de la verdad científica.",
+      },
+      {
+        en: "The browser engine and Python reference are compared through normalized contract fields and residual tolerances, not through screenshot similarity. Scenario identity, conventions, backend, and hashes remain attached so a replay can be distinguished from a fresh live computation.",
+        es: "El motor del navegador y la referencia Python se comparan mediante campos normalizados y tolerancias, no por similitud de capturas. Identidad, convenciones, backend y hashes permanecen adjuntos para distinguir reproducción de cálculo en vivo.",
+      },
+    ],
+    equation: "h=\\operatorname{SHA256}(\\operatorname{canonicalJSON}(C))",
+    caption: { en: "Canonical certificate digest recorded by the export and validation stages.", es: "Hash canónico del certificado registrado por exportación y validación." },
+  },
+  matrix: {
+    paragraphs: [
+      {
+        en: "Every displayed benchmark value is projected from a committed certificate, and every certificate is indexed by path, byte size, method version, and SHA-256. The page does not carry hand-entered performance claims or a separate hidden table.",
+        es: "Cada valor del benchmark se proyecta desde un certificado versionado, indexado por ruta, tamaño, versión y SHA-256. La página no contiene afirmaciones escritas manualmente ni una tabla oculta separada.",
+      },
+      {
+        en: "Partition closure, theorem status, the additive relation, return-gap inventory, discrepancy, and integrity remain separate verdict channels. They are never averaged into a combined score that could hide a scientifically important failure.",
+        es: "Cierre, estado teórico, relación aditiva, inventario de retornos, discrepancia e integridad permanecen como canales separados. Nunca se promedian en un puntaje que oculte una falla importante.",
+      },
+    ],
+    equation: "\\mathcal V(C)=(v_{partition},v_{3gap},v_{dual},v_{hash})",
+    caption: { en: "Layered verdict vector; no weighted aggregate is defined.", es: "Vector de veredictos por capas; no se define agregado ponderado." },
+  },
+};
+
+function MethodFigure({ kind }: { kind: ResearchFigureKind }) {
+  return <ScientificFigure kind={RESEARCH_FIGURE_MAP[kind]} />;
 }
 
 function MethodBlock({
@@ -241,6 +157,7 @@ function MethodBlock({
   equation,
   caption,
   figure,
+  visual,
   refs,
   boundary,
 }: {
@@ -249,18 +166,24 @@ function MethodBlock({
   equation: string;
   caption: Copy;
   figure: Parameters<typeof MethodFigure>[0]["kind"];
+  visual?: ScientificFigureKind;
   refs: string[];
   boundary: Copy;
 }) {
   const t = useT();
+  const depth = METHOD_DEPTH[figure];
   return (
     <section className="method-block">
       <h2>{t(title)}</h2>
       {paragraphs.map((p, index) => (
         <p key={index}>{t(p)}</p>
       ))}
+      {depth.paragraphs.map((p, index) => (
+        <p key={`depth-${index}`}>{t(p)}</p>
+      ))}
       <Equation tex={equation} caption={t(caption)} />
-      <MethodFigure kind={figure} />
+      <Equation tex={depth.equation} caption={t(depth.caption)} />
+      {visual ? <ScientificFigure kind={visual} /> : <MethodFigure kind={figure} />}
       <Callout
         variant="honest"
         title={t({ en: "Validity boundary", es: "Límite de validez" })}
@@ -274,133 +197,104 @@ function MethodBlock({
 
 export function IntroductionPage() {
   const t = useT();
+  const tabs = [
+    {
+      id: "problem",
+      label: t({ en: "Problem", es: "Problema" }),
+      content: (
+        <section className="research-chapter">
+          <span className="eyebrow">{t({ en: "WHAT IS MEASURED?", es: "¿QUÉ SE MIDE?" })}</span>
+          <h2>{t({ en: "A finite orbit cuts the unit circle", es: "Una órbita finita corta el círculo unitario" })}</h2>
+          <p>{t({ en: "Choose an angle step alpha, a phase phi, and a finite point count N. GapTheo evaluates x_n = {phi + n alpha} for n from zero through N-1, sorts those positions, and measures every adjacent circular arc, including the wrap from the last sorted point back to the first. The theorem concerns the number of distinct arc lengths, not the number of arcs and not Euclidean chord lengths.", es: "Elija un paso angular alfa, una fase phi y una cantidad finita N. GapTheo evalúa x_n = {phi + n alfa} para n entre cero y N-1, ordena esas posiciones y mide cada arco circular adyacente, incluido el cierre desde el último punto al primero. El teorema trata la cantidad de longitudes de arco distintas, no la cantidad de arcos ni las cuerdas euclidianas." })}</p>
+          <p>{t({ en: "For an irrational rotation, the finite partition has at most three distinct lengths. When all three occur, the largest is the sum of the two smaller lengths. GapTheo keeps the unconditional closure invariant separate from that theorem certificate: every allocator must form a valid partition, but only a declared irrational one-frequency rotation enters the classical theorem regime.", es: "Para una rotación irracional, la partición finita tiene como máximo tres longitudes distintas. Cuando aparecen las tres, la mayor es la suma de las dos menores. GapTheo mantiene separado el invariante incondicional de cierre del certificado teórico: todo asignador debe formar una partición válida, pero solo una rotación irracional declarada de una frecuencia entra al régimen clásico." })}</p>
+          <Equation tex={"x_n=\\{\\phi+n\\alpha\\},\\quad 0\\le n<N"} caption={t({ en: "Finite rotation orbit in turns; braces denote fractional part.", es: "Órbita finita en vueltas; las llaves denotan parte fraccionaria." })} />
+          <Equation tex={"\\sum_{i=0}^{N-1}g_i=1,\\qquad D_N=\\#\\{g_i\\}\\le 3"} caption={t({ en: "Partition closure and the distinct-length bound are separate assertions.", es: "El cierre de la partición y la cota de longitudes son aserciones separadas." })} />
+          <MethodFigure kind="orbit" />
+          <Callout variant="honest" title={t({ en: "Hypothesis", es: "Hipótesis" })}><span>{t({ en: "A finite decimal does not certify irrationality. The scenario stores the mathematical declaration and the certificate reports numerical conditioning separately.", es: "Un decimal finito no certifica irracionalidad. El escenario almacena la declaración matemática y el certificado informa el condicionamiento por separado." })}</span></Callout>
+          <Refs ids={["hamada2024", "alessandri1998"]} label={t({ en: "Sources", es: "Fuentes" })} />
+        </section>
+      ),
+    },
+    {
+      id: "mechanism",
+      label: t({ en: "Mechanism", es: "Mecanismo" }),
+      content: (
+        <section className="research-chapter">
+          <span className="eyebrow">{t({ en: "HOW DOES N CHANGE THE STATE?", es: "¿CÓMO CAMBIA N EL ESTADO?" })}</span>
+          <h2>{t({ en: "One insertion, one parent arc, two children", es: "Una inserción, un arco padre, dos hijos" })}</h2>
+          <p>{t({ en: "Read the orbit in index order. A new non-colliding point lies inside exactly one existing empty arc. That parent gap disappears and two identified child gaps replace it, while all other gaps persist. The split conserves length. Stable point and gap identifiers let playback, circle selection, the cyclic word, and topology refer to the same event instead of presenting disconnected animations.", es: "Lea la órbita en orden de índices. Un punto nuevo sin colisión cae dentro de exactamente un arco vacío existente. Esa brecha padre desaparece y dos brechas hijas identificadas la reemplazan, mientras todas las demás persisten. La división conserva longitud. Identificadores estables permiten que reproducción, selección, palabra cíclica y topología se refieran al mismo evento." })}</p>
+          <p>{t({ en: "At a rational collision there is no interior split. The engine records the duplicate residue and multiplicity instead of manufacturing zero-length children. This distinction matters because the genealogy is explanatory evidence built from the direct orbit; it must preserve the actual finite geometry even outside the theorem regime.", es: "En una colisión racional no hay división interior. El motor registra el residuo duplicado y su multiplicidad en vez de fabricar hijos de longitud cero. La distinción importa porque la genealogía es evidencia explicativa construida desde la órbita directa y debe preservar la geometría finita real aun fuera del régimen." })}</p>
+          <Equation tex={"g_{parent}=g_{left}+g_{right}"} caption={t({ en: "Local conservation law for each non-colliding insertion.", es: "Ley de conservación local para cada inserción sin colisión." })} />
+          <ScientificFigure kind="split" />
+          <Callout variant="honest" title={t({ en: "Interpretation", es: "Interpretación" })}><span>{t({ en: "The lineage explains finite updates and supports implementation checks. It is not presented as a new proof of the theorem.", es: "La genealogía explica actualizaciones finitas y permite verificar la implementación. No se presenta como una prueba nueva del teorema." })}</span></Callout>
+          <Refs ids={["alessandri1998", "hamada2024"]} label={t({ en: "Sources", es: "Fuentes" })} />
+        </section>
+      ),
+    },
+    {
+      id: "readings",
+      label: t({ en: "Linked readings", es: "Lecturas vinculadas" }),
+      content: (
+        <section className="research-chapter">
+          <span className="eyebrow">{t({ en: "WHY MORE THAN ONE VIEW?", es: "¿POR QUÉ MÁS DE UNA VISTA?" })}</span>
+          <h2>{t({ en: "One certificate, synchronized projections", es: "Un certificado, proyecciones sincronizadas" })}</h2>
+          <p>{t({ en: "The circle exposes primary geometry but not the rational skeleton controlling event changes. Farey neighbours and continued fractions explain arithmetic scales; return times ask a dual question about visits to a target interval; cyclic words preserve class order; the lattice view packages Diophantine information geometrically; and finite H0 records observed gaps as merge thresholds. These are projections of one selected state, not decorative topics assembled on one page.", es: "El círculo expone la geometría primaria, pero no el esqueleto racional que controla los eventos. Farey y fracciones explican escalas aritméticas; los retornos formulan una pregunta dual; las palabras preservan el orden; el retículo empaqueta información diofántica; y H0 registra brechas como umbrales. Son proyecciones de un estado seleccionado, no temas decorativos reunidos en una página." })}</p>
+          <p>{t({ en: "Changing alpha, N, phase, beta, allocator, or seed first creates a new immutable direct certificate. Every secondary panel consumes that state and exposes residuals when a predicted inventory disagrees. No panel owns a hidden scenario, so a visually plausible but stale view cannot silently survive a control change.", es: "Cambiar alfa, N, fase, beta, asignador o semilla crea primero un nuevo certificado directo inmutable. Cada panel secundario consume ese estado y expone residuos si un inventario predicho discrepa. Ningún panel conserva un escenario oculto, por lo que una vista plausible pero obsoleta no sobrevive silenciosamente a un control." })}</p>
+          <Equation tex={"C=F(\\alpha,N,\\phi,\\beta,\\mathrm{allocator},\\mathrm{seed}),\\qquad V_j=\\pi_j(C)"} caption={t({ en: "Every reading is a named projection of one deterministic certificate.", es: "Cada lectura es una proyección nombrada de un certificado determinista." })} />
+          <ScientificFigure kind="readings" />
+          <Callout variant="honest" title={t({ en: "Evidence boundary", es: "Límite de evidencia" })}><span>{t({ en: "Cross-view agreement validates implementation consistency. Shared inputs mean the views are not automatically logically independent proofs.", es: "El acuerdo entre vistas valida consistencia de implementación. Entradas compartidas implican que las vistas no son pruebas lógicamente independientes." })}</span></Callout>
+          <Refs ids={["berthe2024", "marklof2017", "taha2018", "suarez2026"]} label={t({ en: "Sources", es: "Fuentes" })} />
+        </section>
+      ),
+    },
+    {
+      id: "notation",
+      label: t({ en: "Notation", es: "Notación" }),
+      content: (
+        <section className="research-chapter">
+          <span className="eyebrow">{t({ en: "BUILD CONVENTIONS", es: "CONVENCIONES DEL SISTEMA" })}</span>
+          <h2>{t({ en: "Definitions that determine the finite object", es: "Definiciones que determinan el objeto finito" })}</h2>
+          <p>{t({ en: "GapTheo counts N points indexed from zero to N-1 and measures normalized arc lengths in turns. The sorted orbit always includes the wrap gap. Numerical mode validates raw arcs before grouping them at a visible absolute tolerance. Rational mode evaluates modular integer residues before applying phase, preventing accumulated multiplication error. Return mode uses a displayed half-open target interval [0,beta).", es: "GapTheo cuenta N puntos indexados de cero a N-1 y mide arcos normalizados en vueltas. La órbita ordenada siempre incluye el cierre. El modo numérico valida arcos crudos antes de agruparlos con tolerancia absoluta visible. El modo racional evalúa residuos enteros modulares antes de aplicar fase. El modo de retornos usa un intervalo semiabierto [0,beta) mostrado." })}</p>
+          <ul className="symbol-grid">
+            <li><InlineMath tex="\\alpha" />: {t({ en: "angle step in turns", es: "paso angular en vueltas" })}</li>
+            <li><InlineMath tex="N" />: {t({ en: "number of orbit points", es: "cantidad de puntos" })}</li>
+            <li><InlineMath tex="\\phi" />: {t({ en: "phase offset", es: "desfase" })}</li>
+            <li><InlineMath tex="\\beta" />: {t({ en: "target interval length", es: "longitud del intervalo" })}</li>
+            <li><InlineMath tex="g_i" />: {t({ en: "sorted circular gap", es: "brecha circular ordenada" })}</li>
+            <li><InlineMath tex="D_N" />: {t({ en: "distinct-length count", es: "cantidad de longitudes" })}</li>
+            <li><InlineMath tex="p/q" />: {t({ en: "exact rational declaration", es: "declaración racional exacta" })}</li>
+            <li><InlineMath tex="q_k" />: {t({ en: "convergent denominator", es: "denominador convergente" })}</li>
+            <li><InlineMath tex="H_0" />: {t({ en: "connected-component homology", es: "homología de componentes" })}</li>
+            <li><InlineMath tex="D_N^*" />: {t({ en: "star discrepancy", es: "discrepancia estrella" })}</li>
+          </ul>
+          <Equation tex={"g_i=x_{(i+1)}-x_{(i)},\\quad g_{N-1}=1+x_{(0)}-x_{(N-1)}"} caption={t({ en: "Interior gaps and the mandatory wrap gap.", es: "Brechas interiores y brecha de cierre obligatoria." })} />
+          <ScientificFigure kind="overview" />
+          <Callout variant="honest" title={t({ en: "Compare conventions first", es: "Compare primero las convenciones" })}><span>{t({ en: "Different papers may index N+1 points or use a different endpoint convention. A changed finite table is not automatically a mathematical contradiction.", es: "Distintos artículos pueden indexar N+1 puntos o usar otra convención de extremos. Una tabla finita distinta no implica contradicción matemática." })}</span></Callout>
+          <Refs ids={["hamada2024", "mayero2006"]} label={t({ en: "Sources", es: "Fuentes" })} />
+        </section>
+      ),
+    },
+    {
+      id: "scope",
+      label: t({ en: "Scope", es: "Alcance" }),
+      content: (
+        <section className="research-chapter">
+          <span className="eyebrow">{t({ en: "HONEST CLAIMS", es: "AFIRMACIONES HONESTAS" })}</span>
+          <h2>{t({ en: "What this atlas establishes, and what it refuses to claim", es: "Qué establece este atlas y qué se niega a afirmar" })}</h2>
+          <p>{t({ en: "The app establishes reproducible finite statements about implemented scenarios: orbit points, circular gaps, length classes, split events, rational approximants, return indices, finite topology thresholds, residuals, and content hashes. For declared irrational rotations it reports whether the computed finite partition satisfies the three-gap and additive relations. Committed artifacts make those statements replayable instead of anecdotal.", es: "La app establece afirmaciones finitas reproducibles sobre escenarios implementados: puntos, brechas, clases, divisiones, aproximantes, retornos, umbrales topológicos, residuos y hashes. Para rotaciones declaradas irracionales informa si la partición satisface las relaciones de tres brechas y aditividad. Los artefactos versionados vuelven reproducibles esas afirmaciones." })}</p>
+          <p>{t({ en: "It does not prove irrationality from digits, replace a formal proof, establish a new theorem, transfer the bound to random or farthest-point processes, or implement general persistent homology. The defensible contribution is the synchronized certificate protocol: exact and numerical readings made inspectable under explicit validity boundaries.", es: "No prueba irracionalidad desde dígitos, no reemplaza una demostración formal, no establece un teorema nuevo, no transfiere el límite a procesos aleatorios o de punto más lejano ni implementa homología persistente general. La contribución defendible es el protocolo sincronizado de certificados bajo límites explícitos." })}</p>
+          <Equation tex={"\\mathrm{computed\\ agreement}\\;\\not\\Rightarrow\\;\\mathrm{new\\ proof}"} caption={t({ en: "Reproducible computation and proof are deliberately not conflated.", es: "El cálculo reproducible y la prueba no se confunden deliberadamente." })} />
+          <ScientificFigure kind="readings" />
+          <Callout variant="honest" title={t({ en: "Novelty boundary", es: "Límite de novedad" })}><span>{t({ en: "Formal theorem novelty would require a separately reviewed proof artifact. This release claims a research workbench and reproducibility protocol.", es: "La novedad teórica exigiría un artefacto de prueba revisado por separado. Este release afirma un laboratorio y un protocolo de reproducibilidad." })}</span></Callout>
+          <Refs ids={["mayero2006", "suarez2026", "haynes2014"]} label={t({ en: "Sources", es: "Fuentes" })} />
+        </section>
+      ),
+    },
+  ];
   return (
     <main className="page-body prose">
-      <PageHead
-        title={{ en: "Introduction", es: "Introducción" }}
-        lede={{
-          en: "GapTheo turns a finite rotation into an inspectable mathematical object. It shows what the three-gap theorem states, how several exact descriptions explain the same partition, and where rational or non-arithmetic processes leave the theorem regime.",
-          es: "GapTheo transforma una rotación finita en un objeto matemático inspeccionable. Muestra qué afirma el teorema de las tres brechas, cómo varias descripciones exactas explican la misma partición y dónde los procesos racionales o no aritméticos abandonan su régimen.",
-        }}
-      />
-      <section>
-        <h2>{t({ en: "The problem", es: "El problema" })}</h2>
-        <p>
-          {t({
-            en: "Place the points x_n = {phase + n alpha} on the unit circle, sort them, and measure every adjacent circular gap including the wrap from the last point to the first. For an irrational rotation, the finite partition has at most three distinct lengths. When three appear, the largest is the sum of the other two.",
-            es: "Ubique los puntos x_n = {fase + n alfa} en el círculo unitario, ordénelos y mida cada brecha circular adyacente, incluido el cierre desde el último punto al primero. Para una rotación irracional, la partición finita tiene como máximo tres longitudes. Cuando aparecen tres, la mayor es la suma de las otras dos.",
-          })}
-        </p>
-        <Equation
-          tex={"x_n=\\{\\phi+n\\alpha\\},\\qquad D_N\\leq 3"}
-          caption={t({
-            en: "The direct finite orbit and its distinct-gap bound.",
-            es: "La órbita finita directa y su límite de brechas distintas.",
-          })}
-        />
-        <MethodFigure kind="orbit" />
-        <Refs
-          ids={["hamada2024", "alessandri1998"]}
-          label={t({ en: "Sources", es: "Fuentes" })}
-        />
-      </section>
-      <section>
-        <h2>
-          {t({ en: "Ten linked readings", es: "Diez lecturas vinculadas" })}
-        </h2>
-        <p>
-          {t({
-            en: "The orbit, gap genealogy, Farey cell, continued fraction, return indices, cyclic word, lattice window, interval exchange, discrepancy profile, and zero-dimensional topology are not independent decorations. They are synchronized readings of one selected finite state, with the direct sorted partition retained as the numerical oracle.",
-            es: "La órbita, genealogía, celda de Farey, fracción continua, índices de retorno, palabra cíclica, ventana de retículo, intercambio de intervalos, perfil de discrepancia y topología de dimensión cero no son decoraciones independientes. Son lecturas sincronizadas de un estado finito seleccionado, con la partición ordenada directa como oráculo numérico.",
-          })}
-        </p>
-        <Refs
-          ids={["berthe2024", "marklof2017", "taha2018", "dasgupta2023"]}
-          label={t({ en: "Sources", es: "Fuentes" })}
-        />
-      </section>
-      <section>
-        <h2>
-          {t({ en: "Symbols and conventions", es: "Símbolos y convenciones" })}
-        </h2>
-        <ul className="symbol-grid">
-          <li>
-            <InlineMath tex="\\alpha" />:{" "}
-            {t({ en: "angle step in turns", es: "paso angular en vueltas" })}
-          </li>
-          <li>
-            <InlineMath tex="N" />:{" "}
-            {t({ en: "number of orbit points", es: "cantidad de puntos" })}
-          </li>
-          <li>
-            <InlineMath tex="\\phi" />:{" "}
-            {t({ en: "phase offset", es: "desfase" })}
-          </li>
-          <li>
-            <InlineMath tex="\\beta" />:{" "}
-            {t({
-              en: "target interval length",
-              es: "longitud del intervalo objetivo",
-            })}
-          </li>
-          <li>
-            <InlineMath tex="a,b,c" />:{" "}
-            {t({ en: "ordered gap lengths", es: "longitudes ordenadas" })}
-          </li>
-          <li>
-            <InlineMath tex="D_N" />:{" "}
-            {t({
-              en: "number of distinct lengths",
-              es: "cantidad de longitudes distintas",
-            })}
-          </li>
-          <li>
-            <InlineMath tex="p/q" />:{" "}
-            {t({
-              en: "rational boundary input",
-              es: "entrada racional de frontera",
-            })}
-          </li>
-          <li>
-            <InlineMath tex="q_k" />:{" "}
-            {t({ en: "convergent denominator", es: "denominador convergente" })}
-          </li>
-          <li>
-            <InlineMath tex="H_0" />:{" "}
-            {t({
-              en: "connected-component homology",
-              es: "homología de componentes",
-            })}
-          </li>
-          <li>
-            <InlineMath tex="D_N^*" />:{" "}
-            {t({ en: "star discrepancy", es: "discrepancia estrella" })}
-          </li>
-        </ul>
-      </section>
-      <section>
-        <h2>
-          {t({
-            en: "What this app is and is not",
-            es: "Qué es y qué no es esta app",
-          })}
-        </h2>
-        <Callout
-          variant="honest"
-          title={t({ en: "Honest scope", es: "Alcance honesto" })}
-        >
-          <span>
-            {t({
-              en: "The app is a reproducible finite certificate atlas. It is not a new theorem, a proof assistant, a general persistent-homology package, or an irrationality test for decimal input.",
-              es: "La app es un atlas reproducible de certificados finitos. No es un teorema nuevo, un asistente de pruebas, un paquete general de homología persistente ni una prueba de irracionalidad para entradas decimales.",
-            })}
-          </span>
-        </Callout>
-        <Refs
-          ids={["mayero2006", "suarez2026"]}
-          label={t({ en: "Sources", es: "Fuentes" })}
-        />
-      </section>
+      <PageHead title={{ en: "Introduction", es: "Introducción" }} lede={{ en: "A rigorous map of the finite rotation problem: what is measured, how the partition evolves, why several mathematical readings are linked, which conventions determine the result, and which claims the application deliberately refuses to make.", es: "Un mapa riguroso del problema de rotación finita: qué se mide, cómo evoluciona la partición, por qué se vinculan varias lecturas, qué convenciones determinan el resultado y qué afirmaciones la aplicación se niega deliberadamente a hacer." }} />
+      <Tabs tabs={tabs} ariaLabel={t({ en: "Introduction chapters", es: "Capítulos de introducción" })} />
     </main>
   );
 }
@@ -466,6 +360,7 @@ export function MethodologyPage() {
             es: "Una inserción sin colisión conserva la longitud del arco padre.",
           }}
           figure="orbit"
+          visual="split"
           refs={["alessandri1998"]}
           boundary={{
             en: "At a rational collision, no interior split occurs; the UI labels that event instead of inventing children.",
@@ -532,6 +427,7 @@ export function MethodologyPage() {
             es: "Recurrencia entera para convergentes.",
           }}
           figure="farey"
+          visual="continued"
           refs={["alessandri1998", "berthe2024"]}
           boundary={{
             en: "Finite truncation explains the current orbit scale only; it does not classify the infinite expansion.",
@@ -747,6 +643,7 @@ export function ImplementationPage() {
               es: "El hash cubre el certificado antes de agregar su propio campo.",
             })}
           />
+          <ScientificFigure kind="contracts" />
           <Callout
             variant="strong"
             title={t({ en: "Drift gate", es: "Control de deriva" })}
@@ -758,6 +655,34 @@ export function ImplementationPage() {
               })}
             </span>
           </Callout>
+        </section>
+      ),
+    },
+    {
+      id: "evidence",
+      label: t({ en: "Evidence", es: "Evidencia" }),
+      content: (
+        <section>
+          <h2>{t({ en: "Immutable scientific evidence", es: "Evidencia científica inmutable" })}</h2>
+          <p>{t({ en: "The canonical bake writes one certificate per scenario and a manifest that binds identity, path, regime status, method version, and SHA-256 digest. The browser benchmark is projected from that committed matrix; deployment may validate it but cannot silently rewrite it.", es: "El bake canónico escribe un certificado por escenario y un manifiesto que vincula identidad, ruta, régimen, versión y hash SHA-256. El benchmark del navegador se proyecta desde esa matriz versionada; el despliegue puede validarla, pero no reescribirla." })}</p>
+          <p>{t({ en: "Live controls are intentionally separate. They recompute the same contract in memory for exploration and expose when the selected state has diverged from its preset, but they do not masquerade as a new canonical artifact.", es: "Los controles en vivo están separados. Recalculan el mismo contrato en memoria y exponen cuándo el estado diverge del preset, pero no se presentan como un nuevo artefacto canónico." })}</p>
+          <ScientificFigure kind="contracts" />
+          <Callout variant="honest" title={t({ en: "Provenance boundary", es: "Frontera de procedencia" })}>
+            <span>{t({ en: "A screenshot is presentation evidence. The certificate and its digest are scientific evidence.", es: "Una captura es evidencia de presentación. El certificado y su hash son evidencia científica." })}</span>
+          </Callout>
+        </section>
+      ),
+    },
+    {
+      id: "verification",
+      label: t({ en: "Verification", es: "Verificación" }),
+      content: (
+        <section>
+          <h2>{t({ en: "Layered release gates", es: "Controles de release por capas" })}</h2>
+          <p>{t({ en: "Static guards enforce route and tab contracts, accessible SVGs, language-scoped architecture labels, and the absence of hard-coded figure colors. Unit and reference tests then verify geometry, regimes, deterministic seeds, hashes, and matrix coverage.", es: "Los controles estáticos exigen rutas, pestañas, SVG accesibles, etiquetas de arquitectura por idioma y ausencia de colores rígidos. Las pruebas verifican geometría, regímenes, semillas, hashes y cobertura." })}</p>
+          <p>{t({ en: "The final gate is rendered interaction: direct routes, every tab, both themes, both languages, and narrow and desktop viewports. Computed SVG fills and text colors are inspected so a technically present figure cannot pass as an opaque black panel.", es: "El control final es la interacción renderizada: rutas directas, cada pestaña, ambos temas, ambos idiomas y vistas móvil y escritorio. Se inspeccionan colores calculados para impedir que una figura presente pase como panel negro." })}</p>
+          <ScientificFigure kind="protocol" />
+          <Equation tex={"release=guards\\land tests\\land build\\land rendered\\ QA"} caption={t({ en: "No individual green signal is treated as delivery.", es: "Ninguna señal verde aislada se trata como entrega." })} />
         </section>
       ),
     },
@@ -842,6 +767,7 @@ export function ExperimentsPage() {
               ))}
             </tbody>
           </table>
+          <ScientificFigure kind="benchmark" />
           <Refs
             ids={["hamada2024", "alessandri1998"]}
             label={t({ en: "Sources", es: "Fuentes" })}
@@ -920,6 +846,7 @@ export function ExperimentsPage() {
               })}
             </span>
           </Callout>
+          <ScientificFigure kind="protocol" />
         </section>
       ),
     },
@@ -1074,6 +1001,7 @@ export function BenchmarkPage() {
               es: "Invariante de cierre independiente en todos los procesos.",
             })}
           />
+          <ScientificFigure kind="benchmark" />
         </section>
       ),
     },
@@ -1110,6 +1038,37 @@ export function BenchmarkPage() {
       ),
     },
     {
+      id: "regimes",
+      label: t({ en: "Regimes", es: "Regímenes" }),
+      content: (
+        <section>
+          <h2>{t({ en: "Coverage by mathematical regime", es: "Cobertura por régimen matemático" })}</h2>
+          <p>{t({ en: "Eight theorem cells exercise declared irrational rotations, finite-size variation, phase translation, and near-rational conditioning. Two exact rational cells verify boundary labelling. Two non-rotation allocators verify that reproducibility does not incorrectly imply theorem applicability.", es: "Ocho celdas prueban rotaciones irracionales declaradas, tamaño finito, fase y condicionamiento casi racional. Dos celdas racionales verifican la frontera. Dos asignadores no rotacionales verifican que reproducibilidad no implique aplicabilidad." })}</p>
+          <div className="metric-grid">
+            {Object.entries(benchmark.partitions).map(([name, ids]) => (
+              <div className="metric" key={name}><span>{name}</span><strong>{ids.length}</strong><small>{ids.join(" · ")}</small></div>
+            ))}
+          </div>
+          <ScientificFigure kind="events" />
+        </section>
+      ),
+    },
+    {
+      id: "provenance",
+      label: t({ en: "Provenance", es: "Procedencia" }),
+      content: (
+        <section>
+          <h2>{t({ en: "Artifact-backed claims", es: "Afirmaciones respaldadas por artefactos" })}</h2>
+          <p>{t({ en: "This page reads its totals, categories, verdicts, distinct counts, residuals, dual counts, and discrepancy values directly from the committed benchmark JSON. The canonical manifest separately binds each source certificate to its content hash.", es: "Esta página lee totales, categorías, veredictos, cantidades, residuos, retornos y discrepancias directamente del JSON versionado. El manifiesto canónico vincula cada certificado con su hash." })}</p>
+          <Equation tex={"B=\\Pi(\\{C_s:s\\in S_{canonical}\\})"} caption={t({ en: "The benchmark is a deterministic projection of canonical certificates.", es: "El benchmark es una proyección determinista de certificados canónicos." })} />
+          <ScientificFigure kind="contracts" />
+          <Callout variant="strong" title={t({ en: "Current matrix", es: "Matriz actual" })}>
+            <span>{benchmark.summary.total} {t({ en: "cells, protocol", es: "celdas, protocolo" })}: {benchmark.protocol}; v{benchmark.version}.</span>
+          </Callout>
+        </section>
+      ),
+    },
+    {
       id: "limits",
       label: t({ en: "Limits", es: "Límites" }),
       content: (
@@ -1140,6 +1099,7 @@ export function BenchmarkPage() {
               })}
             </span>
           </Callout>
+          <ScientificFigure kind="protocol" />
           <Refs
             ids={["mayero2006", "hamada2024"]}
             label={t({ en: "Sources", es: "Fuentes" })}

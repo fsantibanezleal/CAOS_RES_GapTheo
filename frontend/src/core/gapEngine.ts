@@ -112,7 +112,7 @@ export interface Certificate {
   extension: { points: number[]; distinctCount: number; groups: GapGroup[] };
 }
 
-export const GAP_COLORS = ["#f1b66e", "#58d2c2", "#d98cff"];
+export const GAP_COLORS = ["var(--gap-a)", "var(--gap-b)", "var(--gap-c)"];
 const TAU = Math.PI * 2;
 
 export function frac(value: number): number {
@@ -207,7 +207,7 @@ function gapGroups(gaps: Gap[]): GapGroup[] {
         length: gap.length,
         count: 1,
         share: 0,
-        color: GAP_COLORS[index] ?? "#9aa6b2",
+        color: GAP_COLORS[index] ?? "var(--color-fg-subtle)",
       });
     }
   });
