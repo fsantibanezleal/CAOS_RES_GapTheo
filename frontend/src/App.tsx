@@ -1514,11 +1514,12 @@ function RoutesView({
   const location = useLocation();
   const lang = useShellLang();
   const es = lang === "es";
-  if (location.pathname !== "/")
+  const routePath = location.pathname.replace(/\/+$/, "") || "/";
+  if (routePath !== "/")
     return (
       <ResearchRoute
         path={
-          location.pathname === "/references" ? "/benchmark" : location.pathname
+          routePath === "/references" ? "/benchmark" : routePath
         }
       />
     );
