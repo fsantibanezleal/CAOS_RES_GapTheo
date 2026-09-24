@@ -1,7 +1,7 @@
 # GapTheo wiki
 
 GapTheo is an interactive reading room for the three-gap theorem. Start at
-the workbench, choose an angle step, then use the Proof Atlas and Extensions
+the workbench, choose an angle step, then use the Farey / continued-fraction certificate and Extensions
 tabs to follow the same finite orbit into Farey cells, return times, words,
 lattices, topology, and controlled counter-processes.
 
