@@ -14,15 +14,15 @@ def require(condition: bool, message: str, failures: list[str]) -> None:
         failures.append(message)
 
 
-def function_block(source: str, name: str, next_name: str | None) -> str:
-    start = source.index(f"export function {name}Page()")
-    end = source.index(f"export function {next_name}Page()", start) if next_name else len(source)
-    return source[start:end]
-
-
 def main() -> int:
     failures: list[str] = []
-    pages = (FRONTEND / "src/pages/ResearchPages.tsx").read_text(encoding="utf-8")
+    page_names = ("Introduction", "Methodology", "Implementation", "Experiments", "Benchmark")
+    pages = {
+        name: (FRONTEND / f"src/pages/{name}Page.tsx").read_text(encoding="utf-8")
+        for name in page_names
+    }
+    page_sources = "\n".join(pages.values())
+    shared_pages = (FRONTEND / "src/pages/research/ResearchShared.tsx").read_text(encoding="utf-8")
     figures = (FRONTEND / "src/pages/ScientificFigures.tsx").read_text(encoding="utf-8")
     app = (FRONTEND / "src/App.tsx").read_text(encoding="utf-8")
     workbench = (FRONTEND / "src/workbench/GapTheoWorkbench.tsx").read_text(encoding="utf-8")
@@ -30,8 +30,8 @@ def main() -> int:
     main_tsx = (FRONTEND / "src/main.tsx").read_text(encoding="utf-8")
     app_css = (FRONTEND / "src/styles.css").read_text(encoding="utf-8")
 
-    require("Legacy" not in pages, "legacy research renderers are forbidden", failures)
-    require("diagram-" not in pages, "undefined legacy diagram classes are forbidden", failures)
+    require("Legacy" not in page_sources + shared_pages, "legacy research renderers are forbidden", failures)
+    require("diagram-" not in page_sources + shared_pages, "undefined legacy diagram classes are forbidden", failures)
     require("extension-tabs" not in app, "custom extension tab controls are forbidden; use shell SubTabs", failures)
     require(
         "STANDARD_ROUTES.map((r) => r.path)" in route_materializer and "404.html" in route_materializer,
@@ -104,7 +104,7 @@ def main() -> int:
         "Una órbita, una ventana de retículo",
         "Cambiar el proceso cambia la pregunta",
     )
-    interface_copy = app + pages + workbench
+    interface_copy = app + page_sources + shared_pages + workbench
     for heading in imprecise_headings:
         require(heading not in interface_copy, f"imprecise promotional heading is forbidden: {heading}", failures)
     for required_heading in (
@@ -117,13 +117,10 @@ def main() -> int:
     ):
         require(required_heading in workbench, f"missing literal scientific heading: {required_heading}", failures)
 
-    page_order = ["Introduction", "Methodology", "Implementation", "Experiments", "Benchmark"]
-    next_names = page_order[1:] + [None]
-    for name, next_name in zip(page_order, next_names):
-        block = function_block(pages, name, next_name)
-        require("<Tabs" in block, f"{name} must render shell Tabs", failures)
+    for name, page in pages.items():
+        require("<Tabs" in page, f"{name} must render shell Tabs", failures)
 
-    intro = function_block(pages, "Introduction", "Methodology")
+    intro = pages["Introduction"]
     for tab_id in ("problem", "mechanism", "readings", "notation", "scope"):
         require(f'id: "{tab_id}"' in intro, f"Introduction missing {tab_id} tab", failures)
 
