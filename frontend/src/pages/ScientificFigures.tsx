@@ -20,8 +20,8 @@ type Copy = { en: string; es: string };
 
 const CAPTIONS: Record<ScientificFigureKind, Copy> = {
   overview: {
-    en: "One finite rotation, shown simultaneously as a circular partition, a sorted interval, and a three-length inventory.",
-    es: "Una rotación finita, mostrada simultáneamente como partición circular, intervalo ordenado e inventario de tres longitudes.",
+    en: "One finite rotation, shown as a circular partition, a sorted interval, and its observed gap-length inventory.",
+    es: "Una rotación finita, mostrada como partición circular, intervalo ordenado e inventario de longitudes observadas.",
   },
   split: {
     en: "Insertion conserves length: one parent arc is replaced by two identified children while every other gap persists.",
@@ -114,14 +114,21 @@ function SvgShell({
 }
 
 function Overview({ es }: { es: boolean }) {
-  const values = [0, 0.118, 0.236, 0.382, 0.5, 0.618, 0.736, 0.854];
+  const orbitValues = Array.from({ length: 8 }, (_, n) => (n * (Math.sqrt(5) - 1) / 2) % 1);
+  const values = [...orbitValues].sort((a, b) => a - b);
+  const gaps = values.map((value, i) => (values[(i + 1) % values.length] - value + 1) % 1);
+  const grouped = [...gaps.reduce((map, gap) => {
+    const key = Math.round(gap * 1_000_000) / 1_000_000;
+    map.set(key, { length: key, count: (map.get(key)?.count ?? 0) + 1 });
+    return map;
+  }, new Map<number, { length: number; count: number }>()).values()].sort((a, b) => a.length - b.length);
   return (
     <SvgShell label={es ? "Anatomía de una partición de tres brechas" : "Anatomy of a three-gap partition"}>
       <text x="34" y="36" className="sf-title">{es ? "ANATOMÍA DE LA PARTICIÓN FINITA" : "FINITE PARTITION ANATOMY"}</text>
       <text x="34" y="58" className="sf-subtitle">xₙ = {'{'}φ + nα{'}'} · α = (√5 − 1)/2 · N = 8</text>
       <rect x="28" y="82" width="378" height="318" rx="14" className="sf-panel" />
       <circle cx="215" cy="235" r="118" className="sf-ring" />
-      {values.map((v, i) => {
+      {orbitValues.map((v, i) => {
         const a = -Math.PI / 2 + v * Math.PI * 2;
         const x = 215 + 118 * Math.cos(a);
         const y = 235 + 118 * Math.sin(a);
@@ -135,17 +142,19 @@ function Overview({ es }: { es: boolean }) {
       <line x1="510" y1="178" x2="840" y2="178" className="sf-axis" />
       {values.map((v, i) => <g key={v}><line x1={510 + v * 330} y1="166" x2={510 + v * 330} y2="190" className="sf-tick" /><text x={510 + v * 330} y="207" textAnchor="middle" className="sf-small">{i}</text></g>)}
       <line x1="840" y1="166" x2="840" y2="190" className="sf-tick" />
-      <text x="510" y="226" className="sf-note">{es ? "incluye la brecha de cierre x₇ → 1 → x₀" : "includes wrap gap x₇ → 1 → x₀"}</text>
-      {[
-        { y: 268, w: 118, cls: "sf-gap-a", name: "a", n: 3 },
-        { y: 306, w: 146, cls: "sf-gap-b", name: "b", n: 2 },
-        { y: 344, w: 264, cls: "sf-gap-c", name: "c = a + b", n: 3 },
-      ].map((g) => <g key={g.name}><rect x="510" y={g.y - 15} width={g.w} height="18" rx="5" className={g.cls} /><text x={510 + g.w + 12} y={g.y} className="sf-label">{g.name}</text><text x="804" y={g.y} className="sf-mono">× {g.n}</text></g>)}
-      <rect x="730" y="247" width="115" height="114" rx="10" className="sf-valid-box" />
-      <text x="746" y="272" className="sf-kicker">{es ? "CERTIFICADO" : "CERTIFICATE"}</text>
-      <text x="746" y="300" className="sf-value">D₈ = 3</text>
-      <text x="746" y="326" className="sf-label">c = a + b</text>
-      <text x="746" y="349" className="sf-good-text">Σgᵢ = 1 ✓</text>
+      <text x="510" y="226" className="sf-note">{es ? "incluye la brecha envolvente último-a-primero" : "includes the final-to-first wrap gap"}</text>
+      {grouped.map((g, i) => {
+        const y = 268 + i * 38;
+        const name = ["a", "b", "c"][i] ?? `g${i + 1}`;
+        const cls = ["sf-gap-a", "sf-gap-b", "sf-gap-c"][i] ?? "sf-gap-c";
+        const width = 142 * g.length / grouped[grouped.length - 1].length;
+        return <g key={g.length}><rect x="510" y={y - 15} width={width} height="18" rx="5" className={cls} /><text x={510 + width + 12} y={y} className="sf-label">{name}</text><text x="710" y={y} className="sf-mono">× {g.count}</text></g>;
+      })}
+      <rect x="755" y="247" width="112" height="114" rx="10" className="sf-valid-box" />
+      <text x="767" y="272" className="sf-kicker">{es ? "CERTIFICADO" : "CERTIFICATE"}</text>
+      <text x="767" y="300" className="sf-value">D₈ = {grouped.length}</text>
+      <text x="767" y="326" className="sf-label">{grouped.length === 3 ? "c = a + b" : es ? "Dos clases" : "Two classes"}</text>
+      <text x="767" y="349" className="sf-good-text">Σgᵢ = 1 ✓</text>
     </SvgShell>
   );
 }
@@ -160,7 +169,7 @@ function Split({ es }: { es: boolean }) {
       <line x1="76" y1="213" x2="332" y2="213" className="sf-gap-parent" />
       <circle cx="76" cy="213" r="7" className="sf-point" /><circle cx="332" cy="213" r="7" className="sf-point" />
       <path d="M76 190Q204 116 332 190" className="sf-arc-parent" />
-      <text x="204" y="145" textAnchor="middle" className="sf-value">gₚ = 0.236068</text>
+      <text x="204" y="145" textAnchor="middle" className="sf-value">{es ? "gₚ = 0,236068" : "gₚ = 0.236068"}</text>
       <text x="76" y="247" className="sf-mono">gap:g-07</text>
       <rect x="62" y="282" width="284" height="58" rx="9" className="sf-neutral-box" />
       <text x="80" y="307" className="sf-label">{es ? "arco vacío seleccionado" : "selected empty arc"}</text>
@@ -172,11 +181,11 @@ function Split({ es }: { es: boolean }) {
       <line x1="526" y1="213" x2="826" y2="213" className="sf-axis" />
       <circle cx="526" cy="213" r="7" className="sf-point" /><circle cx="714" cy="213" r="9" className="sf-point-new" /><circle cx="826" cy="213" r="7" className="sf-point" />
       <path d="M526 190Q620 132 714 190" className="sf-gap-a-stroke" /><path d="M714 190Q770 152 826 190" className="sf-gap-b-stroke" />
-      <text x="620" y="151" textAnchor="middle" className="sf-label">gₗ = 0.145898</text>
-      <text x="770" y="166" textAnchor="middle" className="sf-label">gᵣ = 0.090170</text>
+      <text x="620" y="151" textAnchor="middle" className="sf-label">{es ? "gₗ = 0,145898" : "gₗ = 0.145898"}</text>
+      <text x="770" y="166" textAnchor="middle" className="sf-label">{es ? "gᵣ = 0,090170" : "gᵣ = 0.090170"}</text>
       <text x="714" y="247" textAnchor="middle" className="sf-mono">point:p-{es ? "nuevo" : "new"}</text>
       <rect x="526" y="282" width="300" height="58" rx="9" className="sf-valid-box" />
-      <text x="546" y="307" className="sf-good-text">0.236068 = 0.145898 + 0.090170</text>
+      <text x="546" y="307" className="sf-good-text">{es ? "0,236068 = 0,145898 + 0,090170" : "0.236068 = 0.145898 + 0.090170"}</text>
       <text x="546" y="329" className="sf-note">{es ? "residuo de conservación < 10⁻¹²" : "conservation residual < 10⁻¹²"}</text>
     </SvgShell>
   );
@@ -224,7 +233,7 @@ function Farey({ es }: { es: boolean }) {
       <path d="M116 270L230 223L346 181L470 150L598 126L780 112" className="sf-stair sf-gap-c-stroke" />
       <rect x="401" y="112" width="116" height="230" className="sf-cell" />
       <line x1="459" y1="112" x2="459" y2="342" className="sf-cursor" />
-      <text x="459" y="102" textAnchor="middle" className="sf-accent-text">α = 0.618…</text>
+      <text x="459" y="102" textAnchor="middle" className="sf-accent-text">{es ? "α = 0,618…" : "α = 0.618…"}</text>
       <text x="405" y="329" className="sf-small">8/13</text><text x="492" y="329" className="sf-small">5/8</text>
       <rect x="570" y="232" width="234" height="82" rx="10" className="sf-neutral-box" />
       <text x="588" y="257" className="sf-kicker">{es ? "CELDA ACTIVA" : "ACTIVE CELL"}</text>
@@ -244,7 +253,7 @@ function Continued({ es }: { es: boolean }) {
       <rect x="36" y="86" width="354" height="304" rx="14" className="sf-panel" />
       <text x="58" y="115" className="sf-kicker">{es ? "RECURRENCIA ENTERA" : "INTEGER RECURRENCE"}</text>
       <text x="65" y="151" className="sf-table-head">k</text><text x="126" y="151" className="sf-table-head">pₖ/qₖ</text><text x="244" y="151" className="sf-table-head">|qₖα−pₖ|</text>
-      {rows.map((r,i)=><g key={r[0]}><line x1="58" y1={165+i*34} x2="366" y2={165+i*34} className="sf-grid" /><text x="68" y={188+i*34} className="sf-mono">{i}</text><text x="126" y={188+i*34} className="sf-label">{r[1]}/{r[0]}</text><rect x="244" y={176+i*34} width={r[2]*250} height="11" rx="4" className={i%2?"sf-gap-b":"sf-gap-a"}/><text x="354" y={188+i*34} textAnchor="end" className="sf-small">{r[2].toFixed(3)}</text></g>)}
+      {rows.map((r,i)=><g key={r[0]}><line x1="58" y1={165+i*34} x2="366" y2={165+i*34} className="sf-grid" /><text x="68" y={188+i*34} className="sf-mono">{i}</text><text x="126" y={188+i*34} className="sf-label">{r[1]}/{r[0]}</text><rect x="244" y={176+i*34} width={r[2]*250} height="11" rx="4" className={i%2?"sf-gap-b":"sf-gap-a"}/><text x="354" y={188+i*34} textAnchor="end" className="sf-small">{new Intl.NumberFormat(es ? "es-ES" : "en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false }).format(r[2])}</text></g>)}
       <rect x="426" y="86" width="438" height="304" rx="14" className="sf-plot" />
       <text x="448" y="115" className="sf-kicker">{es ? "EVENTOS AL VARIAR N" : "EVENTS AS N CHANGES"}</text>
       <line x1="466" y1="326" x2="832" y2="326" className="sf-axis" />
@@ -330,7 +339,7 @@ function Topology({ es }: { es: boolean }) {
       <text x="58" y="112" className="sf-kicker">{es ? "BARRAS DE COMPONENTES" : "COMPONENT BARS"}</text>
       <line x1="94" y1="340" x2="398" y2="340" className="sf-axis"/>
       {deaths.map((d,i)=><g key={i}><line x1="94" y1={145+i*23} x2={94+d*1100} y2={145+i*23} className={d<.1?"sf-gap-a-stroke":d<.2?"sf-gap-b-stroke":"sf-gap-c-stroke"}/><circle cx={94+d*1100} cy={145+i*23} r="4" className="sf-point-new"/></g>)}
-      {[0,.09,.146,.236].map(v=><g key={v}><line x1={94+v*1100} y1="132" x2={94+v*1100} y2="340" className="sf-event-line"/><text x={94+v*1100} y="362" textAnchor="middle" className="sf-small">{v.toFixed(3)}</text></g>)}
+      {[0,.09,.146,.236].map(v=><g key={v}><line x1={94+v*1100} y1="132" x2={94+v*1100} y2="340" className="sf-event-line"/><text x={94+v*1100} y="362" textAnchor="middle" className="sf-small">{new Intl.NumberFormat(es ? "es-ES" : "en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false }).format(v)}</text></g>)}
       <rect x="466" y="82" width="398" height="310" rx="14" className="sf-plot" />
       <text x="488" y="112" className="sf-kicker">β₀(r) · {es ? "COMPONENTES VIVOS" : "LIVE COMPONENTS"}</text>
       <line x1="514" y1="338" x2="830" y2="338" className="sf-axis"/><line x1="514" y1="136" x2="514" y2="338" className="sf-axis"/>
@@ -348,7 +357,7 @@ function Pipeline({ es }: { es: boolean }) {
     <SvgShell label={es ? "Pipeline científico determinista" : "Deterministic scientific pipeline"}>
       <text x="34" y="36" className="sf-title">{es ? "PIPELINE DE REFERENCIA Y LÍMITE DE DESPLIEGUE" : "REFERENCE PIPELINE AND DEPLOYMENT BOUNDARY"}</text>
       <rect x="34" y="76" width="832" height="236" rx="14" className="sf-panel" />
-      <text x="54" y="105" className="sf-kicker">OFFLINE · Python · data_pipeline/gaptheo/stages/</text>
+      <text x="54" y="105" className="sf-kicker">OFFLINE · Python · data-pipeline/pipeline/gaptheo/stages/</text>
       {stages.map((s,i)=>{const row=Math.floor(i/4),col=i%4,x=58+col*199,y=132+row*86;return <g key={s}><rect x={x} y={y} width="156" height="55" rx="9" className={s==="validate"?"sf-valid-box":i<3?"sf-primary-box":"sf-neutral-box"}/><text x={x+14} y={y+23} className="sf-label">{s}</text><text x={x+14} y={y+43} className="sf-mono">stages/{s}.py</text>{i<7&&<path d={col===3?`M${x+78} ${y+55}V${y+76}H${58+78}`:`M${x+156} ${y+28}H${x+190}`} className="sf-flow"/>}</g>})}
       <line x1="34" y1="330" x2="866" y2="330" className="sf-deploy-boundary" />
       <text x="450" y="350" textAnchor="middle" className="sf-warn-text">{es ? "CI/CD valida artefactos; nunca recalcula evidencia" : "CI/CD validates artifacts; it never recomputes evidence"}</text>
@@ -377,7 +386,7 @@ function Contracts({ es }: { es: boolean }) {
 function Protocol({ es }: { es: boolean }) {
   return (
     <SvgShell label={es ? "Protocolo estratificado y antipatrón" : "Stratified protocol and anti-pattern"}>
-      <text x="34" y="36" className="sf-title">{es ? "PROTOCOLO DE COBERTURA Y CONTROL ADVERSARIAL" : "COVERAGE PROTOCOL AND ADVERSARIAL CONTROL"}</text>
+      <text x="34" y="36" className="sf-title">{es ? "REGÍMENES DEL TEOREMA Y CONTROLES" : "THEOREM REGIMES AND CONTROLS"}</text>
       <rect x="36" y="76" width="528" height="330" rx="14" className="sf-panel" />
       <text x="58" y="106" className="sf-kicker">{es ? "PARTICIÓN POR RÉGIMEN" : "REGIME PARTITION"}</text>
       {[{y:132,t:es?"Irracional / teorema":"Irrational / theorem",c:"sf-valid-box"},{y:190,t:es?"Racional / colisión":"Rational / collision",c:"sf-boundary-box"},{y:248,t:es?"Casi racional / condición":"Near-rational / conditioning",c:"sf-secondary-box"},{y:306,t:es?"Contrastes / fuera de régimen":"Contrasts / out of regime",c:"sf-neutral-box"}].map((r,i)=><g key={r.t}><rect x="62" y={r.y} width="190" height="42" rx="8" className={r.c}/><text x="78" y={r.y+26} className="sf-label">{r.t}</text><path d={`M252 ${r.y+21}H330`} className="sf-flow"/><rect x="342" y={r.y} width="188" height="42" rx="8" className="sf-panel sf-panel-compact"/><text x="358" y={r.y+19} className="sf-mono">{["golden · sqrt2 · pi","1/7 · 5/13","1/7 + ε","random · farthest"][i]}</text><text x="358" y={r.y+35} className="sf-small">{es?"casos versionados":"versioned cases"}</text></g>)}
@@ -418,8 +427,8 @@ function Benchmark({ es }: { es: boolean }) {
     <SvgShell label={es ? "Matriz de invariantes del benchmark" : "Benchmark invariant matrix"}>
       <text x="34" y="36" className="sf-title">{es ? "EVIDENCIA SEPARADA, SIN PUNTAJE COMBINADO" : "SEPARATE EVIDENCE, NO COMBINED SCORE"}</text>
       <rect x="36" y="78" width="570" height="326" rx="14" className="sf-plot" />
-      <text x="58" y="108" className="sf-kicker">{es ? "COBERTURA DE 12 CASOS" : "12-CASE COVERAGE"}</text>
-      {rows.map((r,i)=><g key={r.n}><text x="64" y={151+i*49} className="sf-label">{r.n}</text><rect x="232" y={134+i*49} width="326" height="22" rx="6" className="sf-track"/><rect x="232" y={134+i*49} width={326*r.v} height="22" rx="6" className={r.c}/><text x="566" y={151+i*49} textAnchor="end" className="sf-mono">{i===2?"< 1e−12":i===3?"11/12":"12/12"}</text></g>)}
+      <text x="58" y="108" className="sf-kicker">{es ? "MATRIZ DE 12 CASOS" : "12-CASE MATRIX"}</text>
+      {rows.map((r,i)=><g key={r.n}><text x="64" y={151+i*49} className="sf-label">{r.n}</text><rect x="232" y={134+i*49} width="326" height="22" rx="6" className="sf-track"/><rect x="232" y={134+i*49} width={326*r.v} height="22" rx="6" className={r.c}/><text x="600" y={151+i*49} textAnchor="end" className="sf-mono">{i===2?"< 1e−12":i===3?"11/12":"12/12"}</text></g>)}
       <rect x="638" y="78" width="226" height="326" rx="14" className="sf-panel" />
       <text x="660" y="108" className="sf-kicker">{es ? "PROCEDENCIA" : "PROVENANCE"}</text>
       {["scenarioId","methodVersion","sourceRefs","tolerance","sha256"].map((s,i)=><g key={s}><circle cx="670" cy={148+i*42} r="4" className="sf-good-point"/><text x="684" y={152+i*42} className="sf-mono">{s}</text></g>)}

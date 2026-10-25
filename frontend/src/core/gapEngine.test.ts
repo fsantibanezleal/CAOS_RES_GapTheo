@@ -8,7 +8,7 @@ import {
 } from "./gapEngine";
 
 describe("GapTheo direct certificate", () => {
-  it("keeps the irrational rotation within the three-gap bound", () => {
+  it("adversarial: the irrational cyclic partition stays within three lengths and closes", () => {
     const certificate = computeCertificate({
       alpha: (Math.sqrt(5) - 1) / 2,
       alphaMode: "irrational",
@@ -20,7 +20,7 @@ describe("GapTheo direct certificate", () => {
     expect(certificate.theoremStatus).toBe("certified");
   });
 
-  it("marks rational residue collisions as a boundary", () => {
+  it("adversarial: rational residue collisions remain theorem boundaries", () => {
     const certificate = computeCertificate({
       alpha: 5 / 13,
       alphaMode: "rational",
@@ -35,7 +35,18 @@ describe("GapTheo direct certificate", () => {
     ).toBeLessThan(34);
   });
 
-  it("keeps seeded random and farthest insertion outside the theorem claim", () => {
+  it("adversarial: numeric angle edits never assert irrationality", () => {
+    const certificate = computeCertificate({
+      alpha: 0.501,
+      alphaMode: "numeric",
+      pointCount: 34,
+      allocator: "rotation",
+    });
+    expect(certificate.theoremStatus).toBe("boundary");
+    expect(certificate.theoremMessage).toMatch(/irrationality is not established/i);
+  });
+
+  it("adversarial: seeded random and farthest insertion stay outside the theorem claim", () => {
     const randomA = computeCertificate({
       pointCount: 22,
       allocator: "random",

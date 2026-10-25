@@ -25,6 +25,8 @@ def main() -> int:
     pages = (FRONTEND / "src/pages/ResearchPages.tsx").read_text(encoding="utf-8")
     figures = (FRONTEND / "src/pages/ScientificFigures.tsx").read_text(encoding="utf-8")
     app = (FRONTEND / "src/App.tsx").read_text(encoding="utf-8")
+    workbench = (FRONTEND / "src/workbench/GapTheoWorkbench.tsx").read_text(encoding="utf-8")
+    route_materializer = (FRONTEND / "scripts/materialize-routes.mjs").read_text(encoding="utf-8")
     main_tsx = (FRONTEND / "src/main.tsx").read_text(encoding="utf-8")
     app_css = (FRONTEND / "src/styles.css").read_text(encoding="utf-8")
 
@@ -32,8 +34,8 @@ def main() -> int:
     require("diagram-" not in pages, "undefined legacy diagram classes are forbidden", failures)
     require("extension-tabs" not in app, "custom extension tab controls are forbidden; use shell SubTabs", failures)
     require(
-        'location.pathname.replace(/\\/+$/, "") || "/"' in app,
-        "route handling must normalize GitHub Pages trailing slashes",
+        "STANDARD_ROUTES.map((r) => r.path)" in route_materializer and "404.html" in route_materializer,
+        "route handling must materialize canonical GitHub Pages paths and a fallback",
         failures,
     )
     require(
@@ -80,8 +82,8 @@ def main() -> int:
     )
     for legacy_token in ("--teal", "--orange", "--violet", "--gap-", "--ink", "--bg", "--panel"):
         require(legacy_token not in app_css, f"legacy bespoke token {legacy_token} is forbidden", failures)
-    require('className="card control-panel"' in app, "workbench panels must compose the shell card", failures)
-    require('className="btn primary"' in app, "primary actions must compose the shell button", failures)
+    require('className="card control-panel"' in workbench, "workbench panels must compose the shell card", failures)
+    require('className="btn primary"' in workbench, "primary actions must compose the shell button", failures)
     require(
         "<linearGradient" not in app and "<radialGradient" not in app,
         "workbench SVGs may not introduce decorative gradients",
@@ -102,7 +104,7 @@ def main() -> int:
         "Una órbita, una ventana de retículo",
         "Cambiar el proceso cambia la pregunta",
     )
-    interface_copy = app + pages
+    interface_copy = app + pages + workbench
     for heading in imprecise_headings:
         require(heading not in interface_copy, f"imprecise promotional heading is forbidden: {heading}", failures)
     for required_heading in (
@@ -113,7 +115,7 @@ def main() -> int:
         "Lattice representation of the rotation",
         "Gap counts by point-generation process",
     ):
-        require(required_heading in app, f"missing literal scientific heading: {required_heading}", failures)
+        require(required_heading in workbench, f"missing literal scientific heading: {required_heading}", failures)
 
     page_order = ["Introduction", "Methodology", "Implementation", "Experiments", "Benchmark"]
     next_names = page_order[1:] + [None]
@@ -132,7 +134,7 @@ def main() -> int:
         require('role="img"' in tag, f"scientific SVG {index + 1} lacks role=img", failures)
         require("aria-label=" in tag, f"scientific SVG {index + 1} lacks an aria-label", failures)
 
-    for path in (FRONTEND / "public/svg/tech").glob("*.svg"):
+    for path in (FRONTEND / "src/architecture").glob("*.svg"):
         text = path.read_text(encoding="utf-8")
         require(not re.search(r"#[0-9a-fA-F]{3,8}", text), f"{path.name} contains hard-coded hex color", failures)
         allowed_tokens = {
@@ -140,10 +142,15 @@ def main() -> int:
             "--color-surface-2",
             "--color-border",
             "--color-accent",
+            "--color-accent-soft",
             "--color-good",
             "--color-warn",
+            "--color-bad",
             "--color-fg",
             "--color-fg-subtle",
+            "--color-fg-faint",
+            "--font-sans",
+            "--font-mono",
         }
         used_tokens = set(re.findall(r"var\((--[a-zA-Z0-9-]+)", text))
         require(

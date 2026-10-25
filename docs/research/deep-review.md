@@ -195,7 +195,7 @@ Known boundaries remain visible:
 From the repository root:
 
 ```text
-python data_pipeline/run.py
+python data-pipeline/run.py
 python scripts/validate_artifacts.py
 npm run typecheck
 npm run test

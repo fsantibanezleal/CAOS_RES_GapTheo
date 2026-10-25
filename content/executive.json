@@ -1,0 +1,676 @@
+{
+  "title": {
+    "en": "The three-gap theorem: geometry and arithmetic",
+    "es": "El teorema de tres distancias: geometría y aritmética"
+  },
+  "key_statement": {
+    "en": "For irrational α, the first N points of a circle rotation determine N cyclic gaps with at most three distinct lengths. Farey and continued-fraction data describe how this partition changes with N; a finite calculation checks examples, not the theorem.",
+    "es": "Para α irracional, los primeros N puntos de una rotación circular determinan N brechas cíclicas con a lo sumo tres longitudes distintas. Los datos de Farey y las fracciones continuas describen los cambios de esta partición al variar N; un cálculo finito comprueba ejemplos, no el teorema."
+  },
+  "headline_figures": [
+    {
+      "heading": {
+        "en": "Distinct arc lengths",
+        "es": "Longitudes de arco distintas"
+      },
+      "value": {
+        "en": "at most 3",
+        "es": "a lo sumo 3"
+      },
+      "unit": {
+        "en": "under the explicit hypothesis that the rotation step is irrational, which finite decimal calculations cannot establish",
+        "es": "bajo la hipótesis explícita de que el paso de rotación es irracional, algo que ningún cálculo decimal finito puede demostrar; la simulación solo muestra prefijos finitos de la órbita"
+      },
+      "source": "hamada"
+    },
+    {
+      "heading": {
+        "en": "Finite orbit size",
+        "es": "Tamaño de órbita finita"
+      },
+      "value": {
+        "en": "N",
+        "es": "N"
+      },
+      "unit": {
+        "en": "points through the last index; the closing arc back to the first is included, so all N gaps cover one circumference",
+        "es": "puntos hasta el último índice; también se incluye el arco de cierre al primero, por lo que las N brechas cubren una circunferencia completa"
+      },
+      "source": "berthe"
+    },
+    {
+      "heading": {
+        "en": "Additive relation",
+        "es": "Relación aditiva"
+      },
+      "value": {
+        "en": "g₃ = g₁ + g₂",
+        "es": "g₃ = g₁ + g₂"
+      },
+      "unit": {
+        "en": "when the sorted circular partition contains three distinct lengths",
+        "es": "cuando la partición circular ordenada contiene tres longitudes distintas"
+      },
+      "source": "hamada"
+    }
+  ],
+  "pain": {
+    "key_message": {
+      "en": "The theorem is an infinite statement; a finite exhibit depends on explicit indexing, endpoint, and arithmetic conventions.",
+      "es": "El teorema es una afirmación infinita; un ejemplo finito depende de convenciones explícitas de índices, extremos y aritmética."
+    },
+    "paragraphs": [
+      {
+        "en": "For a fixed rotation number and point count, the circle is partitioned by one finite orbit. Geometric, arithmetic, symbolic, and return-time descriptions can be compared only after their indexing and endpoint conventions are made explicit.",
+        "es": "Para un número de rotación y una cantidad de puntos fijados, una órbita finita particiona el círculo. Las descripciones geométricas, aritméticas, simbólicas y de retorno se comparan solo tras declarar sus índices y extremos."
+      },
+      {
+        "en": "The percentages below describe the composition of this repository’s twelve selected scenarios. They are not estimates of research effort, user impact, or the frequency of mathematical errors.",
+        "es": "Los porcentajes siguientes describen la composición de los doce escenarios seleccionados en este repositorio. No estiman esfuerzo de investigación, impacto en personas ni frecuencia de errores matemáticos."
+      }
+    ],
+    "bearers": [
+      {
+        "who": {
+          "en": "Readers comparing proof conventions",
+          "es": "Lectores que comparan convenciones de demostración"
+        },
+        "cost": {
+          "en": "Point counts and starting indices may differ between accounts",
+          "es": "La cantidad de puntos y el índice inicial pueden variar entre exposiciones"
+        },
+        "measure": {
+          "en": "State N, n range, phase, and the closing gap explicitly",
+          "es": "Declarar N, rango de n, fase y brecha de cierre"
+        }
+      },
+      {
+        "who": {
+          "en": "Readers checking arithmetic descriptions",
+          "es": "Lectores que revisan descripciones aritméticas"
+        },
+        "cost": {
+          "en": "Approximants may be indexed under different conventions",
+          "es": "Los aproximantes pueden indexarse con convenciones distintas"
+        },
+        "measure": {
+          "en": "Show convergents, Farey neighbors, and the matching finite gaps",
+          "es": "Mostrar convergentes, vecinos de Farey y brechas finitas correspondientes"
+        }
+      },
+      {
+        "who": {
+          "en": "Readers evaluating finite computation",
+          "es": "Lectores que evalúan cálculos finitos"
+        },
+        "cost": {
+          "en": "Floating-point agreement can be mistaken for an infinite proof",
+          "es": "La concordancia numérica puede confundirse con una prueba infinita"
+        },
+        "measure": {
+          "en": "Keep hypotheses, tolerance, residuals, and theorem status visible",
+          "es": "Mantener visibles hipótesis, tolerancia, residuos y estado del teorema"
+        }
+      },
+      {
+        "who": {
+          "en": "Authors linking symbolic and geometric accounts",
+          "es": "Autores que conectan exposiciones simbólicas y geométricas"
+        },
+        "cost": {
+          "en": "A word may hide the point order that generated it",
+          "es": "Una palabra puede ocultar el orden de puntos que la genera"
+        },
+        "measure": {
+          "en": "Retain the ordered points beside the cyclic gap word",
+          "es": "Conservar los puntos ordenados junto a la palabra cíclica de brechas"
+        }
+      },
+      {
+        "who": {
+          "en": "Readers studying contrast processes",
+          "es": "Lectores que estudian procesos de contraste"
+        },
+        "cost": {
+          "en": "An arbitrary allocation may be read as a rotation orbit",
+          "es": "Una asignación arbitraria puede leerse como una órbita de rotación"
+        },
+        "measure": {
+          "en": "Label allocator and theorem applicability on every result",
+          "es": "Etiquetar asignador y aplicabilidad del teorema en cada resultado"
+        }
+      }
+    ],
+    "figures": [
+      {
+        "heading": {
+          "en": "Possible gap lengths",
+          "es": "Longitudes de brecha posibles"
+        },
+        "value": {
+          "en": "3",
+          "es": "3"
+        },
+        "unit": {
+          "en": "maximum for the irrational case",
+          "es": "máximo en el caso irracional"
+        },
+        "source": "hamada"
+      },
+      {
+        "heading": {
+          "en": "Descriptions linked here",
+          "es": "Descripciones vinculadas aquí"
+        },
+        "value": {
+          "en": "6",
+          "es": "6"
+        },
+        "unit": {
+          "en": "finite, Farey, continued fraction, return, word, topology",
+          "es": "finita, Farey, fracción continua, retorno, palabra, topología"
+        },
+        "source": "berthe"
+      }
+    ],
+    "causes": [
+      {
+        "cause": {
+          "en": "Irrational and named-constant rotation scenarios (5 of 12)",
+          "es": "Escenarios de rotación irracional y constantes nombradas (5 de 12)"
+        },
+        "weight": 42
+      },
+      {
+        "cause": {
+          "en": "Phase, finite-size, and conditioning scenarios (3 of 12)",
+          "es": "Escenarios de fase, tamaño finito y condicionamiento (3 de 12)"
+        },
+        "weight": 25
+      },
+      {
+        "cause": {
+          "en": "Rational-boundary and allocation controls (4 of 12)",
+          "es": "Controles de frontera racional y asignación (4 de 12)"
+        },
+        "weight": 33
+      }
+    ]
+  },
+  "context": {
+    "key_message": {
+      "en": "The result connects an irrational rotation, a finite circular partition, and arithmetic approximants.",
+      "es": "El resultado conecta una rotación irracional, una partición circular finita y aproximantes aritméticos."
+    },
+    "paragraphs": [
+      {
+        "en": "The mathematical setting is a rotation of the unit circle by an irrational step. The first N orbit points cut the circle into consecutive arcs; the classical result bounds the number of distinct arc lengths and constrains their relation. Farey neighbours and continued fractions encode the finite changes as N grows.",
+        "es": "El marco matemático es una rotación del círculo unitario por un paso irracional. Los primeros N puntos de la órbita cortan el círculo en arcos consecutivos; el resultado clásico limita la cantidad de longitudes distintas y restringe su relación. Los vecinos de Farey y las fracciones continuas codifican los cambios finitos al crecer N."
+      }
+    ],
+    "setting": {
+      "en": "Classical Diophantine approximation, dynamical systems, combinatorics on words, and computational mathematics",
+      "es": "Aproximación diofántica clásica, sistemas dinámicos, combinatoria de palabras y matemática computacional"
+    },
+    "forces": [
+      {
+        "force": {
+          "en": "Multiple equivalent names and indexing conventions",
+          "es": "Varios nombres equivalentes y convenciones de índices"
+        },
+        "direction": "steady"
+      },
+      {
+        "force": {
+          "en": "Exact rational structure alongside floating-point displays",
+          "es": "Estructura racional exacta junto a representaciones de punto flotante"
+        },
+        "direction": "steady"
+      },
+      {
+        "force": {
+          "en": "More computational views create more opportunities to overstate what is proved",
+          "es": "Más vistas computacionales aumentan el riesgo de exagerar lo demostrado"
+        },
+        "direction": "rising"
+      }
+    ],
+    "evidence": [
+      {
+        "statement": {
+          "en": "For an irrational rotation, the finite orbit has at most three distinct gap lengths; if three occur, the largest is the sum of the other two.",
+          "es": "Para una rotación irracional, la órbita finita tiene a lo sumo tres longitudes de brecha distintas; si aparecen tres, la mayor es la suma de las otras dos."
+        },
+        "source": "hamada"
+      },
+      {
+        "statement": {
+          "en": "Three-distance results also connect circular partitions with symbolic words and arithmetic structure.",
+          "es": "Los resultados de tres distancias también conectan particiones circulares con palabras simbólicas y estructura aritmética."
+        },
+        "source": "hal"
+      }
+    ]
+  },
+  "situation": {
+    "key_message": {
+      "en": "Existing work supplies proofs and complementary descriptions; the atlas links them as inspectable readings of one finite state.",
+      "es": "El trabajo existente aporta demostraciones y descripciones complementarias; el atlas las vincula como lecturas inspeccionables de un estado finito."
+    },
+    "roles": [
+      {
+        "role": {
+          "en": "Mathematics educator",
+          "es": "Docente de matemática"
+        },
+        "decides": {
+          "en": "Which construction best exposes the theorem’s mechanism",
+          "es": "Qué construcción expone mejor el mecanismo del teorema"
+        },
+        "needs": {
+          "en": "A geometric object tied to each definition",
+          "es": "Un objeto geométrico ligado a cada definición"
+        }
+      },
+      {
+        "role": {
+          "en": "Researcher in dynamical systems",
+          "es": "Investigador de sistemas dinámicos"
+        },
+        "decides": {
+          "en": "Which finite certificate supports a comparison",
+          "es": "Qué certificado finito respalda una comparación"
+        },
+        "needs": {
+          "en": "Reproducible inputs and explicit validity conditions",
+          "es": "Entradas reproducibles y condiciones explícitas de validez"
+        }
+      },
+      {
+        "role": {
+          "en": "Computational mathematics reviewer",
+          "es": "Revisor de matemática computacional"
+        },
+        "decides": {
+          "en": "Whether a numerical result matches its stated claim",
+          "es": "Si un resultado numérico coincide con la afirmación declarada"
+        },
+        "needs": {
+          "en": "Independent invariants, residuals, and provenance",
+          "es": "Invariantes independientes, residuos y procedencia"
+        }
+      }
+    ],
+    "interaction": {
+      "en": "A declared rotation generates a finite orbit; the sorted partition feeds arithmetic, symbolic, dual, and topological readings; each view states its own assumptions and residual checks.",
+      "es": "Una rotación declarada genera una órbita finita; la partición ordenada alimenta lecturas aritméticas, simbólicas, duales y topológicas; cada vista declara sus supuestos y verificaciones de residuos."
+    },
+    "state_of_the_art": [
+      {
+        "approach": {
+          "en": "Geometric proof and Farey description",
+          "es": "Demostración geométrica y descripción de Farey"
+        },
+        "achieves": {
+          "en": "Explicit possible lengths and multiplicities",
+          "es": "Longitudes posibles y multiplicidades explícitas"
+        },
+        "falls_short": {
+          "en": "Usually does not synchronize an interactive finite oracle",
+          "es": "Normalmente no sincroniza un oráculo finito interactivo"
+        },
+        "source": "hamada"
+      },
+      {
+        "approach": {
+          "en": "Combinatorics on words and three-distance structure",
+          "es": "Combinatoria de palabras y estructura de tres distancias"
+        },
+        "achieves": {
+          "en": "Relates orbit order to symbolic sequences",
+          "es": "Relaciona el orden de la órbita con secuencias simbólicas"
+        },
+        "falls_short": {
+          "en": "Requires translating notation across presentations",
+          "es": "Exige traducir notación entre exposiciones"
+        },
+        "source": "berthe"
+      },
+      {
+        "approach": {
+          "en": "Finite gap distributions and lattice methods",
+          "es": "Distribuciones finitas de brechas y métodos de retículos"
+        },
+        "achieves": {
+          "en": "Connects gaps to broader arithmetic dynamics",
+          "es": "Conecta las brechas con dinámica aritmética más amplia"
+        },
+        "falls_short": {
+          "en": "Asymptotic frameworks answer questions beyond one selected finite orbit",
+          "es": "Los marcos asintóticos responden preguntas que exceden una órbita finita seleccionada"
+        },
+        "source": "marklof"
+      },
+      {
+        "approach": {
+          "en": "Symmetry analysis of finite gap configurations",
+          "es": "Análisis de simetría de configuraciones finitas de brechas"
+        },
+        "achieves": {
+          "en": "Identifies transformations preserving the gap structure",
+          "es": "Identifica transformaciones que preservan la estructura de brechas"
+        },
+        "falls_short": {
+          "en": "Does not replace the direct orbit check for a selected input",
+          "es": "No reemplaza la verificación de la órbita directa para una entrada seleccionada"
+        },
+        "source": "dasgupta"
+      }
+    ],
+    "status": {
+      "heading": {
+        "en": "Mathematical status",
+        "es": "Estado matemático"
+      },
+      "value": {
+        "en": "Established theorem; expository computational atlas",
+        "es": "Teorema establecido; atlas computacional expositivo"
+      },
+      "unit": {
+        "en": "scope of this repository",
+        "es": "alcance de este repositorio"
+      },
+      "date": {
+        "en": "2026",
+        "es": "2026"
+      },
+      "source": "hamada"
+    }
+  },
+  "trends": {
+    "key_message": {
+      "en": "Current research connects the classical result to other mathematical structures, while the theorem itself remains established.",
+      "es": "La investigación actual conecta el resultado clásico con otras estructuras matemáticas, mientras el teorema permanece establecido."
+    },
+    "items": [
+      {
+        "trend": {
+          "en": "Formal verification of classical mathematical results",
+          "es": "Verificación formal de resultados matemáticos clásicos"
+        },
+        "kind": "practice",
+        "direction": "rising",
+        "horizon": "now",
+        "signal": {
+          "statement": {
+            "en": "A machine-checked formal proof of the three-gap theorem is available.",
+            "es": "Existe una demostración formal verificada por máquina del teorema de las tres distancias."
+          },
+          "source": "mayero"
+        },
+        "effect": {
+          "en": "Clarifies the difference between proof objects and numerical checks",
+          "es": "Aclara la diferencia entre objetos de prueba y verificaciones numéricas"
+        },
+        "confidence": "high"
+      },
+      {
+        "trend": {
+          "en": "Links between gap geometry and persistence",
+          "es": "Vínculos entre geometría de brechas y persistencia"
+        },
+        "kind": "practice",
+        "direction": "rising",
+        "horizon": "now",
+        "signal": {
+          "statement": {
+            "en": "Recent work studies persistence-diagram estimation using three-gap structure.",
+            "es": "Trabajo reciente estudia estimación de diagramas de persistencia mediante la estructura de tres distancias."
+          },
+          "source": "suarez"
+        },
+        "effect": {
+          "en": "Motivates a finite topological reading without claiming a general persistence engine",
+          "es": "Motiva una lectura topológica finita sin afirmar un motor general de persistencia"
+        },
+        "confidence": "medium"
+      },
+      {
+        "trend": {
+          "en": "Broader arithmetic and dynamical interpretations",
+          "es": "Interpretaciones aritméticas y dinámicas más amplias"
+        },
+        "kind": "practice",
+        "direction": "steady",
+        "horizon": "now",
+        "signal": {
+          "statement": {
+            "en": "Lattice and interval-exchange approaches place the theorem in wider dynamical settings.",
+            "es": "Los enfoques de retículos e intercambios de intervalos sitúan el teorema en marcos dinámicos más amplios."
+          },
+          "source": "taha"
+        },
+        "effect": {
+          "en": "Supports linked comparison views while preserving the classical theorem’s hypotheses",
+          "es": "Sustenta vistas comparativas vinculadas sin alterar las hipótesis clásicas"
+        },
+        "confidence": "medium"
+      }
+    ]
+  },
+  "proposal": {
+    "key_message": {
+      "en": "Keep one finite orbit as the shared object, compute each reading transparently, and state precisely what each certificate establishes.",
+      "es": "Mantener una órbita finita como objeto común, calcular cada lectura de forma transparente y declarar con precisión qué establece cada certificado."
+    },
+    "paragraphs": [
+      {
+        "en": "The atlas places a direct sorted-orbit oracle beside Farey and continued-fraction predictions, then links return gaps, cyclic words, lattice coordinates, finite H0, and allocator contrasts. Inputs, rational boundaries, tolerances, hashes, and theorem applicability remain visible so readers can reproduce and challenge each claim.",
+        "es": "El atlas vincula una órbita ordenada directa con predicciones de Farey y fracciones continuas, además de brechas de retorno, palabras cíclicas, retículos y topología finita. Expone entradas, fronteras racionales, tolerancias, hashes y aplicabilidad para reproducir y cuestionar cada afirmación."
+      }
+    ],
+    "four_cs": [
+      {
+        "c": {
+          "en": "Choice",
+          "es": "Elección"
+        },
+        "applies": {
+          "en": "Readers can choose the direct orbit, arithmetic certificate, or an explicitly non-theorem contrast.",
+          "es": "Los lectores pueden elegir la órbita directa, el certificado aritmético o un contraste explícitamente ajeno al teorema."
+        }
+      },
+      {
+        "c": {
+          "en": "Context",
+          "es": "Contexto"
+        },
+        "applies": {
+          "en": "Every view keeps the rotation hypothesis, finite point count, units, and endpoint convention visible.",
+          "es": "Cada vista mantiene visibles la hipótesis de rotación, cantidad finita de puntos, unidades y convención de extremos."
+        }
+      },
+      {
+        "c": {
+          "en": "Cost",
+          "es": "Costo"
+        },
+        "applies": {
+          "en": "The finite computation reports its inputs, runtime lane, residuals, and reproducible artifact size.",
+          "es": "El cálculo finito informa sus entradas, carril de ejecución, residuos y tamaño reproducible del artefacto."
+        }
+      },
+      {
+        "c": {
+          "en": "Control",
+          "es": "Control"
+        },
+        "applies": {
+          "en": "Independent invariants and explicit theorem status constrain what may be concluded from a run.",
+          "es": "Invariantes independientes y estado explícito del teorema limitan las conclusiones posibles de una corrida."
+        }
+      }
+    ],
+    "actions": [
+      {
+        "action": {
+          "en": "Inspect the direct circular partition and its wrap gap",
+          "es": "Inspeccionar la partición circular directa y su brecha de cierre"
+        },
+        "owner": {
+          "en": "Mathematics educator",
+          "es": "Docente de matemática"
+        },
+        "horizon": {
+          "en": "Now",
+          "es": "Ahora"
+        },
+        "check": {
+          "en": "Verify all N arcs sum to one turn",
+          "es": "Verificar que los N arcos sumen una vuelta"
+        }
+      },
+      {
+        "action": {
+          "en": "Compare the Farey prediction with the direct certificate",
+          "es": "Comparar la predicción de Farey con el certificado directo"
+        },
+        "owner": {
+          "en": "Researcher in dynamical systems",
+          "es": "Investigador de sistemas dinámicos"
+        },
+        "horizon": {
+          "en": "Now",
+          "es": "Ahora"
+        },
+        "check": {
+          "en": "Review matched lengths, multiplicities, and residual",
+          "es": "Revisar longitudes emparejadas, multiplicidades y residuo"
+        }
+      },
+      {
+        "action": {
+          "en": "Challenge a claim with rational and allocator controls",
+          "es": "Contrastar una afirmación con controles racionales y de asignador"
+        },
+        "owner": {
+          "en": "Computational mathematics reviewer",
+          "es": "Revisor de matemática computacional"
+        },
+        "horizon": {
+          "en": "Now",
+          "es": "Ahora"
+        },
+        "check": {
+          "en": "Confirm theorem-inapplicable status where required",
+          "es": "Confirmar el estado de teorema no aplicable cuando corresponda"
+        }
+      }
+    ],
+    "risks": [
+      {
+        "en": "Numerical agreement can be mistaken for proof or for evidence of irrationality.",
+        "es": "La concordancia numérica puede confundirse con una demostración o evidencia de irracionalidad."
+      }
+    ],
+    "unknowns": [
+      {
+        "en": "The atlas does not claim a new theorem, a new proof, or completeness across all extensions.",
+        "es": "El atlas no afirma un teorema nuevo, una demostración nueva ni completitud para todas las extensiones."
+      }
+    ],
+    "handoff": {
+      "en": "Use the research pages for definitions and interactive views for reproducible finite experiments.",
+      "es": "Consulte las páginas de investigación y las vistas interactivas para realizar experimentos finitos reproducibles."
+    }
+  },
+  "illustrations": {
+    "pain": {
+      "file": "executive/pain.svg",
+      "caption": {
+        "en": "Separate geometric and arithmetic accounts make it difficult to confirm that two displays share the same finite input.",
+        "es": "Exposiciones geométricas y aritméticas separadas dificultan confirmar que dos vistas comparten la misma entrada finita."
+      }
+    },
+    "situation": {
+      "file": "executive/situation.svg",
+      "caption": {
+        "en": "The literature supplies complementary proofs and structures, each with its own notation and scope.",
+        "es": "La literatura aporta demostraciones y estructuras complementarias, cada una con notación y alcance propios."
+      }
+    },
+    "proposal": {
+      "file": "executive/proposal.svg",
+      "caption": {
+        "en": "A shared orbit links the direct partition to arithmetic, symbolic, dual, and topological readings.",
+        "es": "Una órbita común vincula la partición directa con lecturas aritméticas, simbólicas, duales y topológicas."
+      }
+    }
+  },
+  "sources": [
+    {
+      "id": "hamada",
+      "title": {
+        "en": "A concise geometric proof of the three distance theorem",
+        "es": "A concise geometric proof of the three distance theorem"
+      },
+      "url": "https://arxiv.org/abs/2308.11999"
+    },
+    {
+      "id": "berthe",
+      "title": {
+        "en": "Three distance theorems and combinatorics on words",
+        "es": "Three distance theorems and combinatorics on words"
+      },
+      "url": "https://www.irif.fr/~berthe/Articles/3d.pdf"
+    },
+    {
+      "id": "marklof",
+      "title": {
+        "en": "The three gap theorem and the space of lattices",
+        "es": "The three gap theorem and the space of lattices"
+      },
+      "url": "https://arxiv.org/abs/1612.04906"
+    },
+    {
+      "id": "mayero",
+      "title": {
+        "en": "A formal proof of the three gap theorem in Coq",
+        "es": "A formal proof of the three gap theorem in Coq"
+      },
+      "url": "https://www.irif.fr/~mayero/three-gap/"
+    },
+    {
+      "id": "suarez",
+      "title": {
+        "en": "Estimation of persistence diagrams via the three gap theorem",
+        "es": "Estimation of persistence diagrams via the three gap theorem"
+      },
+      "url": "https://arxiv.org/abs/2603.04570"
+    },
+    {
+      "id": "taha",
+      "title": {
+        "en": "The three gap theorem, interval exchange transformations, and zippered rectangles",
+        "es": "The three gap theorem, interval exchange transformations, and zippered rectangles"
+      },
+      "url": "https://arxiv.org/abs/1708.04380"
+    },
+    {
+      "id": "hal",
+      "title": {
+        "en": "Three distance theorems and combinatorics on words",
+        "es": "Teoremas de tres distancias y combinatoria de palabras"
+      },
+      "url": "https://hal.science/hal-04769002/document"
+    },
+    {
+      "id": "dasgupta",
+      "title": {
+        "en": "Symmetries of the three-gap theorem",
+        "es": "Simetrías del teorema de las tres distancias"
+      },
+      "url": "https://doi.org/10.1080/00029890.2022.2158021"
+    }
+  ]
+}

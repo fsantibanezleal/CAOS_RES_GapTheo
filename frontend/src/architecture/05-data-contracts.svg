@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" class="arch-svg" role="img" aria-label="Scenario inputs become one validated finite orbit certificate">
+  <style>
+    .arch-svg text{font-family:var(--font-sans)}.arch-svg .mono{font-family:var(--font-mono)}
+    .arch-svg .panel{fill:var(--color-surface);stroke:var(--color-border);stroke-width:1.5}
+    .arch-svg .orbit{fill:var(--color-surface-2);stroke:var(--color-accent);stroke-width:1.5}
+    .arch-svg .cert{fill:var(--color-surface-2);stroke:var(--color-good);stroke-width:1.5}
+    .arch-svg .rule{stroke:var(--color-border);stroke-width:1}.arch-svg .arrow{fill:none;stroke:var(--color-fg-subtle);stroke-width:1.8;marker-end:url(#dc-arrow)}
+    .arch-svg .title{fill:var(--color-fg);font-size:18px;font-weight:700}.arch-svg .head{fill:var(--color-accent);font-size:12px;font-weight:700;letter-spacing:.08em}
+    .arch-svg .green{fill:var(--color-good)}.arch-svg .label{fill:var(--color-fg);font-size:13px;font-weight:600}.arch-svg .note{fill:var(--color-fg-subtle);font-size:11px}.arch-svg .mono{fill:var(--color-fg-subtle);font-size:11px}
+    .l-es{display:none}[data-arch-lang="es"] .l-en{display:none}[data-arch-lang="es"] .l-es{display:inline}
+  </style>
+  <defs><marker id="dc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="var(--color-fg-subtle)"/></marker></defs>
+  <text class="title l-en" x="30" y="38">From declared input to inspectable evidence</text><text class="title l-es" x="30" y="38">De la entrada declarada a la evidencia inspeccionable</text>
+  <rect class="panel" x="30" y="72" width="260" height="250" rx="18"/><text class="head l-en" x="52" y="104">01 · SCENARIO</text><text class="head l-es" x="52" y="104">01 · ESCENARIO</text>
+  <text class="label mono l-neutral" x="52" y="140">α · N · φ</text><text class="note l-en" x="52" y="164">step · point count · phase</text><text class="note l-es" x="52" y="164">paso · número de puntos · fase</text>
+  <line class="rule" x1="52" y1="184" x2="268" y2="184"/><text class="label mono l-neutral" x="52" y="216">allocator · seed · β</text><text class="note l-en" x="52" y="242">process and target interval</text><text class="note l-es" x="52" y="242">proceso e intervalo objetivo</text>
+  <text class="note l-en" x="52" y="282">mode states theorem applicability</text><text class="note l-es" x="52" y="282">el modo declara si aplica el teorema</text>
+  <path class="arrow" d="M300 196H350"/>
+  <circle class="orbit" cx="480" cy="196" r="112"/><circle cx="480" cy="196" r="80" fill="none" stroke="var(--color-border)" stroke-width="1.5"/>
+  <path d="M480 84A112 112 0 0 1 574 135" fill="none" stroke="var(--color-accent)" stroke-width="10" stroke-linecap="round"/><path d="M574 135A112 112 0 0 1 530 297" fill="none" stroke="var(--color-warn)" stroke-width="10" stroke-linecap="round"/><path d="M530 297A112 112 0 0 1 480 84" fill="none" stroke="var(--color-good)" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="480" cy="84" r="5" fill="var(--color-fg)"/><circle cx="574" cy="135" r="5" fill="var(--color-fg)"/><circle cx="530" cy="297" r="5" fill="var(--color-fg)"/><text class="head l-en" x="433" y="190">COMPUTE</text><text class="head l-es" x="432" y="190">CÁLCULO</text><text class="note mono l-neutral" x="416" y="214">sorted orbit</text><text class="note mono l-neutral" x="419" y="232">+ wrap gap</text>
+  <path class="arrow" d="M610 196H660"/>
+  <rect class="cert" x="670" y="72" width="260" height="250" rx="18"/><text class="head green l-en" x="692" y="104">02 · CERTIFICATE</text><text class="head green l-es" x="692" y="104">02 · CERTIFICADO</text>
+  <text class="label l-en" x="692" y="140">Observed gaps and multiplicities</text><text class="label l-es" x="692" y="140">Brechas observadas y multiplicidades</text>
+  <text class="note l-en" x="692" y="166">closure · arithmetic check · residuals</text><text class="note l-es" x="692" y="166">cierre · control aritmético · residuos</text>
+  <line class="rule" x1="692" y1="184" x2="908" y2="184"/><text class="label l-en" x="692" y="216">Provenance and content hash</text><text class="label l-es" x="692" y="216">Procedencia y hash del contenido</text>
+  <text class="note l-en" x="692" y="242">finite evidence; not an infinite proof</text><text class="note l-es" x="692" y="242">evidencia finita; no prueba infinita</text>
+  <rect class="panel" x="152" y="356" width="656" height="52" rx="14"/><text class="note l-en" x="180" y="388">The same certificate supplies every linked view; contrasts retain an inapplicable status.</text><text class="note l-es" x="180" y="388">El mismo certificado alimenta cada vista; los contrastes conservan un estado de no aplicabilidad.</text>
+</svg>

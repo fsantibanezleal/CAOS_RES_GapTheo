@@ -1,15 +1,24 @@
-# GapTheo documentation
+# GapTheo research documentation
 
-This wiki is the durable technical and scientific map for GapTheo 0.03.002.
+The documentation records the mathematical contract, reviewed literature, architecture, experimental protocol, and
+limits of the finite computations. The interactive app is a research instrument for studying examples of the
+three-gap theorem; it does not claim a new theorem or proof.
 
-## Themes
+## Research basis
 
-- [Architecture](architecture/architecture.md): product boundaries, lanes, and deployment.
-- [Frameworks](frameworks/frameworks.md): browser, shell, equations, and reference pipeline.
-- [Guides](guides/guides.md): local work, experiments, and scenario extension.
-- [Problem types](problem-types/problem-types.md): theorem, boundary, and contrast regimes.
-- [Use cases](use-cases/use-cases.md): the twelve canonical experiments.
-- [Data contract](data-contract/data-contract.md): input and certificate schemas.
-- [Research](research/deep-review.md): state of the art, proof families, and novelty assessment.
+- [Deep literature review](research/deep-review.md): theorem history, proof approaches, related structures, and open
+  questions, with linked sources.
+- [Mathematical contract](research/mathematical-contract.md): definitions, hypotheses, circular conventions, and
+  exact versus numerical claims.
+- [Reproducibility record](research/reproducibility.md): canonical inputs, certificate fields, validation, and replay.
+- [Manuscript source](../manuscripts/gaptheo/tex/main.tex): the research note developed from this review.
 
-The live application is the interactive layer. This wiki is the implementation and reproducibility layer. The manuscript is the publication-oriented layer.
+## Implementation
+
+- [Architecture overview](architecture/01_overview.md) and the remaining architecture notes describe computation
+  lanes, browser calculations, artifacts, and deployment.
+- [Design and requirements](design/SDD.md) maps product requirements to implementation and gates.
+- [Guides](guides.md) document the canonical bake, deployment, and research workflows.
+
+Results are drawn from the committed GapTheo artifacts. A finite numerical agreement is evidence about an example and
+the implementation; it does not establish irrationality or prove the infinite theorem.
