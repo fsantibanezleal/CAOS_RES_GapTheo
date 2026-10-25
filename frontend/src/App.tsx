@@ -1,7 +1,6 @@
-// The six routes on the shared shell (ADR-0016, ADR-0057 as amended 2026-10-04): the App route (/app) is the workbench,
-// the five documentation routes are DocPages. The product lands on the mathematical introduction: the root and every unknown path render <Landing />, which opens /introduction and forwards
-// an old App link such as /?case=B2 to /app?case=B2. The header order is the shell's STANDARD_ROUTES: App, Introduction,
-// Methodology, Implementation, Experiments, Benchmark; the landing never moves the tabs. Identity, licence and visibility come from product.json (one source,
+// The root and unknown paths use the shared shell Landing, which opens the Introduction and preserves legacy App deep links.
+// The workbench lives at /app, followed by the five documentation routes. The header order is the shell's STANDARD_ROUTES:
+// App, Introduction, Methodology, Implementation, Experiments, Benchmark. Identity, licence and visibility come from product.json (one source,
 // declared in product.json); the version is VERSION, injected at build.
 import { lazy, Suspense } from 'react';
 import { AppShell, CitationsProvider, Landing, STANDARD_ROUTES, type ShellConfig } from '@fasl-work/caos-app-shell';

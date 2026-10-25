@@ -134,7 +134,7 @@ function Overview({ es }: { es: boolean }) {
         const y = 235 + 118 * Math.sin(a);
         return <g key={v}><line x1="215" y1="235" x2={x} y2={y} className="sf-ray" /><circle cx={x} cy={y} r={i === 0 ? 7 : 5} className={i === 0 ? "sf-point sf-point-origin" : "sf-point"} /><text x={x + (x >= 215 ? 9 : -22)} y={y + (y >= 235 ? 17 : -9)} className="sf-small">x{i}</text></g>;
       })}
-      <text x="51" y="112" className="sf-kicker">{es ? "CÍRCULO / ORDEN CÍCLICO" : "CIRCLE / CYCLIC ORDER"}</text>
+      <text x="51" y="388" className="sf-kicker">{es ? "CÍRCULO / ORDEN CÍCLICO" : "CIRCLE / CYCLIC ORDER"}</text>
       <path d="M416 235H453" className="sf-flow" />
       <text x="416" y="220" className="sf-flow-label">{es ? "cortar en 0" : "cut at 0"}</text>
       <rect x="474" y="82" width="398" height="318" rx="14" className="sf-panel" />

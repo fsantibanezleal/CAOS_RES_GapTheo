@@ -109,7 +109,7 @@ export interface Certificate {
   topology: TopologyResult;
   word: WordResult;
   lattice: LatticeVector[];
-  extension: { points: number[]; distinctCount: number; groups: GapGroup[] };
+  extension: { points: Array<{ x: number; y: number; nearest: number; group: number }>; distinctCount: number; groups: GapGroup[] };
 }
 
 export const GAP_COLORS = [
@@ -196,6 +196,21 @@ function gapsFromSorted(points: OrbitPoint[]): Gap[] {
   });
 }
 
+function addFarthestPoint(values: number[]): void {
+  const current = sortNumbers(values);
+  const currentGaps = current.map((value, i) => {
+    const next = current[(i + 1) % current.length];
+    return {
+      start: value,
+      length: i === current.length - 1 ? 1 - value + next : next - value,
+    };
+  });
+  const largest = [...currentGaps].sort(
+    (a, b) => b.length - a.length || a.start - b.start,
+  )[0];
+  values.push(frac(largest.start + largest.length / 2));
+}
+
 function gapGroups(gaps: Gap[]): GapGroup[] {
   const ordered = [...gaps].sort((a, b) => a.length - b.length);
   const groups: GapGroup[] = [];
@@ -241,22 +256,15 @@ function allocatorValues(scenario: Scenario): OrbitPoint[] {
     const random = makeRandom(scenario.seed);
     for (let index = 0; index < scenario.pointCount; index += 1)
       values.push(random());
+  } else if (scenario.allocator === "anchors") {
+    values.push(frac(scenario.phase));
+    const anchorCount = Math.min(scenario.anchorCount, scenario.pointCount);
+    for (let index = 1; index < anchorCount; index += 1)
+      values.push(frac(scenario.phase + index / anchorCount));
+    while (values.length < scenario.pointCount) addFarthestPoint(values);
   } else {
     values.push(frac(scenario.phase));
-    for (let index = 1; index < scenario.pointCount; index += 1) {
-      const current = sortNumbers(values);
-      const currentGaps = current.map((value, i) => {
-        const next = current[(i + 1) % current.length];
-        return {
-          start: value,
-          length: i === current.length - 1 ? 1 - value + next : next - value,
-        };
-      });
-      const largest = [...currentGaps].sort(
-        (a, b) => b.length - a.length || a.start - b.start,
-      )[0];
-      values.push(frac(largest.start + largest.length / 2));
-    }
+    while (values.length < scenario.pointCount) addFarthestPoint(values);
   }
   return values.map((value, index) => ({
     id: "point-" + index,
@@ -403,7 +411,8 @@ function dualResult(scenario: Scenario): DualResult {
     if (scenario.strictBeta ? value < scenario.beta : value <= scenario.beta)
       selected.push(index);
   }
-  const returnGaps = selected
+  const shownIndices = selected.slice(0, scenario.pointCount);
+  const returnGaps = shownIndices
     .slice(1)
     .map((value, index) => value - selected[index]);
   const fakeGaps = returnGaps.map((length, index) => ({
@@ -416,8 +425,8 @@ function dualResult(scenario: Scenario): DualResult {
   }));
   const groups = gapGroups(fakeGaps);
   return {
-    selected: selected.slice(0, scenario.pointCount),
-    returnGaps: returnGaps.slice(0, Math.max(0, scenario.pointCount - 1)),
+    selected: shownIndices,
+    returnGaps,
     groups,
     regime:
       groups.length === 0
@@ -444,11 +453,16 @@ function topology(gaps: Gap[], threshold: number): TopologyResult {
       .filter((gap) => Math.abs(gap.length - value) < 1e-8)
       .map((gap) => gap.id),
   }));
-  const bars = gaps.map((gap, index) => ({
-    id: "bar-" + index,
+  // In the circular nearest-neighbour graph the final, largest edge closes a
+  // cycle and does not kill an H0 class. A minimum spanning tree therefore
+  // contains every observed gap except one largest gap.
+  const largest = Math.max(...gaps.map((gap) => gap.length));
+  const omitted = gaps.findIndex((gap) => Math.abs(gap.length - largest) < 1e-8);
+  const bars = gaps.filter((_, index) => index !== omitted).map((gap) => ({
+    id: gap.id,
     birth: 0,
     death: gap.length,
-  }));
+  })).sort((a, b) => a.death - b.death || a.id.localeCompare(b.id));
   return {
     threshold,
     components: Math.max(
@@ -512,25 +526,33 @@ function extension(
   alpha: number,
   beta: number,
   size: number,
-): { points: number[]; distinctCount: number; groups: GapGroup[] } {
-  const points: number[] = [];
-  for (let i = 0; i < size; i += 1) {
-    for (let j = 0; j < 3; j += 1) points.push(frac(i * alpha + j * beta));
-  }
-  const sorted = sortNumbers(points);
-  const gaps = sorted.map((value, index) => {
-    const next = sorted[(index + 1) % sorted.length];
-    return {
-      id: "ext-" + index,
-      start: value,
-      end: next,
-      length: index === sorted.length - 1 ? 1 - value + next : next - value,
-      type: "",
-      rank: index,
-    };
+): { points: Array<{ x: number; y: number; nearest: number; group: number }>; distinctCount: number; groups: GapGroup[] } {
+  const coordinates = Array.from({ length: size }, (_, n) => ({ x: frac(n * alpha), y: frac(n * beta) }));
+  const distances = coordinates.map((point, i) => {
+    let nearest = Infinity;
+    coordinates.forEach((other, j) => {
+      if (i === j) return;
+      const dx = Math.abs(point.x - other.x);
+      const dy = Math.abs(point.y - other.y);
+      nearest = Math.min(nearest, Math.hypot(Math.min(dx, 1 - dx), Math.min(dy, 1 - dy)));
+    });
+    return nearest;
   });
-  const groups = gapGroups(gaps);
-  return { points: sorted, distinctCount: groups.length, groups };
+  const sorted = [...distances].sort((a, b) => a - b);
+  const representatives: number[] = [];
+  sorted.forEach((distance) => {
+    if (!representatives.length || Math.abs(distance - representatives.at(-1)!) > 1e-8) representatives.push(distance);
+  });
+  const groups = representatives.map((length, index) => {
+    const count = distances.filter((distance) => Math.abs(distance - length) <= 1e-8).length;
+    return { type: String.fromCharCode(65 + index), length, count, share: count / distances.length, color: GAP_COLORS[index % GAP_COLORS.length] };
+  });
+  const points = coordinates.map((point, index) => ({
+    ...point,
+    nearest: distances[index],
+    group: representatives.findIndex((length) => Math.abs(distances[index] - length) <= 1e-8),
+  }));
+  return { points, distinctCount: groups.length, groups };
 }
 
 export function computeCertificate(
