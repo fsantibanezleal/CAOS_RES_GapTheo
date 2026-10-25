@@ -29,6 +29,9 @@ jobs:
         run: pip install -r requirements-dev.txt
       - name: Install frontend dependencies
         run: npm --prefix frontend ci
+      - name: Install Chromium for the measured browser gate
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
       - name: Validate product specification and repository paths
         env:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
