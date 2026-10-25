@@ -126,6 +126,8 @@ Adversarial checks include N=1 and small N, zero phase, exact rational inputs wi
 
 The cited literature already contains geometric, continued-fraction, word-theoretic, dynamical, formal, and interactive treatments. GapTheo’s defensible contribution is an integrated, inspectable finite research atlas: synchronized views share one explicit scenario; direct and arithmetic certificates are compared; contrast allocators expose hypothesis boundaries; and the app provides reproducible, bilingual, source-linked exploration. This is an implementation and pedagogy contribution, not a new theorem or a claim to supersede the cited mathematics.
 
+None claimed.
+
 Research update (25 October 2026): the current topology literature includes a 2026 method that uses the three-gap theorem and Persistent Künneth formula to approximate persistence diagrams of sliding-window embeddings of quasiperiodic signals. GapTheo does not implement that method. Its topology panel is a separate finite H₀ connectivity calculation in the intrinsic circle metric, with an explicit minimum-spanning-tree interpretation. The product contribution remains integration and reproducibility, not that paper's algorithm, a new theorem, classification, or validated learning outcome.
 
 ## Deploy driver
