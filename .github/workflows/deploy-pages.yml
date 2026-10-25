@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install pinned artifact-validation dependencies
+        run: pip install -r requirements-dev.txt
       - name: The committed artifacts are consistent, and Pages is this product's one deploy place
         run: |
           python scripts/check_artifacts.py
