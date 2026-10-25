@@ -18,8 +18,8 @@
         "es": "a lo sumo 3"
       },
       "unit": {
-        "en": "under the explicit hypothesis that the rotation step is irrational",
-        "es": "bajo la hipótesis explícita de que el paso de rotación es irracional"
+        "en": "under the explicit hypothesis that the rotation step is irrational, which finite decimal calculations cannot establish",
+        "es": "bajo la hipótesis explícita de que el paso de rotación es irracional, algo que un cálculo decimal finito no puede demostrar"
       },
       "source": "hamada"
     },
