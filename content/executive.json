@@ -19,7 +19,7 @@
       },
       "unit": {
         "en": "under the explicit hypothesis that the rotation step is irrational, which finite decimal calculations cannot establish",
-        "es": "bajo la hipótesis explícita de que el paso de rotación es irracional, algo que un cálculo decimal finito no puede demostrar"
+        "es": "bajo la hipótesis explícita de que el paso de rotación es irracional, algo que ningún cálculo decimal finito puede demostrar; la simulación solo muestra prefijos finitos de la órbita"
       },
       "source": "hamada"
     },
@@ -33,8 +33,8 @@
         "es": "N"
       },
       "unit": {
-        "en": "points from the initial sample through the last indexed point; the closing arc is counted too",
-        "es": "puntos desde el inicial hasta el último índice; también se cuenta el arco cíclico de cierre"
+        "en": "points through the last index; the closing arc back to the first is included, so all N gaps cover one circumference",
+        "es": "puntos hasta el último índice; también se incluye el arco de cierre al primero, por lo que las N brechas cubren una circunferencia completa"
       },
       "source": "berthe"
     },
