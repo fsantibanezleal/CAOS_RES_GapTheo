@@ -344,9 +344,9 @@
       "type": "b"
     }
   ],
-  "hash": "9b524d323e49d3ff0bb39660610a48f3d49b32de8f8a2947f9dce9c3bc0f0e82",
+  "hash": "bc2a851ee5b9e369ac87a083acb4f07499937b4e33bd20cda002f63b0e99de41",
   "method": "direct-sorted-orbit",
-  "methodVersion": "0.03.003",
+  "methodVersion": "0.03.004",
   "partitionResidual": 0.0,
   "pointCount": 34,
   "points": [

@@ -43,11 +43,11 @@ The compact, deterministic scenario and certificate contracts are `contracts/sce
 
 ## Technology and versions
 
-The browser application is TypeScript, React, Vite, and the pinned `@fasl-work/caos-app-shell` 0.19.1. The shell owns navigation, typography, tokens, tabs, accessibility primitives, and layout. Product styles are restricted to research-specific instrument geometry and visualization layout; they do not redefine shell colors, typography, page width, or component appearance. KaTeX renders equations. The deterministic offline certificate lane is Python; JSON schemas and committed artifacts form the reproducibility boundary. Exact package versions are recorded below and in `frontend/package-lock.json`.
+The browser application is TypeScript, React, Vite, and the pinned `@fasl-work/caos-app-shell` 0.19.2. The shell owns navigation, typography, tokens, tabs, accessibility primitives, and layout. Product styles are restricted to research-specific instrument geometry and visualization layout; they do not redefine shell colors, typography, page width, or component appearance. KaTeX renders equations. The deterministic offline certificate lane is Python; JSON schemas and committed artifacts form the reproducibility boundary. Exact package versions are recorded below and in `frontend/package-lock.json`.
 
 | component | package | version | use | alternative considered |
 |---|---|---|---|---|
-| Browser shell | `@fasl-work/caos-app-shell` | 0.19.1 | shared navigation, tokens, route tabs and accessibility | product-owned shell, rejected by ADR |
+| Browser shell | `@fasl-work/caos-app-shell` | 0.19.2 | shared navigation, tokens, route tabs and accessibility | product-owned shell, rejected by ADR |
 | Browser UI | `react` | 19.3.0 | stateful interactive workbench | hand-written DOM |
 | Browser renderer | `react-dom` | 19.3.0 | accessible component rendering | canvas-only UI |
 | Routing | `react-router` | 8.4.0 | six static routes and direct links | one long page |
@@ -150,7 +150,7 @@ GitHub Actions builds the static frontend, validates contracts and committed art
 |---|---|
 | ADR-0017 frontend bar | Six shell routes, bilingual content, inline citations, domain-specific interactive App, and research depth; every page and view still requires measured gate and screenshot evidence |
 | ADR-0070 | Focus applies to this interactive mathematical workbench; every App route and view retains the shell's Focus control and gate coverage |
-| ADR-0057 product template | Template v0.11.002 and shell 0.19.1 provide the common product baseline; all template example content must be replaced by GapTheo content |
+| ADR-0057 product template | Template v0.11.002 and shell 0.19.2 provide the common product baseline; all template example content must be replaced by GapTheo content |
 | ADR-0071 viewport and navigation | Shell owns page width and navigation; the workbench uses grouped, bounded views and responsive controls |
 | ADR-0075 design document | This SDD states the GapTheo problem, research basis, cases, methods, risks, and deploy boundary before declaring the implementation complete |
 | ADR-0078 template adoption | `.template-version` records the exact adopted template version; template residue is a failing gate, never an allowlist |

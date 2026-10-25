@@ -127,8 +127,8 @@ function citations(): Array<{ source: string; tab: number }> {
 }
 
 describe('the example executive view', () => {
-  it('the shell is pinned at the current product base version 0.19.1', () => {
-    expect(pkg.dependencies['@fasl-work/caos-app-shell']).toBe('0.19.1');
+  it('the shell is pinned at the current product base version 0.19.2', () => {
+    expect(pkg.dependencies['@fasl-work/caos-app-shell']).toBe('0.19.2');
     expect(EXECUTIVE_SCHEMA_VERSION).toBe('2.0.0');
   });
 
