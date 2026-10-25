@@ -11,8 +11,8 @@ export function Introduction() {
     <DocPage
       title={{ en: "Introduction", es: "Introducción" }}
       lede={t(
-        "We define the finite rotation orbit and its hypotheses, specify the circular partition and gap conventions, distinguish theorem guarantees from computed evidence, and connect geometric gaps to the arithmetic structures that organize exact changes across reproducible examples.",
-        "Definiciones, hipótesis, construcción de la órbita finita, convenciones de partición circular, descripciones aritméticas y frontera entre afirmaciones exactas del teorema y evidencia numérica reproducible para estudiar y verificar las tres distancias en ejemplos interactivos y reproducibles.",
+        "The finite orbit, circular-gap convention, and irrationality hypothesis are stated first. The research views then compare direct geometry with Farey intervals, continued fractions, dual return times, cyclic gap words, lattice coordinates, and a finite H₀ connectivity filtration.",
+        "Primero se definen la órbita finita, la convención de brechas circulares y la hipótesis de irracionalidad. Las vistas comparan luego la geometría directa con intervalos de Farey, fracciones continuas, retornos duales, palabras cíclicas, coordenadas reticulares y una filtración finita de conectividad H₀.",
       )}
     >
       <Tabs

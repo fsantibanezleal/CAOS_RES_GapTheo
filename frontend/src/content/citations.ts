@@ -62,4 +62,10 @@ export const CITATIONS: Citation[] = [
     citation: "A. Haynes and J. Marklof, Higher dimensional gap distributions.",
     url: "https://arxiv.org/abs/1301.4338",
   },
+  {
+    id: "haynesmarklof2020",
+    label: "Haynes and Marklof 2020",
+    citation: "A. Haynes and J. Marklof, A five distance theorem for Kronecker sequences.",
+    url: "https://arxiv.org/abs/2009.08444",
+  },
 ];

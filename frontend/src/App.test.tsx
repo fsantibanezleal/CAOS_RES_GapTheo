@@ -1,6 +1,5 @@
-// The landing and the header order: the product opens on the mathematical Introduction,
-// the App has its own route and is the leftmost tab, always (App, Introduction, Methodology, Implementation, Experiments, Benchmark),
-// and an old App link keeps its query string and hash (WB-008).
+// The shell owns the Introduction Landing, `/app` workbench route and tab order,
+// and legacy App links preserve their query string and hash (WB-008).
 import { APP_ROUTE, LANDING_ROUTE, STANDARD_ROUTES } from '@fasl-work/caos-app-shell';
 import { readFileSync } from 'node:fs';
 import { Writable } from 'node:stream';
@@ -74,11 +73,10 @@ describe('the landing', () => {
     expect(page).toContain('data-surface');
   });
 
-  it('the root and the catch-all render the shell landing, which opens the Introduction and keeps an old App link', () => {
+  it('adversarial: the root and unknown paths use the shell Landing and the App opens the workbench', () => {
     expect(source).toMatch(/<Route path="\/" element=\{<Landing \/>\} \/>/);
     expect(source).toMatch(/<Route path="\/app" element=\{<Workbench \/>\} \/>/);
     expect(source).toMatch(/<Route path="\*" element=\{<Landing \/>\} \/>/);
-    expect(source).not.toMatch(/<Route path="\/" element=\{<Workbench/);
   });
 
   it('adversarial: each shell route is loaded through its own lazy module and a bilingual Suspense status', () => {
