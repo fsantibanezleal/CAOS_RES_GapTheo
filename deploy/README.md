@@ -1,3 +1,7 @@
 # Deployment
 
-GitHub Actions builds the static frontend and publishes it to GitHub Pages. `frontend/public/CNAME` binds `gaptheo.fasl-work.com`. No VPS or runtime process is part of this product.
+GitHub Pages is the only deployment target. The workflow builds the static client from the reviewed commit and publishes
+it after CI succeeds on `main`. The live check verifies the build identity, all routes, and a missing-file response.
+There is no server service, reverse proxy, or environment secret in this product.
+
+See [Pages deployment](pages.md) for repository and custom-domain setup.

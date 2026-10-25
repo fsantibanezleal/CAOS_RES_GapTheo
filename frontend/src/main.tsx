@@ -1,19 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
+import 'katex/dist/katex.min.css';
 import '@fasl-work/caos-app-shell/styles.css';
+import '@fasl-work/caos-app-shell/chart.css';
 import './styles.css';
-import App from './App';
+import { App } from './App';
 
-const redirect = new URLSearchParams(window.location.search).get('redirect');
-if (redirect) {
-  window.history.replaceState(null, '', decodeURIComponent(redirect));
-}
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <StrictMode>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </StrictMode>,
 );

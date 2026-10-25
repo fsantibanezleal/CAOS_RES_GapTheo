@@ -1,0 +1,15 @@
+{
+  "name": "GapTheo",
+  "slug": "gaptheo",
+  "tagline": {
+    "en": "Reproducible computation and visualization of finite circle rotations and their gaps.",
+    "es": "Cómputo y visualización reproducibles de rotaciones finitas del círculo y sus brechas."
+  },
+  "repo": "https://github.com/fsantibanezleal/CAOS_RES_GapTheo",
+  "visibility": "public",
+  "license": "Apache-2.0",
+  "holder": "Felipe Santibáñez-Leal",
+  "year": 2026,
+  "app": "surface",
+  "focus": true
+}
