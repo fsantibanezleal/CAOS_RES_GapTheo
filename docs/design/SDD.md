@@ -51,7 +51,7 @@ The browser application is TypeScript, React, Vite, and the pinned `@fasl-work/c
 | Browser UI | `react` | 19.3.0 | stateful interactive workbench | hand-written DOM |
 | Browser renderer | `react-dom` | 19.3.0 | accessible component rendering | canvas-only UI |
 | Routing | `react-router` | 8.4.0 | six static routes and direct links | one long page |
-| Build | `vite` | 8.3.5 | static bundle and route materialization | server runtime |
+| Build | `vite` | 8.3.5 | lazy route bundles, separate React/KaTeX vendors, each JavaScript chunk at most 500 KiB, and route materialization | server runtime |
 | React integration | `@vitejs/plugin-react` | 6.1.1 | JSX transform in Vite | not applicable |
 | Type declarations | `@types/node` | 24.19.1 | build-script types | not applicable |
 | Type declarations | `@types/react` | 19.3.0 | component types | not applicable |

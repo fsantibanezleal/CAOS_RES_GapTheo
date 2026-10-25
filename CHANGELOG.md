@@ -3,6 +3,12 @@
 All notable changes to this product. Versions are X.XX.XXX (VERSION is the single source); every release is
 tagged.
 
+## [0.03.005], 2026-10-25
+
+### Changed
+
+- Load the workbench and research routes independently; enforce a 500 KiB JavaScript chunk ceiling with separate React and KaTeX vendor chunks.
+
 ## [0.03.004], 2026-10-25
 
 ### Fixed

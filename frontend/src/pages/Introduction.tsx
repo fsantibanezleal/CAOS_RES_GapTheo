@@ -1,6 +1,8 @@
+import { lazy, Suspense } from "react";
 import { DocPage, ExecutiveView, Tabs, useShellLang } from "@fasl-work/caos-app-shell";
 import executive from "../../../content/executive.json";
-import { IntroductionPage as TechnicalIntroduction } from "./ResearchPages";
+
+const TechnicalIntroduction = lazy(() => import("./IntroductionPage").then((module) => ({ default: module.IntroductionPage })));
 
 export function Introduction() {
   const es = useShellLang() === "es";
@@ -17,7 +19,7 @@ export function Introduction() {
         ariaLabel={t("Introduction views", "Vistas de introducción")}
         tabs={[
           { id: "executive", label: t("Research overview", "Panorama de investigación"), content: <ExecutiveView data={executive} base={import.meta.env.BASE_URL} /> },
-          { id: "technical", label: t("Technical introduction", "Introducción técnica"), content: <TechnicalIntroduction /> },
+          { id: "technical", label: t("Technical introduction", "Introducción técnica"), content: <Suspense fallback={<p className="caos-pending" data-state="loading" role="status" aria-label="Loading / Cargando">…</p>}><TechnicalIntroduction /></Suspense> },
         ]}
       />
     </DocPage>

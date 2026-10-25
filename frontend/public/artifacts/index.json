@@ -1,78 +1,78 @@
 {
   "artifacts": [
     {
-      "hash": "d15325847b3d565bb31310ff6478035835749927cc757939e4a7636364735319",
+      "hash": "d37912d79ba6a8afe4a20f3588ed666a68587cf0638431b5a10f7e45b35d47f0",
       "id": "golden-baseline",
       "path": "artifacts/golden-baseline.json",
       "status": "certified"
     },
     {
-      "hash": "1beecf77ce2be1d6c0944440e1ee5a32492fc2dbc10d6a6c4449072283e3d647",
+      "hash": "2ca6b37f48cecd932b59dab39a7b1e597f47ab5d0789c990b77703007f77b6ed",
       "id": "silver-ratio",
       "path": "artifacts/silver-ratio.json",
       "status": "certified"
     },
     {
-      "hash": "da27b379fb6595cba4665dfd9a16339e07be7963dfa56da2b2a5fd803ec9cb31",
+      "hash": "f3f37682ec5e5cba2611323a5d825a7b2f843aae2e8a2b9d329d08cc5bfa0ca4",
       "id": "sqrt-three",
       "path": "artifacts/sqrt-three.json",
       "status": "certified"
     },
     {
-      "hash": "70cd017c865aa3d29c46727079ceba5087190bb7821557bfd144c7cadaf25808",
+      "hash": "9f3f34ff338d64206a374810d6e3e3f9cb8461135d60b47146a42a4057fad000",
       "id": "e-tail",
       "path": "artifacts/e-tail.json",
       "status": "certified"
     },
     {
-      "hash": "601bb226a0434206dcc9f46d94450981061b88bd7ac6a406f9766e616f4324ae",
+      "hash": "40f069f93bfc274873e577cf5b4266c3eacedca255df2a0b24415ce7cc46bd60",
       "id": "pi-tail",
       "path": "artifacts/pi-tail.json",
       "status": "certified"
     },
     {
-      "hash": "b81927e2bf013f177586eaf6e4486f1ab094dc3baa41850850df06aadcfff2c0",
+      "hash": "458a18e71741c4e7476068a1f6d50125198bcc2d0c191e8788a16ee81084fee0",
       "id": "phase-shifted-golden",
       "path": "artifacts/phase-shifted-golden.json",
       "status": "certified"
     },
     {
-      "hash": "d614b3209a15ff923247653965fa7440e76ab9dde98f30847d14d27ee4a3a314",
+      "hash": "7075e26cc33dc3b57053a18b18bef95095f04ac9f8d1c6b8df9cb60110f7af7d",
       "id": "low-n-golden",
       "path": "artifacts/low-n-golden.json",
       "status": "certified"
     },
     {
-      "hash": "f76704299ceed67296aa37222507bf86469fc659ac7f76326eef3737fa7a4e1b",
+      "hash": "bc799557bbd8f3d79ec9f60475b1533c91a2053c6bd1fc78bc19e7d203808463",
       "id": "near-five-thirteenths",
       "path": "artifacts/near-five-thirteenths.json",
       "status": "certified"
     },
     {
-      "hash": "449cb13a37486812261e991ce5ac1e57353275a3b07951583091b4ee92e40829",
+      "hash": "3cce8a90c5b5b06d534610ae8d9b014a5150fa2e4ecb5d168e7d596d63b0f10d",
       "id": "rational-five-thirteenths",
       "path": "artifacts/rational-five-thirteenths.json",
       "status": "boundary"
     },
     {
-      "hash": "de6ed455519d59934cfdb79710eb82616263d812601f947a10ada4b3a3f862a8",
+      "hash": "d7869b7316de4919b54cadd2faebc5e8b0bbb0ba617bbe942d5974e6527d97d4",
       "id": "rational-eight-twenty-one",
       "path": "artifacts/rational-eight-twenty-one.json",
       "status": "boundary"
     },
     {
-      "hash": "bc2a851ee5b9e369ac87a083acb4f07499937b4e33bd20cda002f63b0e99de41",
+      "hash": "69d76335a50606826c11b1c22c530a3cae9ea6cc9f49433328005768c2624f85",
       "id": "farthest-contrast",
       "path": "artifacts/farthest-contrast.json",
       "status": "contrast"
     },
     {
-      "hash": "3cc0d0bd0b6eb50531bb4923018dbc3620a282c69b5c8b265898144d570015e1",
+      "hash": "0d63d89f3eca02c59a4656071bea7f946dcf45b9506cd93f4249bcfd8574bbf7",
       "id": "seeded-random-contrast",
       "path": "artifacts/seeded-random-contrast.json",
       "status": "contrast"
     }
   ],
   "count": 12,
-  "version": "0.03.004"
+  "version": "0.03.005"
 }
