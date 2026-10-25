@@ -10,7 +10,7 @@
 
 From the repository root:
 
-    python data_pipeline/run.py
+    python data-pipeline/run.py
     python scripts/validate_artifacts.py
     python -m unittest discover -s tests -p "test_*.py"
     npm --prefix frontend install

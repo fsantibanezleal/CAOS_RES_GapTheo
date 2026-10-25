@@ -1,0 +1,4 @@
+# Development and validation tools. Keep exact pins in sync with docs/design/SDD.md.
+pytest==9.1.1
+ruff==0.15.18
+jsonschema==4.26.0

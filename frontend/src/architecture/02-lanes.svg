@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" class="arch-svg" role="img" aria-label="Browser computation, Python reference and committed certificates">
+  <style>
+    .arch-svg text{font-family:var(--font-sans)}.arch-svg .mono{font-family:var(--font-mono)}
+    .arch-svg .panel{fill:var(--color-surface);stroke:var(--color-border);stroke-width:1.5}.arch-svg .web{stroke:var(--color-accent)}.arch-svg .offline{stroke:var(--color-warn)}.arch-svg .evidence{stroke:var(--color-good)}
+    .arch-svg .title{fill:var(--color-fg);font-size:18px;font-weight:700}.arch-svg .head{fill:var(--color-fg);font-size:14px;font-weight:700}.arch-svg .label{fill:var(--color-fg-subtle);font-size:11px}.arch-svg .path{fill:var(--color-fg);font-size:11px}
+    .l-es{display:none}[data-arch-lang="es"] .l-en{display:none}[data-arch-lang="es"] .l-es{display:inline}
+  </style>
+  <text class="title l-en" x="28" y="40">Three computational lanes, with separate responsibilities</text><text class="title l-es" x="28" y="40">Tres carriles de cálculo con responsabilidades separadas</text>
+  <rect class="panel web" x="28" y="72" width="285" height="260" rx="18"/><text class="head l-en" x="52" y="110">Interactive browser</text><text class="head l-es" x="52" y="110">Navegador interactivo</text>
+  <text class="label l-en" x="52" y="143">Recomputes the selected finite input</text><text class="label l-es" x="52" y="143">Recalcula la entrada finita seleccionada</text>
+  <text class="path mono l-neutral" x="52" y="180">frontend/src/core/gapEngine.ts</text><text class="label l-en" x="52" y="214">Controls update one shared certificate</text><text class="label l-es" x="52" y="214">Los controles actualizan un certificado común</text><text class="label l-en" x="52" y="246">No server or request-time bake</text><text class="label l-es" x="52" y="246">Sin servidor ni precálculo en cada solicitud</text>
+  <rect class="panel offline" x="338" y="72" width="285" height="260" rx="18"/><text class="head l-en" x="362" y="110">Python reference</text><text class="head l-es" x="362" y="110">Referencia en Python</text>
+  <text class="label l-en" x="362" y="143">Rebuilds named canonical scenarios</text><text class="label l-es" x="362" y="143">Reconstruye escenarios canónicos nombrados</text>
+  <text class="path mono l-neutral" x="362" y="180">data-pipeline/run.py</text><text class="label l-en" x="362" y="214">Checks direct and arithmetic results</text><text class="label l-es" x="362" y="214">Comprueba resultados directos y aritméticos</text><text class="label l-en" x="362" y="246">Runs locally before evidence is committed</text><text class="label l-es" x="362" y="246">Se ejecuta localmente antes de versionar evidencia</text>
+  <rect class="panel evidence" x="648" y="72" width="285" height="260" rx="18"/><text class="head l-en" x="672" y="110">Committed evidence</text><text class="head l-es" x="672" y="110">Evidencia versionada</text>
+  <text class="label l-en" x="672" y="143">Validated JSON scenarios and certificates</text><text class="label l-es" x="672" y="143">Escenarios y certificados JSON validados</text>
+  <text class="path mono l-neutral" x="672" y="180">data/artifacts/ · contracts/</text><text class="label l-en" x="672" y="214">Hashes bind the published case matrix</text><text class="label l-es" x="672" y="214">Los hashes vinculan la matriz publicada</text><text class="label l-en" x="672" y="246">Pages serves the reviewed static build</text><text class="label l-es" x="672" y="246">Pages sirve la compilación estática revisada</text>
+  <path d="M313 202H334M623 202H644" fill="none" stroke="var(--color-fg-subtle)" stroke-width="2"/><circle cx="323" cy="202" r="3" fill="var(--color-accent)"/><circle cx="633" cy="202" r="3" fill="var(--color-good)"/>
+  <text class="label l-en" x="28" y="380">The browser and Python implementations are checked for agreement; deployment validates and publishes committed artifacts.</text><text class="label l-es" x="28" y="380">La implementación del navegador se compara con Python; el despliegue valida y publica los artefactos versionados.</text>
+</svg>

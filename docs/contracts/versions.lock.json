@@ -1,0 +1,12 @@
+{
+  "scenario": {
+    "version": "1.0.0",
+    "schema": "contracts/scenario.schema.json",
+    "sha256": "54409ab2edb80499b797099ea335c75a4d69a907b3fb73d181130f13d1f3328d"
+  },
+  "certificate": {
+    "version": "1.0.0",
+    "schema": "contracts/certificate.schema.json",
+    "sha256": "4890d7e7bd4dd280b48411d6f0435c76b867e233ea86923a2ee1f46a4cb51f81"
+  }
+}

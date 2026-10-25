@@ -564,17 +564,21 @@ export function computeCertificate(
     points.length;
   const theoremStatus = contrast
     ? "contrast"
-    : scenario.alphaMode === "rational" || collision
+    : scenario.alphaMode === "rational" ||
+        scenario.alphaMode === "numeric" ||
+        collision
       ? "boundary"
       : sumCheck.holds
         ? "certified"
         : "warning";
   const theoremMessage = contrast
     ? "Contrast process: the allocator is not an arithmetic rotation."
+    : scenario.alphaMode === "numeric"
+      ? "Numeric input: irrationality is not established. The finite orbit is computed without asserting the theorem."
     : scenario.alphaMode === "rational" || collision
       ? "Boundary case: rational or collision-prone input. The irrational theorem is not asserted."
       : theoremStatus === "certified"
-        ? "Certificate agrees: at most three gaps, with additive largest gap when three occur."
+        ? "Conditional certificate: assuming the declared irrationality hypothesis, the finite check satisfies the three-gap bound. The computation does not prove irrationality."
         : "Diagnostic warning: direct and structural checks need attention.";
   const threshold =
     topologyThreshold ?? Math.max(...gaps.map((gap) => gap.length)) * 0.55;

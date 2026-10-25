@@ -1,0 +1,2 @@
+# The offline lane. GapTheo's canonical numerical certificate pipeline uses Python's standard library.
+-r data-pipeline/requirements.txt

@@ -4,46 +4,64 @@ on:
   push:
     branches: [main, develop]
   workflow_dispatch:
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
-  analytic:
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python scripts/check_content_standards.py
-      - run: python scripts/check_template_residue.py
-      - run: python scripts/check_product_completeness.py
-      - run: python scripts/check_frontend_adr.py
-      - run: python data_pipeline/run.py --output "${{ runner.temp }}/gaptheo-smoke"
-      - run: python scripts/validate_artifacts.py
-      - run: python -m unittest discover -s tests -p "test_*.py"
-
-      - name: CI budget, trunk-only triggers, no training (ADR-0074)
-        run: python scripts/check_ci_budget.py
-  frontend:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run test
-      - run: npm run build
+      - name: Install pinned validation dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+      - name: Validate product specification and repository paths
+        env:
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+        run: |
+          python scripts/check_sdd.py
+          python scripts/check_doc_paths.py
+          python scripts/check_readme_areas.py
+          python scripts/check_tech_matrix.py
+          python scripts/check_contracts.py docs/contracts/catalog.md
+          python scripts/check_skeleton.py docs/contracts/catalog.md
+          if [[ "$GITHUB_EVENT_BEFORE" =~ ^[0-9a-f]{40}$ ]] && [ "$GITHUB_EVENT_BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            python scripts/check_contract_versions.py --base "$GITHUB_EVENT_BEFORE"
+          else
+            python scripts/check_contract_versions.py --base origin/develop
+          fi
+          python scripts/check_documents.py
+      - name: Validate content and generated research data
+        run: |
+          python scripts/check_content_standards.py
+          python scripts/check_template_residue.py
+          python scripts/check_version_coherence.py
+          python scripts/check_product_completeness.py
+          python scripts/check_frontend_adr.py
+          python scripts/check_web_baseline.py
+          python scripts/check_artifacts.py
+          python scripts/check_notebooks.py
+          python scripts/check_svg_animation.py
+          python scripts/check_deploy_place.py
+      - name: Frontend, build, and shell rendering gates
+        run: |
+          npm --prefix frontend run typecheck
+          npm --prefix frontend test
+          npm --prefix frontend run build
+          npm --prefix frontend run gate
+      - name: CI budget guard
+        run: python scripts/check_ci_budget.py

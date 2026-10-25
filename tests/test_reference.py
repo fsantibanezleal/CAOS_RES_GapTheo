@@ -4,14 +4,15 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+import jsonschema
 
-from data_pipeline.gaptheo.model import allocate, certificate, continued_fraction, gap_partition, star_discrepancy
-from data_pipeline.gaptheo.pipeline import REPO_ROOT, run_pipeline
-from data_pipeline.gaptheo.stages.ingest import ingest
-from data_pipeline.gaptheo.stages.preprocess import preprocess
+from pipeline.gaptheo.model import allocate, certificate, continued_fraction, gap_partition, star_discrepancy
+from pipeline.gaptheo.pipeline import REPO_ROOT, run_pipeline
+from pipeline.gaptheo.stages.ingest import ingest
+from pipeline.gaptheo.stages.preprocess import preprocess
 
 
-class ReferenceTests(unittest.TestCase):
+class TestReference(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.scenarios = preprocess(ingest(REPO_ROOT / "data" / "input" / "canonical-scenarios.json"))
@@ -23,7 +24,7 @@ class ReferenceTests(unittest.TestCase):
         self.assertGreaterEqual(len(self.scenarios), 12)
         self.assertEqual(len(self.scenarios), len({item["id"] for item in self.scenarios}))
 
-    def test_irrational_rotation_cases_respect_three_gap_bound(self) -> None:
+    def test_adversarial_irrational_rotation_cases_respect_three_gap_bound(self) -> None:
         theorem_cases = [item for item in self.scenarios if item["allocator"] == "rotation" and item["alphaMode"] != "rational"]
         for scenario in theorem_cases:
             with self.subTest(scenario=scenario["id"]):
@@ -31,6 +32,23 @@ class ReferenceTests(unittest.TestCase):
                 self.assertLessEqual(result["distinctCount"], 3)
                 self.assertTrue(result["sumCheck"]["holds"])
                 self.assertLess(result["partitionResidual"], 1e-10)
+
+    def test_adversarial_scenario_and_certificate_schemas_reject_missing_fields(self) -> None:
+        scenario_schema = json.loads((REPO_ROOT / "contracts" / "scenario.schema.json").read_text(encoding="utf-8"))
+        certificate_schema = json.loads((REPO_ROOT / "contracts" / "certificate.schema.json").read_text(encoding="utf-8"))
+        scenario = dict(self.scenario("golden-baseline"))
+        scenario.pop("alpha")
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(scenario, scenario_schema)
+        result = certificate(self.scenario("golden-baseline"))
+        result.pop("groups")
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(result, certificate_schema)
+
+    def test_adversarial_changing_rotation_step_changes_the_certificate(self) -> None:
+        scenario = self.scenario("golden-baseline")
+        changed = dict(scenario, alpha=float(scenario["alpha"]) + 0.001)
+        self.assertNotEqual(certificate(scenario)["hash"], certificate(changed)["hash"])
 
     def test_rational_cases_are_boundaries(self) -> None:
         for scenario_id in ("rational-five-thirteenths", "rational-eight-twenty-one"):

@@ -1,0 +1,18 @@
+{
+  "id": "golden-baseline",
+  "name": "Golden conjugate",
+  "nameEs": "Conjugado áureo",
+  "category": "Irrational rotations",
+  "expression": "(sqrt(5)-1)/2",
+  "anchor": "Badly approximable baseline with N=34",
+  "alpha": 0.6180339887498949,
+  "alphaMode": "irrational",
+  "rationalP": 5,
+  "rationalQ": 13,
+  "pointCount": 34,
+  "phase": 0,
+  "beta": 0.31,
+  "allocator": "rotation",
+  "seed": 17,
+  "strictBeta": true
+}
