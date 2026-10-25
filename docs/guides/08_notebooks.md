@@ -8,6 +8,6 @@ Run `python scripts/check_notebooks.py` for the static layout and content gate. 
 kernels, use `python scripts/run_notebooks.py`. Check mode requires an external temporary root, for example:
 
 ```powershell
-$env:CAOS_TEMP_ROOT='D:\_Temp\GapTheo-notebooks'
+$env:CAOS_TEMP_ROOT = Join-Path $env:TEMP 'GapTheo-notebooks'
 python scripts/run_notebooks.py --check
 ```
