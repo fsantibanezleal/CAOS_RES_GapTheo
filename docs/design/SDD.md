@@ -1,6 +1,6 @@
 # GapTheo software design document
 
-Status: implementation complete; owner review pending
+Status: full implementation in progress; release pending validation and owner review
 
 GapTheo is a bilingual research instrument for finite orbits of circle rotations. Its core object is the ordered partition induced by `{nα + φ} mod 1`; it places the direct geometric computation beside arithmetic and dynamical descriptions, and makes theorem hypotheses explicit in every result. It is an exploratory and reproducibility tool, not a proof assistant and not a claim of new theorem-level results.
 
@@ -108,7 +108,7 @@ The app is statically deployed on GitHub Pages at `https://gaptheo.fasl-work.com
 | Cyclic gap word | Inspect adjacency and symbol sequence of grouped gap classes | Exploratory symmetry observations are not a complete classification |
 | H₀ threshold filtration | Show component merges as threshold crosses observed gaps | Finite one-dimensional construction; no claim of higher homology |
 | Lattice and interval-exchange interpretations | Provide geometric context for related formulations | Explanatory views; they do not replace the direct certificate |
-| Two-frequency extension | Contrast higher-dimensional distance behavior | Extension panel only; the one-dimensional theorem is not generalized |
+| Two-frequency torus contrast | Plot n(alpha,beta) mod 1 and periodic-Euclidean nearest-neighbor classes | Extension panel only; a separate higher-dimensional theorem, not a generalization of circular gaps |
 
 No learned model is relevant to this theorem demonstration: the outputs are exactly computable from the finite input and adding an ML method would obscure rather than improve the mathematical contract.
 
@@ -126,7 +126,9 @@ Adversarial checks include N=1 and small N, zero phase, exact rational inputs wi
 
 The cited literature already contains geometric, continued-fraction, word-theoretic, dynamical, formal, and interactive treatments. GapTheo’s defensible contribution is an integrated, inspectable finite research atlas: synchronized views share one explicit scenario; direct and arithmetic certificates are compared; contrast allocators expose hypothesis boundaries; and the app provides reproducible, bilingual, source-linked exploration. This is an implementation and pedagogy contribution, not a new theorem or a claim to supersede the cited mathematics.
 
-None claimed. The integrated finite atlas, bilingual explanations, and synchronized views are product and pedagogy work; they are not claimed as a new theorem, classification, or validated learning outcome.
+None claimed.
+
+Research update (25 October 2026): the current topology literature includes a 2026 method that uses the three-gap theorem and Persistent Künneth formula to approximate persistence diagrams of sliding-window embeddings of quasiperiodic signals. GapTheo does not implement that method. Its topology panel is a separate finite H₀ connectivity calculation in the intrinsic circle metric, with an explicit minimum-spanning-tree interpretation. The product contribution remains integration and reproducibility, not that paper's algorithm, a new theorem, classification, or validated learning outcome.
 
 ## Deploy driver
 

@@ -134,7 +134,7 @@ function Overview({ es }: { es: boolean }) {
         const y = 235 + 118 * Math.sin(a);
         return <g key={v}><line x1="215" y1="235" x2={x} y2={y} className="sf-ray" /><circle cx={x} cy={y} r={i === 0 ? 7 : 5} className={i === 0 ? "sf-point sf-point-origin" : "sf-point"} /><text x={x + (x >= 215 ? 9 : -22)} y={y + (y >= 235 ? 17 : -9)} className="sf-small">x{i}</text></g>;
       })}
-      <text x="51" y="112" className="sf-kicker">{es ? "CÍRCULO / ORDEN CÍCLICO" : "CIRCLE / CYCLIC ORDER"}</text>
+      <text x="51" y="388" className="sf-kicker">{es ? "CÍRCULO / ORDEN CÍCLICO" : "CIRCLE / CYCLIC ORDER"}</text>
       <path d="M416 235H453" className="sf-flow" />
       <text x="416" y="220" className="sf-flow-label">{es ? "cortar en 0" : "cut at 0"}</text>
       <rect x="474" y="82" width="398" height="318" rx="14" className="sf-panel" />
@@ -253,7 +253,7 @@ function Continued({ es }: { es: boolean }) {
       <rect x="36" y="86" width="354" height="304" rx="14" className="sf-panel" />
       <text x="58" y="115" className="sf-kicker">{es ? "RECURRENCIA ENTERA" : "INTEGER RECURRENCE"}</text>
       <text x="65" y="151" className="sf-table-head">k</text><text x="126" y="151" className="sf-table-head">pₖ/qₖ</text><text x="244" y="151" className="sf-table-head">|qₖα−pₖ|</text>
-      {rows.map((r,i)=><g key={r[0]}><line x1="58" y1={165+i*34} x2="366" y2={165+i*34} className="sf-grid" /><text x="68" y={188+i*34} className="sf-mono">{i}</text><text x="126" y={188+i*34} className="sf-label">{r[1]}/{r[0]}</text><rect x="244" y={176+i*34} width={r[2]*250} height="11" rx="4" className={i%2?"sf-gap-b":"sf-gap-a"}/><text x="354" y={188+i*34} textAnchor="end" className="sf-small">{new Intl.NumberFormat(es ? "es-ES" : "en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false }).format(r[2])}</text></g>)}
+      {rows.map((r,i)=><g key={r[0]}><line x1="58" y1={165+i*34} x2="366" y2={165+i*34} className="sf-grid" /><text x="68" y={188+i*34} className="sf-mono">{i}</text><text x="126" y={188+i*34} className="sf-label">{r[1]}/{r[0]}</text><rect x="244" y={176+i*34} width={r[2]*250} height="11" rx="4" className={i%2?"sf-gap-b":"sf-gap-a"}/><text x="378" y={188+i*34} textAnchor="end" className="sf-small">{new Intl.NumberFormat(es ? "es-ES" : "en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false }).format(r[2])}</text></g>)}
       <rect x="426" y="86" width="438" height="304" rx="14" className="sf-plot" />
       <text x="448" y="115" className="sf-kicker">{es ? "EVENTOS AL VARIAR N" : "EVENTS AS N CHANGES"}</text>
       <line x1="466" y1="326" x2="832" y2="326" className="sf-axis" />

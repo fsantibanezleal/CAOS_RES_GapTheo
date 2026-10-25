@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import {
   Callout,
   CaseSelector,
-  Cite,
   InlineMath,
   Refs,
   SurfacePage,
@@ -235,11 +234,12 @@ function CircleOrbit({
 }) {
   const es = useShellLang() === "es";
   const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(1);
   const controller = usePausedViz(
     (_dt, elapsed) => {
       const next = Math.min(
         certificate.points.length,
-        1 + Math.floor(elapsed / 90),
+        1 + Math.floor((elapsed * speed) / 90),
       );
       setStep(next);
       if (next >= certificate.points.length) {
@@ -249,7 +249,7 @@ function CircleOrbit({
       return true;
     },
     {
-      durationMs: Math.max(500, certificate.points.length * 90),
+      durationMs: Math.max(500, (certificate.points.length * 90) / speed),
       autoStart: false,
       onComplete: () => setPlaying(false),
     },
@@ -280,7 +280,7 @@ function CircleOrbit({
     setPlaying(!playing);
   };
   return (
-    <div className="orbit-stage">
+    <div className={playing ? "orbit-stage is-playing" : "orbit-stage"}>
       <svg
         viewBox="40 40 440 440"
         role="img"
@@ -394,7 +394,23 @@ function CircleOrbit({
         <span className="mono orbit-readout">
           {String(step).padStart(2, "0")} / {certificate.points.length}
         </span>
+        <label className="orbit-speed">
+          <span>{es ? "Velocidad" : "Speed"}</span>
+          <input
+            aria-label={es ? "Velocidad de reproducción" : "Playback speed"}
+            type="range"
+            min="0.5"
+            max="3"
+            step="0.5"
+            value={speed}
+            onChange={(event) => setSpeed(Number(event.target.value))}
+          />
+          <b>{speed}×</b>
+        </label>
       </div>
+      {certificate.points.length > 18 && <small className="quiet orbit-density">{es
+        ? `Se muestran ${certificate.points.length} puntos; las etiquetas se reducen para conservar la legibilidad.`
+        : `${certificate.points.length} points are shown; labels are reduced to preserve legibility.`}</small>}
     </div>
   );
 }
@@ -474,6 +490,7 @@ function Explore({
                   ? "Asignador de punto más lejano"
                   : "Farthest-point allocator"}
               </option>
+              <option value="anchors">{es ? "Anclas y bisección" : "Anchors and bisection"}</option>
             </select>
           </label>
           <Segmented
@@ -556,6 +573,23 @@ function Explore({
               max={999}
               step={1}
             />
+          )}
+          {scenario.allocator === "anchors" && (
+            <>
+              <Field
+                label={es ? "Cantidad de anclas" : "Number of anchors"}
+                value={scenario.anchorCount}
+                onChange={(anchorCount) => update({ anchorCount })}
+                min={1}
+                max={4}
+                step={1}
+              />
+              <Callout variant="honest" title={es ? "Proceso de contraste" : "Contrast process"}>
+                <span>{es
+                  ? "Se colocan primero anclas uniformes desde la fase seleccionada; las posiciones restantes bisecan siempre el mayor arco vacío. No es una órbita de rotación."
+                  : "Uniform anchors are placed first from the selected phase; remaining points repeatedly bisect the largest empty arc. This is not a rotation orbit."}</span>
+              </Callout>
+            </>
           )}
           {scenario.allocator === "farthest" && (
             <Callout
@@ -751,10 +785,10 @@ function Explore({
                 ? es
                   ? "Cada punto nuevo de la rotación divide el intervalo que lo contiene."
                   : "Each new rotation point splits the interval containing it."
-                : scenario.allocator === "farthest"
+                : scenario.allocator === "farthest" || scenario.allocator === "anchors"
                   ? es
-                    ? "Cada punto nuevo es el punto medio del mayor arco vacío actual."
-                    : "Each new point bisects the largest current empty arc."
+                    ? scenario.allocator === "anchors" ? "Las anclas se insertan primero y las posiciones restantes bisecan el mayor arco vacío." : "Cada punto nuevo es el punto medio del mayor arco vacío actual."
+                    : scenario.allocator === "anchors" ? "Anchors are inserted first; remaining points bisect the largest empty arc." : "Each new point bisects the largest current empty arc."
                   : es
                     ? "La semilla genera cada punto; las divisiones se registran después del cálculo."
                     : "The seed generates each point; the resulting splits are recorded after computation."}
@@ -774,12 +808,24 @@ function ProofAtlas({
   scenario: Scenario;
 }) {
   const es = useShellLang() === "es";
-  const cells = Array.from({ length: 14 }, (_, index) => ({
-    x: 0.08 + index * 0.062,
-    width: 0.055 + (index % 3) * 0.012,
-    shade: index % 2,
-  }));
-  const cursor = 52 + scenario.alpha * 540;
+  const [a, b] = certificate.farey.left;
+  const [c, d] = certificate.farey.right;
+  const leftAlpha = a / b;
+  const rightAlpha = c / d;
+  const span = rightAlpha - leftAlpha;
+  const x0 = 54;
+  const x1 = 590;
+  const y0 = 226;
+  const y1 = 44;
+  const lineSpecs = [
+    { label: "a", value: (alpha: number) => b * alpha - a, count: scenario.pointCount - b, color: "var(--color-accent)" },
+    { label: "b", value: (alpha: number) => c - d * alpha, count: scenario.pointCount - d, color: "var(--color-magenta)" },
+    { label: "c", value: (alpha: number) => (b - d) * alpha + c - a, count: b + d - scenario.pointCount, color: "var(--color-warn)" },
+  ].filter((line) => line.count > 0);
+  const lineMax = Math.max(1e-9, ...lineSpecs.flatMap((line) => [line.value(leftAlpha), line.value(rightAlpha)]));
+  const pointX = (alpha: number) => span > 1e-12 ? x0 + ((alpha - leftAlpha) / span) * (x1 - x0) : (x0 + x1) / 2;
+  const pointY = (length: number) => y0 - (length / lineMax) * (y0 - y1);
+  const cursor = pointX(scenario.alpha);
   return (
     <div className="deep-grid">
       <section className="card atlas-panel">
@@ -794,11 +840,9 @@ function ProofAtlas({
                 ? "Celda de Farey para α y N actuales"
                 : "Farey cell for the current α and N"}
             </h2>
-            <p>
-              At fixed N, the alpha-height diagram changes combinatorial type
-              only at Farey events. The live cursor is not decoration: it reads
-              the exact candidate lengths below.
-            </p>
+            <p>{es
+              ? "Las rectas se calculan con los vecinos racionales que delimitan la celda activa y el N actual. Cada pendiente y multiplicidad proviene de la fórmula de longitudes de Farey; el cursor marca el alfa seleccionado."
+              : "The plotted lines are computed from the rational neighbours bounding the active cell at the current N. Each slope and multiplicity comes from the Farey gap formulas; the cursor marks the selected alpha."}</p>
           </div>
           <StatusBadge certificate={certificate} />
         </div>
@@ -806,7 +850,7 @@ function ProofAtlas({
           className="atlas-svg"
           viewBox="0 0 640 290"
           role="img"
-          aria-label="Farey parameter atlas"
+          aria-label={es ? "Longitudes de brecha de Farey dentro de la celda activa" : "Farey gap lengths inside the active cell"}
         >
           <rect
             x="0"
@@ -816,50 +860,17 @@ function ProofAtlas({
             rx="16"
             fill="var(--color-surface)"
           />
-          {cells.map((cell, i) => (
-            <g key={i}>
-              <rect
-                x={cell.x * 640}
-                y={34 + (i % 2) * 18}
-                width={cell.width * 640}
-                height={215 - (i % 4) * 22}
-                fill={cell.shade ? "var(--color-magenta)" : "var(--color-accent)"}
-                opacity=".08"
-              />
-              <line
-                x1={cell.x * 640}
-                y1="28"
-                x2={cell.x * 640 + cell.width * 640}
-                y2="248"
-                stroke={cell.shade ? "var(--color-magenta)" : "var(--color-accent)"}
-                opacity=".22"
-                strokeDasharray="3 5"
-              />
-            </g>
-          ))}
-          {[0, 1, 2].map((i) => (
-            <path
-              key={i}
-              d={
-                "M 20 " +
-                (236 - i * 58) +
-                " C 180 " +
-                (220 - i * 34) +
-                ", 340 " +
-                (170 - i * 20) +
-                ", 620 " +
-                (45 + i * 42)
-              }
-              stroke={[
-                "var(--color-accent)",
-                "var(--color-magenta)",
-                "var(--color-warn)",
-              ][i]}
-              strokeWidth="2"
-              fill="none"
-              opacity=".85"
-            />
-          ))}
+          {[0, 0.25, 0.5, 0.75, 1].map((fraction) => {
+            const y = y0 - fraction * (y0 - y1);
+            return <g key={fraction}><line x1={x0} x2={x1} y1={y} y2={y} stroke="var(--color-border)" strokeWidth="1" /><text x={x0 - 8} y={y + 4} textAnchor="end" fill="var(--color-fg-subtle)" fontSize="10">{formatNumber(lineMax * fraction, 3, es)}</text></g>;
+          })}
+          <line x1={x0} x2={x1} y1={y0} y2={y0} stroke="var(--color-fg-subtle)" />
+          {lineSpecs.map((line) => {
+            const value0 = Math.max(0, line.value(leftAlpha));
+            const value1 = Math.max(0, line.value(rightAlpha));
+            const current = Math.max(0, line.value(scenario.alpha));
+            return <g key={line.label}><path d={`M ${x0} ${pointY(value0)} L ${x1} ${pointY(value1)}`} stroke={line.color} strokeWidth="3" fill="none" /><circle cx={cursor} cy={pointY(current)} r="4.5" fill={line.color} stroke="var(--color-surface)" strokeWidth="2" /><text x={x1 - 4} y={pointY(value1) - 7} textAnchor="end" fill={line.color} fontSize="11" fontWeight="700">{line.label} · ×{line.count}</text></g>;
+          })}
           <line
             x1={cursor}
             x2={cursor}
@@ -869,25 +880,15 @@ function ProofAtlas({
             strokeWidth="2"
           />
           <circle cx={cursor} cy="18" r="6" fill="var(--color-fg)" />
-          <text x="22" y="276" fill="var(--color-fg-subtle)" fontSize="11">
-            0
-          </text>
-          <text x="600" y="276" fill="var(--color-fg-subtle)" fontSize="11">
-            1
-          </text>
+          <text x={x0} y="258" fill="var(--color-fg-subtle)" fontSize="11">{a}/{b}</text>
+          <text x={x1} y="258" textAnchor="end" fill="var(--color-fg-subtle)" fontSize="11">{c}/{d}</text>
           <text x={cursor + 9} y="30" fill="var(--color-fg)" fontSize="11">
             α = {formatNumber(scenario.alpha, 4, es)}
           </text>
         </svg>
         <div className="atlas-axis">
-          <span>
-            {es ? "Celdas de Farey de orden N" : "Farey cells of order N"}
-          </span>
-          <span>
-            {es
-              ? "altura h = parte fraccionaria"
-              : "height h = fractional part"}
-          </span>
+          <span>{es ? `Celda activa para N = ${scenario.pointCount}` : `Active Farey cell at N = ${scenario.pointCount}`}</span>
+          <span>{es ? "longitud normalizada en vueltas" : "normalized gap length in turns"}</span>
         </div>
       </section>
       <aside className="stack">
@@ -958,12 +959,14 @@ function ProofAtlas({
 function ReturnGaps({
   certificate,
   scenario,
+  setScenario,
 }: {
   certificate: Certificate;
   scenario: Scenario;
+  setScenario: (next: Scenario) => void;
 }) {
   const es = useShellLang() === "es";
-  const selected = certificate.dual.selected.slice(0, 22);
+  const selected = certificate.dual.selected;
   return (
     <div className="deep-grid">
       <section className="card return-hero">
@@ -981,6 +984,28 @@ function ReturnGaps({
             </p>
           </div>
           <span className="regime-badge">{certificate.dual.regime}</span>
+        </div>
+        <div className="return-controls">
+          <Field
+            label={es ? "Longitud del intervalo β" : "Target interval length β"}
+            value={scenario.beta}
+            onChange={(beta) => setScenario({ ...scenario, beta })}
+            min={0.02}
+            max={0.98}
+            step={0.005}
+          />
+          <label className="select-field return-endpoint">
+            <span>{es ? "Extremo del intervalo" : "Interval endpoint"}</span>
+            <select
+              value={scenario.strictBeta ? "strict" : "inclusive"}
+              onChange={(event) =>
+                setScenario({ ...scenario, strictBeta: event.target.value === "strict" })
+              }
+            >
+              <option value="strict">{es ? "Semiabierto [0, β)" : "Half-open [0, β)"}</option>
+              <option value="inclusive">{es ? "Cerrado [0, β]" : "Closed [0, β]"}</option>
+            </select>
+          </label>
         </div>
         <div className="return-track">
           <div
@@ -1029,10 +1054,9 @@ function ReturnGaps({
             <Info size={15} /> {es ? "CONVENCIÓN" : "CONVENTION"}
           </div>
           <p className="small-copy">
-            The strict boundary excludes a visit exactly at beta. Toggle this
-            convention in the experiment source to see endpoint sensitivity.
-            This panel is a dual theorem view, not another claim about the
-            primal circle gaps.
+            {es
+              ? "La convención elegida determina si una visita exactamente en β se incluye. Esta vista dual estudia saltos de índices, no las brechas geométricas primales del círculo."
+              : "The selected convention determines whether a visit exactly at β is included. This dual view studies index jumps, not the primal geometric circle gaps."}
           </p>
           <Refs
             ids={["hamada2024", "alessandri1998"]}
@@ -1071,11 +1095,9 @@ function Topology({
                 ? "La conectividad aparece en longitudes de brecha"
                 : "Connectivity appears at gap lengths"}
             </h2>
-            <p>
-              Raise a threshold on the sampled circle. Every merge is tied to an
-              actual nearest-neighbor gap, so the topology view stays traceable
-              to the orbit.
-            </p>
+            <p>{es
+              ? "Aumente el umbral en la métrica de arco del círculo. Cada fusión ocurre en una brecha observada; el árbol generador mínimo contiene N−1 aristas y omite una brecha máxima, que cierra el ciclo sin matar una clase H₀."
+              : "Raise the threshold in the circle's arc-length metric. Each merge occurs at an observed gap; the minimum spanning tree has N−1 edges and omits one largest gap, which closes the cycle without killing an H₀ class."}</p>
           </div>
           <Metric
             label={es ? "componentes" : "components"}
@@ -1128,6 +1150,7 @@ function Topology({
               <span>
                 {event.components} {es ? "componentes" : "components"}
               </span>
+              <small>{es ? "arcos" : "gaps"}: {event.gapIds.join(", ")}</small>
             </button>
           ))}
         </div>
@@ -1156,19 +1179,18 @@ function Topology({
             ))}
           </div>
           <p className="small-copy">
-            Each horizontal bar starts at 0 and dies at a circular gap length.
-            This is the finite 0D interpretation described by{" "}
-            <Cite id="suarez2026" paren />.
+            {es
+              ? "Cada barra finita nace en cero y muere al cruzar una arista del árbol generador mínimo. Se usa la métrica intrínseca de arco en estos puntos muestreados; la brecha máxima se omite porque cierra el ciclo sin fusionar componentes."
+              : "Each finite bar is born at zero and dies when a minimum-spanning-tree edge enters. This uses the intrinsic arc-length metric on the sampled points; the largest gap is omitted because it closes the cycle without merging components."}{" "}
           </p>
         </div>
         <Callout
           variant="honest"
           title={es ? "Topología acotada" : "Scoped topology"}
         >
-          <span>
-            This is a transparent finite 0D Rips certificate. It is not a
-            general-purpose persistent-homology engine.
-          </span>
+          <span>{es
+            ? "Certificado finito H₀ de conectividad con la métrica intrínseca del círculo. No es un motor general de homología persistente ni reproduce la aproximación de diagramas de persistencia para señales deslizantes."
+            : "Finite H₀ connectivity certificate in the intrinsic circle metric. It is not a general persistent-homology engine and does not reproduce the sliding-window signal persistence approximation."}</span>
         </Callout>
       </aside>
     </div>
@@ -1297,6 +1319,48 @@ function LatticeView({
         <b>α = {formatNumber(scenario.alpha, 5, es)}</b>
       </div>
       <Refs ids={["marklof2017"]} label={es ? "Fuente" : "Source"} />
+    </div>
+  );
+}
+
+function TwoFrequencyView({ certificate }: { certificate: Certificate }) {
+  const es = useShellLang() === "es";
+  const plot = certificate.extension.points;
+  const nearestEdges = plot.map((point, i) => {
+    const candidates = plot.map((other, j) => {
+      const rawX = other.x - point.x;
+      const rawY = other.y - point.y;
+      const dx = Math.abs(rawX) <= 0.5 ? rawX : rawX - Math.sign(rawX);
+      const dy = Math.abs(rawY) <= 0.5 ? rawY : rawY - Math.sign(rawY);
+      return { j, dx, dy, distance: Math.hypot(dx, dy) };
+    }).filter(({ j }) => j !== i).sort((a, b) => a.distance - b.distance)[0];
+    return { point, candidate: candidates };
+  });
+  return (
+    <div className="two-frequency-view">
+      <svg viewBox="0 0 320 320" role="img" aria-label={es
+        ? "Secuencia de Kronecker sobre el toro cuadrado con aristas de vecino más cercano"
+        : "Kronecker sequence on the square torus with nearest-neighbor edges"}>
+        <rect x="34" y="32" width="248" height="248" className="two-frequency-ring" />
+        {[0, 1, 2, 3, 4].map((tick) => <g key={tick}>
+          <line x1={34 + tick * 62} y1="32" x2={34 + tick * 62} y2="280" className="torus-grid" />
+          <line x1="34" y1={32 + tick * 62} x2="282" y2={32 + tick * 62} className="torus-grid" />
+        </g>)}
+        {nearestEdges.map(({ point, candidate }, index) => <line key={`edge-${index}`} x1={34 + point.x * 248} y1={280 - point.y * 248} x2={34 + (point.x + candidate.dx) * 248} y2={280 - (point.y + candidate.dy) * 248} className={`torus-nearest family-${point.group}`} />)}
+        {plot.map((point, index) => <circle key={index} cx={34 + point.x * 248} cy={280 - point.y * 248} r="3.5" className={`two-frequency-point family-${point.group}`} />)}
+      </svg>
+      <div className="torus-readout">
+        <div className="torus-readout-heading">
+          <strong>{es ? "Distancias mínimas observadas" : "Observed nearest distances"}</strong>
+          <span>{es ? "métrica euclídea periódica" : "periodic Euclidean metric"} · N = {plot.length} · v = (α, β)</span>
+        </div>
+        <div className="torus-distance-list">{certificate.extension.groups.map((group, i) => <div className="torus-distance-row" key={group.type}>
+          <span className={`torus-distance-key family-${i}`}>{group.type}</span>
+          <span>{formatNumber(group.length, 4, es)}</span>
+          <span>{es ? "puntos" : "points"} × {group.count}</span>
+        </div>)}</div>
+      </div>
+      <Refs ids={["haynesmarklof2020"]} label={es ? "Referencia · distancias vecinas en dimensión 2" : "Reference · nearest-neighbor distances in dimension 2"} />
     </div>
   );
 }
@@ -1432,13 +1496,15 @@ function Extensions({
           </div>
           <h3>{es ? "Recuentos de brechas por proceso de generación" : "Gap counts by point-generation process"}</h3>
           <p>{es
-            ? "La rotación es aritmética; la inserción más lejana optimiza espacio vacío y el muestreo de dos frecuencias estudia otro sistema. Son controles de hipótesis, no contraejemplos fabricados."
-            : "Rotation is arithmetic; farthest-point insertion optimizes empty space, and two-frequency sampling studies another system. These are hypothesis controls, not manufactured counterexamples."}</p>
+            ? "La rotación es aritmética; la inserción más lejana optimiza espacio vacío. El contraste toroidal usa (nα, nβ) mod 1 y distancias euclídeas periódicas entre vecinos más cercanos; es un teorema distinto y no una generalización de las brechas circulares."
+            : "Rotation is arithmetic; farthest-point insertion optimizes empty space. The torus contrast uses (nα, nβ) mod 1 and periodic Euclidean nearest-neighbor distances; this is a separate theorem, not a generalization of circular gaps."}</p>
+          <TwoFrequencyView certificate={certificate} />
           <div className="contrast-grid">
             {[
               { label: es ? "rotación" : "rotation", value: certificate.distinctCount, tone: "b" },
-              { label: es ? "dos frecuencias" : "two-frequency", value: certificate.extension.distinctCount, tone: "c" },
+              { label: es ? "clases vecinas en toro" : "torus neighbor classes", value: certificate.extension.distinctCount, tone: "c" },
               { label: es ? "punto más lejano" : "farthest point", value: computeCertificate({ ...scenario, allocator: "farthest" }).distinctCount, tone: "a" },
+              { label: es ? "anclas" : "anchors", value: computeCertificate({ ...scenario, allocator: "anchors" }).distinctCount, tone: "b" },
             ].map((item) => (
               <div key={item.label} className={`contrast-stat tone-${item.tone}`}>
                 <span>{item.label}</span>
@@ -1505,7 +1571,7 @@ export function GapTheoWorkbench() {
     {
       id: "return",
       label: es ? "Retornos" : "Return Gaps",
-      content: <ReturnGaps certificate={certificate} scenario={scenario} />,
+      content: <ReturnGaps certificate={certificate} scenario={scenario} setScenario={setScenario} />,
     },
     {
       id: "topology",

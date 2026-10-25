@@ -66,15 +66,24 @@ lattice view follows the space-of-lattices perspective: active short vectors
 are shown alongside the circle certificate. Rotation is also rendered as a
 two-interval exchange, with a zippered-rectangle-inspired schematic.
 
-For the topology lens, a threshold grows on the sampled circle. In the finite
-zero-dimensional Rips filtration, adjacent gaps are the merge thresholds.
-GapTheo draws the component count and finite bars with direct gap identifiers.
-It does not claim a general persistent-homology engine.
+For the topology lens, a threshold grows in the intrinsic arc-length metric
+on the sampled circle. The circular nearest-neighbor graph has one edge per
+gap. Its minimum spanning tree omits one largest gap and contains $N-1$
+edges, each giving a finite $H_0$ merge threshold. GapTheo draws the component
+count and finite bars with direct gap identifiers. This is not the sliding-
+window persistence-diagram approximation of Suarez Salas and Perea, nor a
+general persistent-homology engine.
 
 \section{Controlled extensions}
 The farthest-point allocator places each new point at the midpoint of a
-largest empty arc. Seeded random placement tests reproducibility. A
-two-frequency sequence tests the change in the number of observed lengths.
+largest empty arc. Anchored allocation places the declared number of uniform
+anchors before using the same deterministic bisection rule. Seeded random
+placement tests reproducibility. A
+two-dimensional Kronecker sequence plots $n(\alpha,\beta)\bmod 1$ on the
+square torus and records periodic-Euclidean nearest-neighbor distances. This is
+a separate higher-dimensional contrast, not a generalization of circular gaps;
+the finite display does not assert that every sample realizes five distance
+classes (Haynes and Marklof, 2020).
 These modes are useful falsification and boundary experiments. They do not
 extend the one-dimensional theorem.
 
@@ -105,11 +114,14 @@ direct partition oracle as the circle display.
 \section{Novelty boundary}
 The reviewed literature contains the individual mathematical mechanisms:
 Farey and continued-fraction proofs, dual return times, combinatorics on words,
-space of lattices, interval exchanges, and topology applications. GapTheo's
-original contribution is their synchronized, deterministic, browser-native
-visual atlas with an explicit proof boundary and reproducible artifacts. No
-new theorem, proof, asymptotic claim, or formal verification result is
-asserted.
+space of lattices, interval exchanges, and topology applications. The 2026
+sliding-window persistence method combines the three-gap theorem with the
+Persistent Künneth formula to approximate persistence diagrams of
+quasiperiodic signals. GapTheo does not implement that method. Its
+reproducible contribution is a synchronized finite certificate protocol with
+direct and arithmetic cross-checks, explicit contrast regimes, and a
+parameter-linked Farey length plot. It claims no new theorem, proof,
+asymptotic result, or formal verification.
 
 \section{References}
 \begin{enumerate}
@@ -127,6 +139,8 @@ and Zippered Rectangles}, \url{https://arxiv.org/abs/1708.04380}.
 \url{https://doi.org/10.1080/00029890.2022.2158021}.
 \item L. Suarez Salas and J. A. Perea, \emph{Estimation of Persistence
 Diagrams via the Three Gap Theorem}, \url{https://arxiv.org/abs/2603.04570}.
+\item A. Haynes and J. Marklof, \emph{A Five Distance Theorem for Kronecker
+Sequences}, \url{https://arxiv.org/abs/2009.08444}.
 \end{enumerate}
 
 \end{document}

@@ -163,8 +163,12 @@ The Explore workbench supports these methods:
   the rotation theorem.
 - **Target-interval return mode:** choose a \(\beta\)-interval and inspect visit
   indices, return gaps, and the two/three-regime badge.
-- **Two-frequency extension:** inspect \(\{n\alpha+m\beta\}\) as a changed
-  sequence class. It is not presented as a one-dimensional rotation orbit.
+- **Two-dimensional Kronecker contrast:** plot \(n(\alpha,\beta)\bmod 1\) on the
+  square torus and classify periodic-Euclidean nearest-neighbor distances. This
+  is distinct from circular gap lengths and does not generalize the one-dimensional
+  theorem. The finite display is an experiment against the separate higher-dimensional
+  nearest-neighbor result; it does not claim that every finite sample realizes five
+  classes.
 
 Every mode uses deterministic controls where randomness is involved. The
 Python reference lane generates canonical JSON certificates; the TypeScript
